@@ -40,4 +40,7 @@
 
     <string name="warn_delete_account">정말 탈퇴 하시겠습니까?\n마지막으로 비밀번호를 확인해주세요.</string>
     <string name="warn_delete_data">정말 데이터를 초기화하시겠습니까?\n아래의 확인 문자를 입력해주세요.</string>
+
+
+    <string name="complete">완성</string>
 </resources>
