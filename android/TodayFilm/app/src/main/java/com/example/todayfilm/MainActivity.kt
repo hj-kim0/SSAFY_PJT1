@@ -2,6 +2,8 @@ package com.example.todayfilm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.todayfilm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -9,8 +11,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = HomeFragment()
+        transaction.add(R.id.fragment_content, fragment)
+        transaction.commit()
     }
 }

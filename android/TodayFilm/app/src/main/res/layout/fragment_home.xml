@@ -38,10 +38,9 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
+        android:id="@+id/fragment_content_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="10dp">
-
-    </FrameLayout>
+        android:layout_marginHorizontal="30dp"/>
 
 </LinearLayout>
