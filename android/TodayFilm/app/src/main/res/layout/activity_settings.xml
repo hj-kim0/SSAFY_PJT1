@@ -97,21 +97,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingHorizontal="36dp"
-        android:paddingBottom="24dp"
 
-        android:orientation="horizontal">
+        android:paddingBottom="24dp">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:layout_editor_absoluteX="36dp">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/textView3"
@@ -137,17 +138,14 @@
             android:layout_width="60dp"
             android:layout_height="30dp"
 
-            android:background="@drawable/spinner_background"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/spinner_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
