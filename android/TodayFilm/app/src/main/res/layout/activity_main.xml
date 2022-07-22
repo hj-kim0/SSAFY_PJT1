@@ -28,7 +28,8 @@
             android:text="@string/search"
             android:gravity="center"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -42,7 +43,8 @@
             android:text="@string/album"
             android:gravity="center"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
 

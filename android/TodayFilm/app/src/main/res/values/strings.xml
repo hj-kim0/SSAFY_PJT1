@@ -23,7 +23,9 @@
     <string name="complete_frame">오늘의 필름 완성!</string>
     <string name="search">검색</string>
     <string name="album">내 앨범</string>
-
+    <string name="save">저장하기</string>
+    <string name="share">공유하기</string>
+    <string name="play">재생하기</string>
 
     <string name="example_date">2022/07/13(수)</string>
 
@@ -36,7 +38,7 @@
     <string name="hint_check">확인 문자를 입력하세요</string>
     <string name="hint_search">검색어를 입력하세요</string>
     <string name="hint_hashtag">해시태그를 입력하세요</string>
-    <string name="hint_content">내용을 입력하세요</string>
+    <string name="hint_content">#내용을_입력하세요</string>
     <string name="hint_place">장소를 입력하세요</string>
     <string name="hint_save">사진첩에 저장할까요?</string>
 

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = HomeFragment()
+        val fragment = FilmFragment()
         transaction.add(R.id.fragment_content, fragment)
         transaction.commit()
     }
