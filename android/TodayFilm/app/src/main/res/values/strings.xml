@@ -19,7 +19,13 @@
     <string name="delete_data">데이터 초기화</string>
     <string name="delete_data_check">데이터 초기화 확인</string>
 
-    <string name="title_complete">오늘의 필름 완성!</string>
+    <string name="complete">완료</string>
+    <string name="complete_frame">오늘의 필름 완성!</string>
+    <string name="search">검색</string>
+    <string name="album">내 앨범</string>
+
+
+    <string name="example_date">2022/07/13(수)</string>
 
     <string name="hint_id">아이디를 입력하세요</string>
     <string name="hint_pw">비밀번호를 입력하세요</string>
@@ -30,7 +36,9 @@
     <string name="hint_check">확인 문자를 입력하세요</string>
     <string name="hint_search">검색어를 입력하세요</string>
     <string name="hint_hashtag">해시태그를 입력하세요</string>
+    <string name="hint_content">내용을 입력하세요</string>
     <string name="hint_place">장소를 입력하세요</string>
+    <string name="hint_save">사진첩에 저장할까요?</string>
 
     <string name="err_input_against_rule">6~20자의 영문 대소문자 및 숫자만 가능합니다.</string>
     <string name="err_id_already_exists">이미 존재하는 아이디입니다.</string>
@@ -43,9 +51,7 @@
     <string name="warn_delete_account">정말 탈퇴 하시겠습니까?\n마지막으로 비밀번호를 확인해주세요.</string>
     <string name="warn_delete_data">정말 데이터를 초기화하시겠습니까?\n아래의 확인 문자를 입력해주세요.</string>
 
-    <string name="complete">완성</string>
-    <string name="search">검색</string>
-    <string name="album">내 앨범</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
