@@ -19,6 +19,8 @@
     <string name="delete_data">데이터 초기화</string>
     <string name="delete_data_check">데이터 초기화 확인</string>
 
+    <string name="title_complete">오늘의 필름 완성!</string>
+
     <string name="hint_id">아이디를 입력하세요</string>
     <string name="hint_pw">비밀번호를 입력하세요</string>
     <string name="hint_pw_check">비밀번호를 다시 입력하세요</string>
