@@ -28,6 +28,8 @@
     <string name="play">재생하기</string>
 
     <string name="example_date">2022/07/13(수)</string>
+    <string name="example_time">09:00 AM</string>
+    <string name="example_place">광주광역시</string>
 
     <string name="hint_id">아이디를 입력하세요</string>
     <string name="hint_pw">비밀번호를 입력하세요</string>

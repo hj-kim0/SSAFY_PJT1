@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,86 +9,70 @@
     android:gravity="center_horizontal"
     android:background="@color/blue_200">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="70dp"
+        android:src="@drawable/logo"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:text="@string/app_name_ko"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/logo"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name_ko"
-            android:textSize="25sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
+        android:gravity="center"
         android:text="@string/warn_delete_account"
         android:textColor="@color/red"
-        android:visibility="visible"
-        android:gravity="center"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/deleteAccount_pw"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:padding="10dp"
+        android:background="@drawable/input_border"
+        android:hint="@string/hint_pw"
+        android:inputType="text"
+        android:textSize="12sp" />
 
-        <EditText
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_pw"
-            android:inputType="text"
-            android:textSize="12sp"
-            android:background="@drawable/input_border"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="10dp"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deleteAccount_pw_err"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="7dp"
+        android:paddingVertical="4dp"
+        android:text="@string/err_pw_not_match"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        tools:ignore="RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/login_id_err"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="@string/err_pw_not_match"
-            android:textColor="@color/red"
-            android:paddingStart="7dp"
-            android:paddingVertical="4dp"
-            android:textSize="12sp"
-            android:visibility="visible"
-            tools:ignore="RtlSymmetry" />
-    </LinearLayout>
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteAccount_btn"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:text="@string/delete_account"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="13dp"/>
+        android:layout_marginBottom="13dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/delete_account"
+        android:textColor="@color/black" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:text="@string/app_footer"
-        android:textSize="10sp"
-        android:textColor="@color/white"
         android:layout_weight="1"
         android:gravity="bottom"
         android:layout_marginBottom="10dp"
+        android:text="@string/app_footer"
+        android:textSize="10sp"
+        android:textColor="@color/white"
         tools:ignore="SmallSp" />
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

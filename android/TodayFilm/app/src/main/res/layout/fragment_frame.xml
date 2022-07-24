@@ -1,124 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FrameFragment"
     android:background="@color/brown_500"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:gravity="center">
-    
-    <LinearLayout
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"/>
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="150"
         android:orientation="horizontal"
         android:paddingVertical="2dp"
         android:gravity="center">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_left"/>
-        <ImageView
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_weight="280"
-            android:layout_height="match_parent"
-            android:background="@color/gray_200" />
-        <ImageView
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/photo_1_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_200"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_1_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:padding="5dp"
+                android:text="@string/example_time"
+                android:textColor="@color/black"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_1_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:padding="5dp"
+                android:text="@string/example_place"
+                android:textColor="@color/black"/>
+        </FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_right"/>
-    </LinearLayout>
-    <LinearLayout
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="150"
         android:orientation="horizontal"
         android:paddingVertical="2dp"
         android:gravity="center">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_left"/>
-        <ImageView
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_weight="280"
-            android:layout_height="match_parent"
-            android:background="@color/gray_200" />
-        <ImageView
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/photo_2_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_200"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_2_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:padding="5dp"
+                android:text="@string/example_time"
+                android:textColor="@color/black"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_2_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:padding="5dp"
+                android:text="@string/example_place"
+                android:textColor="@color/black"/>
+        </FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_right"/>
-    </LinearLayout>
-    <LinearLayout
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="150"
         android:orientation="horizontal"
         android:paddingVertical="2dp"
         android:gravity="center">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_left"/>
-        <ImageView
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_weight="280"
-            android:layout_height="match_parent"
-            android:background="@color/gray_200" />
-        <ImageView
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/photo_3_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_200"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_3_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:padding="5dp"
+                android:text="@string/example_time"
+                android:textColor="@color/black"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_3_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:padding="5dp"
+                android:text="@string/example_place"
+                android:textColor="@color/black"/>
+        </FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_right"/>
-    </LinearLayout>
-    <LinearLayout
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="150"
         android:orientation="horizontal"
         android:paddingVertical="2dp"
         android:gravity="center">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_left"/>
-        <ImageView
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_weight="280"
-            android:layout_height="match_parent"
-            android:background="@color/gray_200" />
-        <ImageView
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/photo_4_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_200"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_4_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:padding="5dp"
+                android:text="@string/example_time"
+                android:textColor="@color/black"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/photo_4_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:padding="5dp"
+                android:text="@string/example_place"
+                android:textColor="@color/black"/>
+        </FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_weight="35"
             android:layout_height="match_parent"
             android:src="@drawable/sprocket_holes_right"/>
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingEnd="15dp"
         android:text="@string/example_date"
         android:textColor="@color/white"
-        android:gravity="end"
-        android:paddingEnd="10dp"
         tools:ignore="RtlSymmetry" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"/>
+        android:layout_weight="5"/>
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
