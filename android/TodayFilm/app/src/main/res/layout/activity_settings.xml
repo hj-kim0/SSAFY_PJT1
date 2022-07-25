@@ -238,10 +238,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/settings_to_deleteData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_data"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:paddingHorizontal="35dp"
+        android:paddingBottom="30dp"/>
+
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -273,15 +283,16 @@
         >
 
         <LinearLayout
+            android:id="@+id/settings_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="35dp"
             android:visibility="gone"
-
             >
 
             <TextView
+                android:id="@+id/settings_to_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로그인"
@@ -298,6 +309,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/settings_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -306,6 +318,7 @@
             >
 
             <TextView
+                android:id="@+id/settings_to_changePassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="비밀번호 변경"
@@ -314,6 +327,7 @@
                 android:paddingBottom="30dp"/>
 
             <TextView
+                android:id="@+id/settings_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로그아웃"
@@ -321,6 +335,7 @@
                 android:textSize="18sp"
                 android:paddingBottom="30dp"/>
             <TextView
+                android:id="@+id/settings_to_deleteAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원탈퇴"
