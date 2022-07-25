@@ -34,7 +34,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/nav_home" />
 
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/nav_home"
             android:layout_width="55dp"
@@ -44,9 +43,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/nav_search"
             app:layout_constraintEnd_toStartOf="@+id/nav_album" />
-
-
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/nav_album"

@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment"
-    android:id="@+id/fragment_content_search">
-
+    tools:context=".SearchFragment">
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
@@ -20,17 +18,17 @@
             android:orientation="vertical"
 
             >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:gravity="bottom"
                 android:text="검색"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="bottom"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                />
 
             <EditText
                 android:layout_width="match_parent"
