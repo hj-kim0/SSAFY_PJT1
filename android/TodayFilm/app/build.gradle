@@ -65,4 +65,7 @@ dependencies {
     implementation "androidx.camera:camera-video:${camerax_version}"
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    // bitmap to video 라이브러리
+    implementation 'com.github.israel-fl:bitmap2video:2.0.0'
 }

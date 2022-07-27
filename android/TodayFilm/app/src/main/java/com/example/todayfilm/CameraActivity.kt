@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,14 +20,15 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.todayfilm.databinding.ActivityCameraBinding
+import com.homesoft.encoder.Muxer
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.concurrent.thread
 
 class CameraActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCameraBinding
 
     private var imageCapture: ImageCapture? = null
 
@@ -41,6 +43,9 @@ class CameraActivity : AppCompatActivity() {
         // 카메라 권한 요청
         if ( allPermissionsGranted() ) {
             startCamera()
+
+            // 동영상용 이미지 촬영 스레드 실행
+            videoCaptureThread.start()
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -50,7 +55,6 @@ class CameraActivity : AppCompatActivity() {
         binding.cameraBtn.setOnClickListener { takePhoto() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-
     }
 
     override fun onRequestPermissionsResult(
@@ -144,8 +148,10 @@ class CameraActivity : AppCompatActivity() {
         )
 
         // 저장된 사진 보여주고 다시시도/확인 보여주기
+        videoCaptureFlag = false
         val bitmap = binding.viewFinder.bitmap
         binding.viewCapture.setImageBitmap(bitmap)
+        Log.d(TAG, videoCaptureQueue.toString())
 
         binding.viewFinder.visibility = View.GONE
         binding.viewCapture.visibility = View.VISIBLE
@@ -154,7 +160,11 @@ class CameraActivity : AppCompatActivity() {
         binding.cameraBtn.visibility = View.GONE
 
         binding.cameraOk.setOnClickListener{
-            // 사진 저장 로직
+            // 사진 프레임에 채우는 로직
+            // bitmap을 앱 공용 데이터 영역에 저장
+
+            // 동영상 인코딩 및 저장 로직
+//            val muxer = Muxer(this@CameraActivity, )
 
             // Main activity로 이동
             val intent = Intent(this, MainActivity::class.java)
@@ -170,6 +180,13 @@ class CameraActivity : AppCompatActivity() {
 
             binding.cameraNav.visibility = View.GONE
             binding.cameraBtn.visibility = View.VISIBLE
+
+            // videoCaptureQueue 초기화
+            videoCaptureQueue.clear()
+
+            // videoCaptureThread 재시작
+            videoCaptureFlag = true
+            videoCaptureThread.start()
         }
 
     }
@@ -192,5 +209,17 @@ class CameraActivity : AppCompatActivity() {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
+        private val videoCaptureThread = thread(start = false) {
+            while (videoCaptureFlag) {
+                if (videoCaptureQueue.size > 30) {
+                    videoCaptureQueue.poll()
+                }
+                videoCaptureQueue.add(binding.viewFinder.bitmap!!)
+                Thread.sleep(100)
+            }
+        }
+        private var videoCaptureFlag = true
+        private var videoCaptureQueue: Queue<Bitmap> = LinkedList()
+        private lateinit var binding: ActivityCameraBinding
     }
 }
