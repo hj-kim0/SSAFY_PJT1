@@ -42,7 +42,6 @@ typealias LumaListener = (luma: Double) -> Unit
 class CameraActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityCameraBinding
 
-    private var imageCapture: ImageCapture? = null
 
     private var videoCapture: VideoCapture<Recorder>? = null
     private var recording: Recording? = null
@@ -129,7 +128,7 @@ class CameraActivity : AppCompatActivity() {
                 when(recordEvent) {
                     is VideoRecordEvent.Start -> {
                         viewBinding.cameraBtn.apply {
-                            text = getString(R.string.start_capture)
+                            text = "start"
                             isEnabled = true
                         }
                     }
@@ -147,7 +146,7 @@ class CameraActivity : AppCompatActivity() {
                                     "${recordEvent.error}")
                         }
                         viewBinding.cameraBtn.apply {
-                            text = getString(R.string.start_capture)
+                            text = "finish"
                             isEnabled = true
                         }
                     }
@@ -157,6 +156,7 @@ class CameraActivity : AppCompatActivity() {
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+
 
         cameraProviderFuture.addListener({
             // Used to bind the lifecycle of cameras to the lifecycle owner
@@ -168,6 +168,11 @@ class CameraActivity : AppCompatActivity() {
                 .also {
                     it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
                 }
+
+            val recorder = Recorder.Builder()
+                .setQualitySelector(QualitySelector.from(Quality.HIGHEST))
+                .build()
+            videoCapture = VideoCapture.withOutput(recorder)
 
             // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
