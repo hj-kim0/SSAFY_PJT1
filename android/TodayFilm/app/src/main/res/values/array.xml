@@ -28,6 +28,7 @@
     </string-array>
 
     <string-array name="questions">
+        <item>비밀번호 찾기 질문을 선택해주세요.</item>
         <item>어렸을 때 가장 친한 친구의 이름은?</item>
         <item>가장 기억에 남는 선생님의 성함은?</item>
         <item>가장 좋아하는 연예인의 이름은?</item>

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -51,6 +53,18 @@ class SignupActivity : AppCompatActivity() {
         )
 
         spinner.adapter = arrayAdapter
+
+        // 첫 번째 항목을 제외하고 나머지 항목이 선택되었을 때에만 변수에 넣어서 서버로 넘기기
+        var signupQuestion = ""
+        binding.signupQuestions.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (!binding.signupQuestions.getItemAtPosition(p2).equals("비밀번호 찾기 질문을 선택해주세요.")) {
+                    signupQuestion = binding.signupQuestions.getItemAtPosition(p2).toString()
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
 
         binding.signupToLogin.setOnClickListener {
             val intent = Intent(this@SignupActivity, LoginActivity::class.java)
