@@ -18,12 +18,13 @@ class MainActivity : AppCompatActivity() {
 
         // 처음에 보여줄 프래그먼트 지정
         setFragment(TAG_HOME, HomeFragment())
+        binding.navBar.selectedItemId = R.id.homeFragment
 
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 // !!!!!!!!! 피드 프래그먼트로 변경 필요!!!!!!!!!
-                R.id.feedFragment -> setFragment(TAG_FEED, FilmFragment())
+                R.id.feedFragment -> setFragment(TAG_FEED, SearchFragment())
                 R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
                 R.id.filmsFragment -> setFragment(TAG_FILMS, FilmsFragment())
             }

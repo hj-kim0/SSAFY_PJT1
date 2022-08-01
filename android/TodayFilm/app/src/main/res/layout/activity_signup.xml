@@ -47,7 +47,9 @@
             android:background="@drawable/input_border"
             android:hint="@string/hint_id"
             android:inputType="text"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/signup_pw"
@@ -58,7 +60,9 @@
             android:background="@drawable/input_border"
             android:hint="@string/hint_pw"
             android:inputType="textPassword"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_key"
+            android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/signup_pw_check"
@@ -69,7 +73,9 @@
             android:background="@drawable/input_border"
             android:hint="@string/hint_pw_check"
             android:inputType="textPassword"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_key"
+            android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/signup_username"
@@ -80,7 +86,9 @@
             android:background="@drawable/input_border"
             android:hint="@string/hint_username"
             android:inputType="textPassword"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/signup_questions"
@@ -98,7 +106,9 @@
             android:background="@drawable/input_border"
             android:hint="@string/hint_answer"
             android:inputType="text"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_check_circle"
+            android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/signup_err"
