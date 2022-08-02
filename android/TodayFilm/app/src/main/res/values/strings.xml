@@ -44,6 +44,7 @@
     <string name="hint_content">#내용을_입력하세요</string>
     <string name="hint_place">장소를 입력하세요</string>
     <string name="hint_save">사진첩에 저장할까요?</string>
+    <string name="hint_show">공개 여부</string>
 
     <string name="err_id_already_exists">이미 존재하는 아이디입니다.</string>
     <string name="err_id_not_exists">존재하지 않는 아이디입니다.</string>
