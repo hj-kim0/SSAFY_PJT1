@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment"
-    android:id="@+id/fragment_content_search">
+    android:orientation="vertical"
+    android:background="@color/blue_200"
+    tools:context=".SearchFragment">
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="30dp"
+        android:paddingStart="10dp"
+
+        android:hint="검색어를 입력하세요"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/searchback"
+        android:drawablePadding="10dp"
+        android:background="@color/white"
+        android:inputType="text"
+        android:layout_marginBottom="12.5dp"
+
+        />
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
@@ -14,127 +33,448 @@
 
         >
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
+
             >
 
-            <TextView
+            <!--            프로필검색-->
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:gravity="bottom"
-                android:text="검색"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="30dp"
-                android:paddingStart="10dp"
-                android:hint="검색어를 입력하세요"
-                android:textStyle="bold"
-
-                android:background="@color/white"
-
-
-                android:inputType="text"
-
-                />
-
-            <View
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:background="@color/white"
-                android:layout_marginVertical="12dp"
-                android:layout_gravity="center"
-
-
-                />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout9"
-                android:layout_width="350dp"
-                android:layout_height="212dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12.5dp"
                 android:orientation="vertical">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="사용자"
+                        android:textColor="@color/gray_500"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <View
-                    android:id="@+id/view3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="187dp"
-
-                    android:background="@color/gray_200" />
-
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="여기가 날짜"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:layout_width="350dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="12dp"
+                    android:background="@color/white"
 
 
-                <TextView
-                    android:id="@+id/textView16"
+                    />
+
+                <TableLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
 
-                    android:text="여기는 해시태그"
-                    android:textColor="@color/blue_500"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    >
+
+                    <TableRow android:layout_marginBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="2dp"
+                                android:background="@drawable/bigthumb"
+                                android:clipToOutline="true"
+
+                                android:src="@drawable/poppy"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
+                                android:text="이것은아이디이다.."
+                                android:textColor="@color/gray_500"
+                                android:textSize="8sp" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="350dp"
-                android:layout_height="212dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="2dp"
+                                android:background="@drawable/bigthumb"
+                                android:clipToOutline="true"
+
+                                android:src="@drawable/people"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
+                                android:text="이것은아이디이다.."
+                                android:textColor="@color/gray_500"
+                                android:textSize="8sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="2dp"
+                                android:background="@drawable/bigthumb"
+                                android:clipToOutline="true"
+
+                                android:src="@drawable/people"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
+                                android:text="이것은아이디이다.."
+                                android:textColor="@color/gray_500"
+                                android:textSize="8sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginStart="2dp"
+                                android:background="@drawable/bigthumb"
+                                android:clipToOutline="true"
+
+                                android:src="@drawable/poppy"
+
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
+                                android:text="이것은아이디이다.."
+                                android:textColor="@color/gray_500"
+                                android:textSize="8sp" />
+
+
+                        </LinearLayout>
+
+
+                    </TableRow>
+
+
+                </TableLayout>
+
+
+            </LinearLayout>
+
+            <!--            피드검색-->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일기"
+                    android:textColor="@color/gray_500"
+                    android:textSize="20sp" />
+
                 <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="187dp"
-
-                    android:background="@color/gray_200" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="여기가 날짜"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    android:layout_width="350dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="12dp"
+                    android:background="@color/white"
 
 
-                <TextView
+                    />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="여기는 해시태그"
-                    android:textColor="@color/blue_500"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+
+                    android:background="@drawable/layout_background"
+
+                    android:orientation="vertical"
+
+                    >
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
 
 
+                        android:paddingVertical="7dp">
 
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:src="@drawable/switch_thumb"
 
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="이것은 닉네임이다"
+                            android:textColor="@color/gray_500"
+                            android:textSize="10sp" />
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="342dp"
+                        android:layout_height="190dp"
+
+                        android:background="@drawable/layout_backgroundbottom" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+
+                    android:background="@drawable/layout_background"
+
+                    android:orientation="vertical"
+
+                    >
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+
+
+                        android:paddingVertical="7dp">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:src="@drawable/switch_thumb"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="이것은 닉네임이다"
+                            android:textColor="@color/gray_500"
+                            android:textSize="10sp" />
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="342dp"
+                        android:layout_height="190dp"
+
+                        android:background="@drawable/layout_backgroundbottom" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+
+                    android:background="@drawable/layout_background"
+
+                    android:orientation="vertical"
+
+                    >
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+
+
+                        android:paddingVertical="7dp">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:src="@drawable/switch_thumb"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="이것은 닉네임이다"
+                            android:textColor="@color/gray_500"
+                            android:textSize="10sp" />
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="342dp"
+                        android:layout_height="190dp"
+
+                        android:background="@drawable/layout_backgroundbottom" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+
+                    android:background="@drawable/layout_background"
+
+                    android:orientation="vertical"
+
+                    >
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+
+
+                        android:paddingVertical="7dp">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:src="@drawable/switch_thumb"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="이것은 닉네임이다"
+                            android:textColor="@color/gray_500"
+                            android:textSize="10sp" />
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="342dp"
+                        android:layout_height="190dp"
+
+                        android:background="@drawable/layout_backgroundbottom" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -142,7 +482,11 @@
     </ScrollView>
 
 
+</LinearLayout>
 
 
 
-</FrameLayout>
+
+
+
+

@@ -5,33 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FilmsFragment"
+    android:background="@color/blue_200"
     android:orientation="vertical">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="30dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="7dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
-        android:id="@+id/linearLayout2">
 
-        <TextView
-            android:id="@+id/textView12"
+
+        <ImageView
+            android:layout_marginStart="2dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bigthumb"
+            android:clipToOutline="true"
+            android:src="@drawable/poppy"
+
+
+            />
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="65dp"
-            android:gravity="bottom"
-            android:text="내 앨범"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="이것이 아이디이다"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="이것은 닉네임이다"
+                android:textSize="12sp" />
 
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_conversion_absoluteHeight="65dp"
-            tools:layout_conversion_absoluteWidth="76dp" />
+
+
+        </LinearLayout>
+
+
+
+
 
         <TextView
             android:id="@+id/go_settings"
@@ -49,7 +80,21 @@
             tools:layout_conversion_absoluteHeight="24dp"
             tools:layout_conversion_absoluteWidth="33dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="12dp"
+        android:background="@color/white"
+
+
+        />
+
+
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,7 +134,8 @@
 
                             android:background="@color/gray_200"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="0dp" />
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -134,7 +180,8 @@
 
                             android:background="@color/gray_200"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="0dp" />
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -187,7 +234,8 @@
 
                             android:background="@color/gray_200"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="0dp" />
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -232,7 +280,8 @@
 
                             android:background="@color/gray_200"
                             tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="0dp" />
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -265,295 +314,308 @@
 
 
 
-                </TableRow><TableRow>
+                </TableRow>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TableRow>
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_marginBottom="20dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
 
-
-                    android:orientation="vertical">
-
-
-                    <View
-                        android:layout_width="171dp"
-                        android:layout_height="91dp"
-
-                        android:background="@color/gray_200"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2022/07/22"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="2dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        android:layout_height="113dp"
+                        android:layout_marginBottom="20dp"
 
 
-                    <TextView
+                        android:orientation="vertical">
+
+
+                        <View
+                            android:layout_width="171dp"
+                            android:layout_height="91dp"
+
+                            android:background="@color/gray_200"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2022/07/22"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="#해시태그"
+                            android:textColor="@color/blue_500"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:layout_height="113dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginStart="10dp"
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginStart="10dp"
+                        android:orientation="vertical">
 
 
-                    android:orientation="vertical">
+                        <View
+                            android:layout_width="171dp"
+                            android:layout_height="91dp"
+
+                            android:background="@color/gray_200"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2022/07/22"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
 
-                    <View
-                        android:layout_width="171dp"
-                        android:layout_height="91dp"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                        android:background="@color/gray_200"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
+                            android:text="#해시태그"
+                            android:textColor="@color/blue_500"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
 
-                    <TextView
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+                </TableRow>
+
+                <TableRow>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2022/07/22"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="2dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        android:layout_height="113dp"
+                        android:layout_marginBottom="20dp"
 
 
-                    <TextView
+                        android:orientation="vertical">
+
+
+                        <View
+                            android:layout_width="171dp"
+                            android:layout_height="91dp"
+
+                            android:background="@color/gray_200"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2022/07/22"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="#해시태그"
+                            android:textColor="@color/blue_500"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:layout_height="113dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginStart="10dp"
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:orientation="vertical">
+
+
+                        <View
+                            android:layout_width="171dp"
+                            android:layout_height="91dp"
+
+                            android:background="@color/gray_200"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2022/07/22"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="#해시태그"
+                            android:textColor="@color/blue_500"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 
 
 
-            </TableRow><TableRow>
+                </TableRow>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TableRow>
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_marginBottom="20dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
 
-
-                    android:orientation="vertical">
-
-
-                    <View
-                        android:layout_width="171dp"
-                        android:layout_height="91dp"
-
-                        android:background="@color/gray_200"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-
-                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2022/07/22"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="2dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        android:layout_height="113dp"
+                        android:layout_marginBottom="20dp"
 
 
-                    <TextView
+                        android:orientation="vertical">
+
+
+                        <View
+                            android:layout_width="171dp"
+                            android:layout_height="91dp"
+
+                            android:background="@color/gray_200"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2022/07/22"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="#해시태그"
+                            android:textColor="@color/blue_500"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:layout_height="113dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginStart="10dp"
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginStart="10dp"
+                        android:orientation="vertical">
 
 
-                    android:orientation="vertical">
+                        <View
+                            android:layout_width="171dp"
+                            android:layout_height="91dp"
+
+                            android:background="@color/gray_200"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2022/07/22"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_marginLeft="2dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
 
-                    <View
-                        android:layout_width="171dp"
-                        android:layout_height="91dp"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                        android:background="@color/gray_200"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2022/07/22"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="2dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                            android:text="#해시태그"
+                            android:textColor="@color/blue_500"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 
 
 
-            </TableRow><TableRow>
+                </TableRow>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_marginBottom="20dp"
-
-
-                    android:orientation="vertical">
-
-
-                    <View
-                        android:layout_width="171dp"
-                        android:layout_height="91dp"
-
-                        android:background="@color/gray_200"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2022/07/22"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="2dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginStart="10dp"
-
-
-                    android:orientation="vertical">
-
-
-                    <View
-                        android:layout_width="171dp"
-                        android:layout_height="91dp"
-
-                        android:background="@color/gray_200"
-                        tools:layout_editor_absoluteX="0dp"
-                        tools:layout_editor_absoluteY="0dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2022/07/22"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="2dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-            </TableRow>
 
 
 
