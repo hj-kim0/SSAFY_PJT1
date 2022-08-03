@@ -13,8 +13,6 @@ class MainActivity : AppCompatActivity() {
     private val TAG_HOME = "home_fragment"
     private val TAG_PROFILE = "profile_fragment"
 
-    private var doubleBackToExit = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -90,6 +88,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

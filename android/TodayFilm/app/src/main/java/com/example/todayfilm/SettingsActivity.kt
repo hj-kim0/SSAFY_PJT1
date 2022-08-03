@@ -3,11 +3,13 @@ package com.example.todayfilm
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.example.todayfilm.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
@@ -27,8 +29,48 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsPreference : PreferenceFragmentCompat() {
+        // 저장되는 데이터에 접근하기 위한 SharedPreferences
+        lateinit var prefs: SharedPreferences
+
+        // Preference 객체
+        var repeatPreference: Preference? = null
+        var shakePreference: Preference? = null
+
+        // onCreatee() 중에 호출되어 Fragment에 preference를 제공
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            addPreferencesFromResource(R.xml.preference)
+            setPreferencesFromResource(R.xml.preference, rootKey)
+
+            if (rootKey == null) {
+                // Preference 객체 초기화
+                repeatPreference = findPreference("repeat")
+                shakePreference = findPreference("shake")
+
+                // SharedPreferences 객체 초기화
+                prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+            }
+        }
+
+        val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
+            when (key) {
+                "repeat" -> {
+                    val value = prefs.getBoolean("repeat", false)
+                }
+                "shake" -> {
+                    val value = prefs.getBoolean("shake", false)
+                }
+            }
+        }
+
+        // 리스너 등록
+        override fun onResume() {
+            super.onResume()
+            prefs.registerOnSharedPreferenceChangeListener(prefListener)
+        }
+
+        // 리스너 해제
+        override fun onPause() {
+            super.onPause()
+            prefs.unregisterOnSharedPreferenceChangeListener(prefListener)
         }
 
         override fun onPreferenceTreeClick(preference: Preference): Boolean {

@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <PreferenceCategory>
+    <PreferenceCategory
+        app:title="애플리케이션"
+        app:iconSpaceReserved="false">
 <!--        <SwitchPreference-->
 <!--            app:title="상단바 위젯 표시"-->
 <!--            app:summary="앱 바로가기를 상단바에 고정할 수 있어요" />-->
@@ -15,22 +17,22 @@
             android:key="repeat"/>
 
         <SwitchPreference
-            app:title="알림 받기"
-            app:summary="필름이 비어있으면 알림을 보내드려요"
-            app:iconSpaceReserved="false"
-            android:defaultValue="true"
-            android:key="push"/>
-
-        <SwitchPreference
             app:title="흔들어서 예전 필름 보기"
             app:summary="필름을 보면서 지난 하루를 추억하세요"
             app:iconSpaceReserved="false"
             android:defaultValue="true"
             android:key="shake"/>
 
+        <Preference
+            android:title="푸시 알림"
+            app:summary="푸시 알림을 항목별로 설정하세요"
+            app:iconSpaceReserved="false"
+            android:fragment="com.example.todayfilm.NotificationPreferenceFragment"/>
     </PreferenceCategory>
 
-    <PreferenceCategory>
+    <PreferenceCategory
+        android:title="계정"
+        app:iconSpaceReserved="false">
         <Preference
             app:title="@string/logout"
             app:iconSpaceReserved="false"
