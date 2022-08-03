@@ -30,6 +30,9 @@
         android:theme="@style/Theme.TodayFilm"
         tools:targetApi="31">
         <activity
+            android:name=".FindPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangeProfileActivity"
             android:exported="false" />
         <activity
@@ -43,9 +46,10 @@
             android:exported="false" />
         <activity
             android:name=".CameraActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".MainActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
+        <activity
+             android:name=".MainActivity"
+             android:exported="false" />
         <activity
             android:name=".IntroActivity"
             android:exported="false" />
@@ -62,7 +66,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".CoverActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
