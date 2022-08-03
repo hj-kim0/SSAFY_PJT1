@@ -81,22 +81,15 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.fragment_content_main, SearchFragment())
                     .addToBackStack(null).commit()
             }
-        }
-    }
 
-    override fun onBackPressed() {
-        if (doubleBackToExit) {
-            finishAffinity()
-        } else {
-            Toast.makeText(this, "종료하시려면 뒤로가기를 한번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
-            doubleBackToExit = true
-            runDelayed(1500L) {
-                doubleBackToExit = false
+            2 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_content_main, ProfileListFragment())
+                    .addToBackStack(null).commit()
             }
         }
     }
 
-    fun runDelayed(millis: Long, function: () -> Unit) {
-        Handler(Looper.getMainLooper()).postDelayed(function, millis)
-    }
+
 }
