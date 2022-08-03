@@ -2,7 +2,10 @@ package com.example.todayfilm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.todayfilm.databinding.ActivityMainBinding
 
@@ -10,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG_FEED = "feed_fragment"
     private val TAG_HOME = "home_fragment"
     private val TAG_FILMS = "films_fragment"
+    private var doubleBackToExit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +34,17 @@ class MainActivity : AppCompatActivity() {
         binding.navBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 // !!!!!!!!! 피드 프래그먼트로 변경 필요!!!!!!!!!
-                R.id.feedFragment -> setFragment(TAG_FEED, SearchFragment())
+                R.id.feedFragment -> setFragment(TAG_FEED, FeedFragment())
                 R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
                 R.id.filmsFragment -> setFragment(TAG_FILMS, FilmsFragment())
             }
             true
         }
+
+
+
+
+
     }
 
     private fun setFragment(tag: String, fragment: Fragment) {
@@ -74,4 +83,33 @@ class MainActivity : AppCompatActivity() {
 
         transaction.commitAllowingStateLoss()
     }
+
+    fun changeFragment(index: Int){
+        when(index){
+
+            1 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_content_main, SearchFragment())
+                    .addToBackStack(null).commit()
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (doubleBackToExit) {
+            finishAffinity()
+        } else {
+            Toast.makeText(this, "종료하시려면 뒤로가기를 한번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+            doubleBackToExit = true
+            runDelayed(1500L) {
+                doubleBackToExit = false
+            }
+        }
+    }
+    fun runDelayed(millis: Long, function: () -> Unit) {
+        Handler(Looper.getMainLooper()).postDelayed(function, millis)
+    }
+
+
 }

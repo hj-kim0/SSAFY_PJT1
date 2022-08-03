@@ -8,16 +8,38 @@
     android:background="@color/blue_200"
     tools:context=".FeedFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="65dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:gravity="bottom"
-        android:text="피드"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+
+
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+        <ImageView
+            android:id="@+id/go_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="38dp"
+            android:src="@drawable/searchback"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,15 +50,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
                 android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
 
                 android:orientation="vertical"
 
@@ -46,19 +69,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
 
 
-
-                    android:orientation="horizontal">
-
+                    android:paddingVertical="7dp">
 
 
                     <ImageView
-                        android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                         android:src="@drawable/switch_thumb"
 
                         />
@@ -79,7 +100,7 @@
                     android:layout_width="342dp"
                     android:layout_height="190dp"
 
-                    android:background="@drawable/layout_backgroundbottom"/>
+                    android:background="@drawable/layout_backgroundbottom" />
 
 
             </LinearLayout>
@@ -89,9 +110,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
                 android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
 
                 android:orientation="vertical"
 
@@ -101,19 +122,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
 
 
-
-                    android:orientation="horizontal">
-
+                    android:paddingVertical="7dp">
 
 
                     <ImageView
-                        android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                         android:src="@drawable/switch_thumb"
 
                         />
@@ -134,7 +153,7 @@
                     android:layout_width="342dp"
                     android:layout_height="190dp"
 
-                    android:background="@drawable/layout_backgroundbottom"/>
+                    android:background="@drawable/layout_backgroundbottom" />
 
 
             </LinearLayout>
@@ -144,9 +163,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
                 android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
 
                 android:orientation="vertical"
 
@@ -156,19 +175,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
 
 
-
-                    android:orientation="horizontal">
-
+                    android:paddingVertical="7dp">
 
 
                     <ImageView
-                        android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                         android:src="@drawable/switch_thumb"
 
                         />
@@ -189,19 +206,19 @@
                     android:layout_width="342dp"
                     android:layout_height="190dp"
 
-                    android:background="@drawable/layout_backgroundbottom"/>
+                    android:background="@drawable/layout_backgroundbottom" />
 
 
             </LinearLayout>
-ㄴ
+            ㄴ
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
                 android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
 
                 android:orientation="vertical"
 
@@ -211,19 +228,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
 
 
-
-                    android:orientation="horizontal">
-
+                    android:paddingVertical="7dp">
 
 
                     <ImageView
-                        android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                         android:src="@drawable/switch_thumb"
 
                         />
@@ -244,62 +259,7 @@
                     android:layout_width="342dp"
                     android:layout_height="190dp"
 
-                    android:background="@drawable/layout_backgroundbottom"/>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
-                android:layout_marginBottom="20dp"
-
-                android:orientation="vertical"
-
-                >
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
-
-
-
-                    android:orientation="horizontal">
-
-
-
-                    <ImageView
-                        android:layout_marginStart="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/switch_thumb"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:text="이것은 아이디이다"
-                        android:textSize="10sp" />
-
-
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="342dp"
-                    android:layout_height="190dp"
-
-                    android:background="@drawable/layout_backgroundbottom"/>
+                    android:background="@drawable/layout_backgroundbottom" />
 
 
             </LinearLayout>
@@ -309,9 +269,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
                 android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
 
                 android:orientation="vertical"
 
@@ -321,19 +281,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
 
 
-
-                    android:orientation="horizontal">
-
+                    android:paddingVertical="7dp">
 
 
                     <ImageView
-                        android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                         android:src="@drawable/switch_thumb"
 
                         />
@@ -354,7 +312,7 @@
                     android:layout_width="342dp"
                     android:layout_height="190dp"
 
-                    android:background="@drawable/layout_backgroundbottom"/>
+                    android:background="@drawable/layout_backgroundbottom" />
 
 
             </LinearLayout>
@@ -364,9 +322,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/layout_background"
-
                 android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
 
                 android:orientation="vertical"
 
@@ -376,19 +334,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:paddingVertical="7dp"
 
 
-
-                    android:orientation="horizontal">
-
+                    android:paddingVertical="7dp">
 
 
                     <ImageView
-                        android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
                         android:src="@drawable/switch_thumb"
 
                         />
@@ -409,14 +365,63 @@
                     android:layout_width="342dp"
                     android:layout_height="190dp"
 
-                    android:background="@drawable/layout_backgroundbottom"/>
+                    android:background="@drawable/layout_backgroundbottom" />
 
 
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+
+                android:background="@drawable/layout_background"
+
+                android:orientation="vertical"
+
+                >
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+
+
+                    android:paddingVertical="7dp">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/switch_thumb"
+
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:text="이것은 아이디이다"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="342dp"
+                    android:layout_height="190dp"
+
+                    android:background="@drawable/layout_backgroundbottom" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
