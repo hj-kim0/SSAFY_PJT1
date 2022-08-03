@@ -32,10 +32,6 @@
 
     <PreferenceCategory>
         <Preference
-            app:title="@string/change_pw"
-            app:iconSpaceReserved="false"
-            android:key="changePw"/>
-        <Preference
             app:title="@string/logout"
             app:iconSpaceReserved="false"
             android:key="logout"/>

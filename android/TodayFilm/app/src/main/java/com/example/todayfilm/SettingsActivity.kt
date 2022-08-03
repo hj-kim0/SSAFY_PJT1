@@ -35,12 +35,6 @@ class SettingsActivity : AppCompatActivity() {
             val key = preference.key
 
             when (key) {
-                "changePw" -> {
-                    // change password 액티비티로 이동
-                    val intent = Intent(activity, ChangePasswordActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
-                }
                 "logout" -> {
                     // 다이얼로그 띄우기
                     val builder = AlertDialog.Builder(activity)

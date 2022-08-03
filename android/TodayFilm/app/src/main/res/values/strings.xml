@@ -13,6 +13,7 @@
 
     <string name="delete_account">회원탈퇴</string>
     <string name="change_pw">비밀번호 변경</string>
+    <string name="change_profile">회원정보 수정</string>
     <string name="find_pw">비밀번호 찾기</string>
     <string name="rule">아이디와 비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
 
@@ -43,6 +44,7 @@
     <string name="hint_hashtag">해시태그를 입력하세요</string>
     <string name="hint_content">#내용을_입력하세요</string>
     <string name="hint_place">장소를 입력하세요</string>
+    <string name="hint_description">한 줄 소개를 입력하세요</string>
     <string name="hint_save">사진첩에 저장할까요?</string>
     <string name="hint_show">공개 여부</string>
 

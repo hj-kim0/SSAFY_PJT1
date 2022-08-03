@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChangeProfileActivity"
     android:orientation="vertical"
     android:background="@color/blue_200">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:orientation="vertical"
-        android:gravity="bottom|center_horizontal">
-
+        android:layout_weight="3">
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/logo"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:id="@+id/changeProfile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/bigthumb"
+            android:clipToOutline="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/poppy"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -30,41 +32,34 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/find_pw"
-            android:textColor="@color/gray_500"
-            android:textAlignment="textEnd"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/login_id"
+            android:id="@+id/changeProfile_username"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/white"
             android:padding="10dp"
-            android:background="@drawable/input_border"
-            android:hint="@string/hint_id"
+            android:hint="@string/hint_username"
             android:inputType="text"
             android:textSize="12sp"
-            android:drawableStart="@drawable/ic_person"
+            android:drawableStart="@drawable/ic_email"
             android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/login_pw"
+            android:id="@+id/changeProfile_description"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:background="@drawable/input_border"
-            android:hint="@string/hint_pw"
-            android:inputType="textPassword"
+            android:backgroundTint="@color/white"
+            android:hint="@string/hint_description"
+            android:inputType="text"
             android:textSize="12sp"
-            android:drawableStart="@drawable/ic_key"
+            android:drawableStart="@drawable/ic_chat_bubble_outline"
             android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/login_err"
+            android:id="@+id/changeProfile_err"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:paddingStart="7dp"
@@ -75,35 +70,21 @@
             tools:ignore="RtlSymmetry" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_btn"
+            android:id="@+id/changeProfile_btn"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="13dp"
             android:backgroundTint="@color/white"
-            android:text="@string/login"
+            android:text="@string/change_profile"
             android:textColor="@color/black" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/changeProfile_to_changePassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="@string/from_login_to_signup"
-                android:textColor="@color/gray_500"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/login_to_signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/signup"
-                android:textColor="@color/blue_500"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:text="@string/change_pw"
+            android:textColor="@color/blue_500"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
