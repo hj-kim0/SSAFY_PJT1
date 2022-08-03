@@ -48,7 +48,7 @@ class SettingsActivity : AppCompatActivity() {
                         .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
                             // 서버로 로그아웃 요청
 
-                            // 응답 받은 후 intro 액티비티로 이동
+                            // 응답 받은 후 토스트 띄우고 intro 액티비티로 이동
                             showToast()
                             val intent = Intent(activity, IntroActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

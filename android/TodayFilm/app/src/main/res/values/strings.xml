@@ -46,11 +46,5 @@
     <string name="hint_save">사진첩에 저장할까요?</string>
     <string name="hint_show">공개 여부</string>
 
-    <string name="err_id_already_exists">이미 존재하는 아이디입니다.</string>
-    <string name="err_id_not_exists">존재하지 않는 아이디입니다.</string>
-    <string name="err_pw_not_match">비밀번호가 일치하지 않습니다.</string>
-    <string name="err_old_pw_not_match">기존 비밀번호를 정확히 입력해주세요.</string>
-    <string name="err_new_pw_not_match">새로운 비밀번호가 일치하지 않습니다.</string>
-
     <string name="warn_delete_account">정말 탈퇴 하시겠습니까?\n마지막으로 비밀번호를 확인해주세요.</string>
 </resources>
