@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import com.example.todayfilm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val TAG_FEED = "feed_fragment"
-    private val TAG_HOME = "home_fragment"
-    private val TAG_PROFILE = "profile_fragment"
+    val TAG_FEED = "feed_fragment"
+    val TAG_HOME = "home_fragment"
+    val TAG_PROFILE = "profile_fragment"
+    val TAG_SEARCH = "search_fragment"
+    val TAG_PROFILE_LIST = "profile_list_fragment"
+    val TAG_FILM = "film_fragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFragment(tag: String, fragment: Fragment) {
+    fun setFragment(tag: String, fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
 
@@ -47,11 +50,17 @@ class MainActivity : AppCompatActivity() {
         val feed = fragmentManager.findFragmentByTag(TAG_FEED)
         val home = fragmentManager.findFragmentByTag(TAG_HOME)
         val profile = fragmentManager.findFragmentByTag(TAG_PROFILE)
+        val search = fragmentManager.findFragmentByTag(TAG_SEARCH)
+        val profileList = fragmentManager.findFragmentByTag(TAG_PROFILE_LIST)
+        val film = fragmentManager.findFragmentByTag(TAG_FILM)
 
         // 모든 프래그먼트 숨기기
         if (feed != null) transaction.hide(feed)
         if (home != null) transaction.hide(home)
         if (profile != null) transaction.hide(profile)
+        if (search != null) transaction.hide(search)
+        if (profileList != null) transaction.hide(profileList)
+        if (film != null) transaction.hide(film)
 
         // 선택한 프래그먼트만 보이기
         if (tag == TAG_FEED) {
@@ -66,26 +75,20 @@ class MainActivity : AppCompatActivity() {
             if (profile != null) {
                 transaction.show(profile)
             }
+        } else if (tag == TAG_SEARCH) {
+            if (search != null) {
+                transaction.show(search)
+            }
+        } else if (tag == TAG_PROFILE_LIST) {
+            if (profileList != null) {
+                transaction.show(profileList)
+            }
+        } else if (tag == TAG_FILM) {
+            if (film != null) {
+                transaction.show(film)
+            }
         }
 
         transaction.commitAllowingStateLoss()
-    }
-
-    fun changeFragment(index: Int){
-        when(index){
-            1 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_content_main, SearchFragment())
-                    .addToBackStack(null).commit()
-            }
-
-            2 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_content_main, ProfileListFragment())
-                    .addToBackStack(null).commit()
-            }
-        }
     }
 }

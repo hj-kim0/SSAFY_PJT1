@@ -7,40 +7,33 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.todayfilm.databinding.FragmentSearchBinding
 
-
 class SearchFragment : Fragment(),View.OnClickListener {
     lateinit var binding: FragmentSearchBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
-
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnclickListner()
+        setOnclickListener()
     }
 
-    private fun setOnclickListner(){
+    private fun setOnclickListener(){
         binding.goProfileList.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id){
             R.id.go_profile_list -> {
-
-                (activity as MainActivity).changeFragment(2)
+                (activity as MainActivity).setFragment("profile_list_fragment", ProfileListFragment())
             }
         }
     }
-
-
 }
 
 
