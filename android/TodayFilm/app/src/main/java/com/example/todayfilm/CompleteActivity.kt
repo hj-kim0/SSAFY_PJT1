@@ -1,18 +1,17 @@
 package com.example.todayfilm
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.todayfilm.databinding.ActivityCompleteBinding
 
 class CompleteActivity : AppCompatActivity() {
-    @SuppressLint("UseCompatLoadingForDrawables")
+    var mainImage = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityCompleteBinding.inflate(layoutInflater)
@@ -21,14 +20,18 @@ class CompleteActivity : AppCompatActivity() {
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         val fragment = FrameFragment()
+        val bundle = Bundle()
+        bundle.putString("parent", "complete")
+        fragment.arguments = bundle
         transaction.add(R.id.fragment_content_complete, fragment)
         transaction.commit()
 
-        // 대표 사진 지정
-        var mainImage = 0
+        MyPreference.write(this, "mainImage", "")
 
         binding.completeBtn.setOnClickListener {
-            if (mainImage == 0) {
+            mainImage = MyPreference.read(this, "mainImage")
+
+            if (mainImage == "") {
                 Toast.makeText(this, "대표 사진을 선택해주세요!", Toast.LENGTH_SHORT).show()
             } else {
                 // 서버로 데이터 전송
