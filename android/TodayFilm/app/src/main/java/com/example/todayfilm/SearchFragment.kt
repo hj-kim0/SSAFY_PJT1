@@ -20,20 +20,23 @@ class SearchFragment : Fragment(),View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnclickListener()
+        setOnclickListner()
     }
 
-    private fun setOnclickListener(){
+    private fun setOnclickListner(){
         binding.goProfileList.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id){
             R.id.go_profile_list -> {
-                (activity as MainActivity).setFragment("profile_list_fragment", ProfileListFragment())
+
+                (activity as MainActivity).changeFragment(2)
             }
         }
     }
+
+
 }
 
 

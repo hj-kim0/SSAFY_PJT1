@@ -5,18 +5,38 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.todayfilm.databinding.FragmentProfileListBinding
+import com.example.todayfilm.databinding.FragmentSearchBinding
 
 
-class ProfileListFragment : Fragment() {
-
+class ProfileListFragment : Fragment(),View.OnClickListener {
+    lateinit var binding: FragmentProfileListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_list, container, false)
+        binding = FragmentProfileListBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnclickListener()
+    }
 
+    private fun setOnclickListener(){
+        binding.goSearch.setOnClickListener(this)
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0?.id){
+            R.id.go_search -> {
+
+                (activity as MainActivity).changeFragment(1)
+            }
+        }
+    }
 }
+
+

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.todayfilm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,9 +30,12 @@ class MainActivity : AppCompatActivity() {
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.feedFragment -> setFragment(TAG_FEED, FeedFragment())
-                R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
-                R.id.profileFragment -> setFragment(TAG_PROFILE, ProfileFragment())
+                R.id.feedFragment ->{ clearBackStack()
+                    setFragment(TAG_FEED, FeedFragment())}
+                R.id.homeFragment -> { clearBackStack()
+                    setFragment(TAG_HOME, HomeFragment())}
+                R.id.profileFragment -> { clearBackStack()
+                        setFragment(TAG_PROFILE, ProfileFragment())}
             }
             true
         }
@@ -91,4 +95,31 @@ class MainActivity : AppCompatActivity() {
 
         transaction.commitAllowingStateLoss()
     }
+
+    fun changeFragment(index: Int){
+        when(index){
+
+            1 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_content_main, SearchFragment())
+                    .addToBackStack(null).commit()
+            }
+            2-> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_content_main, ProfileListFragment())
+                    .addToBackStack(null).commit()
+
+
+        }
+    }
+}
+    fun clearBackStack() {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+
+
 }

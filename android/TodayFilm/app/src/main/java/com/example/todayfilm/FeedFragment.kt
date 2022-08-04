@@ -25,15 +25,16 @@ class FeedFragment : Fragment(),View.OnClickListener {
     }
 
     private fun setOnClickListener() {
-        binding.goSearch.setOnClickListener(this)
+        binding.goSearch1.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
-        when (p0?.id) {
-            R.id.go_search -> {
-                Log.d("check","check1")
-                (activity as MainActivity).setFragment("search_fragment", SearchFragment())
+        when (p0?.id){
+            R.id.go_search1 -> {
+
+                (activity as MainActivity).changeFragment(1)
             }
         }
     }
+
 }
