@@ -33,18 +33,30 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlSymmetry" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+
+
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/profile_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/bigthumb"
-                android:clipToOutline="true"
+                app:cardCornerRadius="105dp"
+
                 android:src="@drawable/poppy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/profile_id"/>
+                app:layout_constraintBottom_toTopOf="@id/profile_id"
+
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/poppy"/>
+
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_id"

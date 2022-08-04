@@ -87,16 +87,23 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
+
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -137,16 +144,22 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -176,6 +189,8 @@
 
                </LinearLayout>
            </LinearLayout>
+
+
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -186,16 +201,23 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/people"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
+
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -225,6 +247,7 @@
 
                </LinearLayout>
            </LinearLayout>
+
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -235,16 +258,22 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -274,6 +303,8 @@
 
                </LinearLayout>
            </LinearLayout>
+
+
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -284,16 +315,23 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
+
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -323,6 +361,7 @@
 
                </LinearLayout>
            </LinearLayout>
+
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -333,16 +372,22 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -372,6 +417,8 @@
 
                </LinearLayout>
            </LinearLayout>
+
+
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -382,16 +429,23 @@
 
 
 
-               <ImageView
-                   android:layout_marginStart="2dp"
+               <androidx.cardview.widget.CardView
                    android:layout_width="60dp"
                    android:layout_height="60dp"
-                   android:background="@drawable/bigthumb"
-                   android:clipToOutline="true"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
                    android:src="@drawable/poppy"
 
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
 
-                   />
+
+               </androidx.cardview.widget.CardView>
+
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -421,6 +475,63 @@
 
                </LinearLayout>
            </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:paddingHorizontal="8dp"
+               android:paddingVertical="7dp"
+               android:layout_marginBottom="10dp"
+               android:orientation="horizontal">
+
+
+
+               <androidx.cardview.widget.CardView
+                   android:layout_width="60dp"
+                   android:layout_height="60dp"
+                   android:layout_marginVertical="10dp"
+                   app:cardCornerRadius="105dp"
+
+                   android:src="@drawable/poppy"
+
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/poppy"/>
+
+
+               </androidx.cardview.widget.CardView>
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="10dp"
+                   android:orientation="vertical"
+                   android:layout_gravity="center_vertical"
+                   >
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:layout_marginStart="10dp"
+                       android:text="이것이 아이디이다"
+                       android:textSize="15sp"
+                       android:textStyle="bold"
+                       android:layout_marginBottom="4dp"
+                       />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:layout_marginStart="10dp"
+                       android:text="이것은 닉네임이다"
+                       android:textSize="12sp" />
+
+
+               </LinearLayout>
+           </LinearLayout>
+
 
 
 

@@ -100,17 +100,31 @@
                             android:layout_marginRight="10dp"
                             android:orientation="vertical">
 
-                            <ImageView
+                            <androidx.cardview.widget.CardView
+
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
+
+                                app:cardCornerRadius="105dp"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginStart="2dp"
-                                android:background="@drawable/bigthumb"
-                                android:clipToOutline="true"
 
                                 android:src="@drawable/poppy"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/profile_id"
 
-                                />
+                                >
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/poppy"
+
+                                    />
+
+
+                            </androidx.cardview.widget.CardView>
+
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -131,79 +145,124 @@
                             android:layout_marginRight="10dp"
                             android:orientation="vertical">
 
-                            <ImageView
+                            <androidx.cardview.widget.CardView
+
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
+
+                                app:cardCornerRadius="105dp"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginStart="2dp"
-                                android:background="@drawable/bigthumb"
-                                android:clipToOutline="true"
-
-                                android:src="@drawable/people"
-
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="7dp"
-                                android:text="이것은아이디이다.."
-                                android:textColor="@color/gray_500"
-                                android:textSize="8sp" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginStart="2dp"
-                                android:background="@drawable/bigthumb"
-                                android:clipToOutline="true"
-
-                                android:src="@drawable/people"
-
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="7dp"
-                                android:text="이것은아이디이다.."
-                                android:textColor="@color/gray_500"
-                                android:textSize="8sp" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginStart="2dp"
-                                android:background="@drawable/bigthumb"
-                                android:clipToOutline="true"
 
                                 android:src="@drawable/poppy"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/profile_id"
 
-                                />
+                                >
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/people"
+
+                                    />
+
+
+                            </androidx.cardview.widget.CardView>
+
+
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
+                                android:text="이것은아이디이다.."
+                                android:textColor="@color/gray_500"
+                                android:textSize="8sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+
+                                app:cardCornerRadius="105dp"
+                                android:layout_gravity="center_horizontal"
+
+                                android:src="@drawable/poppy"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/profile_id"
+
+                                >
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/people"
+
+                                    />
+
+
+                            </androidx.cardview.widget.CardView>
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
+                                android:text="이것은아이디이다.."
+                                android:textColor="@color/gray_500"
+                                android:textSize="8sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/profile_image"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+
+                                app:cardCornerRadius="105dp"
+                                android:layout_gravity="center_horizontal"
+
+                                android:src="@drawable/poppy"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/profile_id"
+
+                                >
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:src="@drawable/poppy"
+
+                                    />
+
+
+                            </androidx.cardview.widget.CardView>
+
 
                             <TextView
                                 android:layout_width="wrap_content"
