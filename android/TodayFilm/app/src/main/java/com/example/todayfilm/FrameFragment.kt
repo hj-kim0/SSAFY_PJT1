@@ -43,28 +43,28 @@ class FrameFragment : Fragment(), View.OnClickListener {
                 binding.image2Section.foreground = null
                 binding.image3Section.foreground = null
                 binding.image4Section.foreground = null
-                MyPreference.write(requireActivity(), "mainImage", "1")
+                MyPreference.writeInt(requireActivity(), "mainImage", 1)
             }
             R.id.image2_section -> {
                 binding.image1Section.foreground = null
                 binding.image2Section.foreground = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_check_yellow)
                 binding.image3Section.foreground = null
                 binding.image4Section.foreground = null
-                MyPreference.write(requireActivity(), "mainImage", "2")
+                MyPreference.writeInt(requireActivity(), "mainImage", 2)
             }
             R.id.image3_section -> {
                 binding.image1Section.foreground = null
                 binding.image2Section.foreground = null
                 binding.image3Section.foreground = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_check_yellow)
                 binding.image4Section.foreground = null
-                MyPreference.write(requireActivity(), "mainImage", "3")
+                MyPreference.writeInt(requireActivity(), "mainImage", 3)
             }
             R.id.image4_section -> {
                 binding.image1Section.foreground = null
                 binding.image2Section.foreground = null
                 binding.image3Section.foreground = null
                 binding.image4Section.foreground = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_check_yellow)
-                MyPreference.write(requireActivity(), "mainImage", "4")
+                MyPreference.writeInt(requireActivity(), "mainImage", 4)
             }
         }
     }

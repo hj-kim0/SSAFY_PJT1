@@ -13,7 +13,13 @@ object MyPreference {
         val editor = sp.edit()
         editor.putString(key, value)
         editor.apply()
-//        Log.d("test:", "저장됨")
+    }
+
+    fun writeInt(context: Context, key:String, value:Int) {
+        val sp : SharedPreferences = context.getSharedPreferences(sp_name, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(key, value)
+        editor.apply()
     }
 
     fun read(context: Context, key:String) : String{
@@ -21,5 +27,8 @@ object MyPreference {
         return sp.getString(key, "") ?:""
     }
 
-
+    fun readInt(context: Context, key:String) : Int{
+        val sp : SharedPreferences = context.getSharedPreferences(sp_name, Context.MODE_PRIVATE)
+        return sp.getInt(key, 0)
+    }
 }

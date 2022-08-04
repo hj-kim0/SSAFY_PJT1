@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.todayfilm.databinding.ActivityCompleteBinding
 
 class CompleteActivity : AppCompatActivity() {
-    var mainImage = ""
+    var mainImage = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +26,12 @@ class CompleteActivity : AppCompatActivity() {
         transaction.add(R.id.fragment_content_complete, fragment)
         transaction.commit()
 
-        MyPreference.write(this, "mainImage", "")
+        MyPreference.writeInt(this, "mainImage", 0)
 
         binding.completeBtn.setOnClickListener {
-            mainImage = MyPreference.read(this, "mainImage")
+            mainImage = MyPreference.readInt(this, "mainImage")
 
-            if (mainImage == "") {
+            if (mainImage == 0) {
                 Toast.makeText(this, "대표 사진을 선택해주세요!", Toast.LENGTH_SHORT).show()
             } else {
                 // 서버로 데이터 전송

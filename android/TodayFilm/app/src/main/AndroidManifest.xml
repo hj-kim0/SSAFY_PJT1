@@ -48,7 +48,7 @@
             android:name=".CameraActivity"
             android:exported="false" />
         <activity
-             android:name=".MainActivity"
+             android:name=".CoverActivity"
              android:exported="false" />
         <activity
             android:name=".IntroActivity"
@@ -66,7 +66,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".CoverActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
