@@ -4,18 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todayfilm.data.SignupData
 import com.example.todayfilm.data.User
 import com.example.todayfilm.databinding.ActivitySignupBinding
 import com.example.todayfilm.retrofit.NetWorkClient.GetNetwork
-import kotlinx.android.synthetic.main.activity_settings.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,6 +49,22 @@ class SignupActivity : AppCompatActivity() {
 
         spinner.adapter = arrayAdapter
 
+        binding.signupId.setOnFocusChangeListener { view, b ->
+            if (!b) {
+                if (binding.signupId.length() < 6) {
+                    Toast.makeText(this, "아이디는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.signupPw.setOnFocusChangeListener { view, b ->
+            if (!b) {
+                if (binding.signupPw.length() < 6) {
+                    Toast.makeText(this, "비밀번호는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         binding.signupToLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             clickableFalse()
@@ -70,10 +81,14 @@ class SignupActivity : AppCompatActivity() {
             val question = binding.signupQuestions.selectedItemPosition
             val answer = binding.signupAnswer.text.toString()
 
-            if ((id.length == 0) || (pw.length == 0) || (pw2.length == 0)) {
-                binding.signupErr.setText("기입하지 않은 란이 있습니다.")
-            } else if (pw == pw2) {
-                var user = User()
+            if ((id.length == 0) || (pw.length == 0) || (pw2.length == 0) || (nickname.length == 0) || (answer.length == 0)) {
+                binding.signupErr.text = "기입하지 않은 란이 있습니다."
+            } else if (question == 0) {
+                binding.signupErr.text = "비밀번호 질문을 선택해주세요."
+            } else if (pw != pw2) {
+                binding.signupErr.text = "비밀번호가 일치하지 않습니다."
+            } else {
+                val user = User()
                 user.userid = id
                 user.userpassword = pw
                 user.username = nickname
@@ -87,30 +102,25 @@ class SignupActivity : AppCompatActivity() {
                     ) {
                         val result: SignupData? = response.body()
                         if (result?.message == "계정 생성이 완료되었습니다.") {
-                            var dialog = AlertDialog.Builder(this@SignupActivity)
-                            dialog.setTitle("회원가입 성공!")
-                            dialog.setMessage("회원가입이 정상적으로 완료되었습니다.")
-                            dialog.show()
-
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                val intent = Intent(this@SignupActivity, LoginActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                startActivity(intent)
-                                finish()
-                            }, 2000)
+                            Toast.makeText(this@SignupActivity, "성공적으로 가입되었습니다.", Toast.LENGTH_SHORT).show()
+                            moveToLogin()
                         } else {
-                            binding.signupErr.setText("이미 존재하는 아이디 입니다.")
+                            binding.signupErr.text = "이미 존재하는 아이디 입니다."
                         }
                     }
 
                     override fun onFailure(call: Call<SignupData>, t: Throwable) {
-                        Log.d("", "실패" + t.message.toString())
+                        Toast.makeText(this@SignupActivity, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                     }
                 })
-            } else {
-                binding.signupErr.setText("비밀번호가 일치하지 않습니다.")
             }
         }
+    }
+
+    private fun moveToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 
     private fun clickableFalse() {

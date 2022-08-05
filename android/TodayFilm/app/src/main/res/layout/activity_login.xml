@@ -50,6 +50,9 @@
             android:inputType="text"
             android:textSize="12sp"
             android:textColor="@color/gray_500"
+            android:textColorHint="@color/gray_200"
+            android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            android:maxLength="20"
             android:drawableStart="@drawable/ic_person"
             android:drawablePadding="10dp"/>
 
@@ -63,6 +66,9 @@
             android:inputType="textPassword"
             android:textSize="12sp"
             android:textColor="@color/gray_500"
+            android:textColorHint="@color/gray_200"
+            android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            android:maxLength="20"
             android:drawableStart="@drawable/ic_key"
             android:drawablePadding="10dp"/>
 

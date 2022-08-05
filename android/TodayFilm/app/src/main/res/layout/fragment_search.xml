@@ -17,12 +17,14 @@
             android:layout_height="40dp"
             android:layout_marginHorizontal="30dp"
             android:paddingStart="10dp"
-            android:hint="검색어를 입력하세요"
+            android:hint="@string/hint_search"
             android:textStyle="bold"
             android:drawableStart="@drawable/searchback"
             android:drawablePadding="10dp"
-            android:background="@color/white"
-            android:inputType="text" />
+            android:background="@drawable/input_border"
+            android:inputType="text"
+            android:textColor="@color/gray_500"
+            android:textColorHint="@color/gray_200"/>
     </LinearLayout>
 
     <ScrollView

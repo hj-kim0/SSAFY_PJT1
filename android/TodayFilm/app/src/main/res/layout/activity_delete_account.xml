@@ -41,7 +41,13 @@
         android:background="@drawable/input_border"
         android:hint="@string/hint_pw"
         android:inputType="textPassword"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:textColor="@color/gray_500"
+        android:textColorHint="@color/gray_200"
+        android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        android:maxLength="20"
+        android:drawableStart="@drawable/ic_key"
+        android:drawablePadding="10dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/deleteAccount_err"

@@ -26,6 +26,14 @@ class ChangePasswordActivity : AppCompatActivity() {
         val userpassword = MyPreference.read(this, "userpassword")
         val userpid = MyPreference.read(this, "userid")
 
+        binding.changePasswordNewPw.setOnFocusChangeListener { view, b ->
+            if (!b) {
+                if (binding.changePasswordNewPw.length() < 6) {
+                    Toast.makeText(this, "비밀번호는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         binding.changePasswordBtn.setOnClickListener {
             val oldPw = binding.changePasswordOldPw.text.toString()
             val newPw = binding.changePasswordNewPw.text.toString()
@@ -33,11 +41,10 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             if ((oldPw.isEmpty()) || (newPw.isEmpty()) || (newPwCheck.isEmpty())) {
                 binding.changePasswordErr.text = "기입하지 않은 란이 있습니다."
-            }else if(oldPw != userpassword){
+            } else if (oldPw != userpassword) {
                 binding.changePasswordErr.text = "기존 비밀번호가 일치하지 않습니다."
-            }
-            else if (oldPw == newPw){
-                binding.changePasswordErr.text = "기존비밀번호와 다른 비밀번호를 입력하세요."
+            } else if (oldPw == newPw) {
+                binding.changePasswordErr.text = "기존 비밀번호와 다른 비밀번호를 입력하세요."
             } else if (newPw != newPwCheck) {
                 binding.changePasswordErr.text = "새로운 비밀번호가 일치하지 않습니다."
             }else{
@@ -54,18 +61,12 @@ class ChangePasswordActivity : AppCompatActivity() {
                         MyPreference.write(this@ChangePasswordActivity, "userpassword", newPw)
                         Toast.makeText(this@ChangePasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
                         onBackPressed()
-
-
-
                     }
 
                     override fun onFailure(call: Call<ChangePwResponse>, t: Throwable) {
                         Log.d("", "실패" + t.message.toString())
                     }
                 })
-
-                // 응답 받으면 토스트 띄우고 뒤로가기
-
             }
         }
     }

@@ -6,7 +6,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todayfilm.data.LoginData
 import com.example.todayfilm.data.User
@@ -56,9 +55,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener{
-            var LoginId = binding.loginId.text.toString()
-            var LoginPw = binding.loginPw.text.toString()
-            var user = User()
+            val LoginId = binding.loginId.text.toString()
+            val LoginPw = binding.loginPw.text.toString()
+            val user = User()
             user.userid = LoginId
             user.userpassword = LoginPw
 
@@ -67,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<LoginData>, response: Response<LoginData>) {
                     val result: LoginData? = response.body()
 
-
                     if (result?.message == "로그인 완료"){
                         Log.d("test:", result.token)
                         MyPreference.write(this@LoginActivity, "userpid", result.userpid)
@@ -75,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
                         MyPreference.write(this@LoginActivity, "usertoken", result.token)
                         MyPreference.write(this@LoginActivity, "userpassword", user.userpassword)
+                        Toast.makeText(this@LoginActivity, "성공적으로 로그인되었습니다.", Toast.LENGTH_SHORT).show()
                         Handler(Looper.getMainLooper()).postDelayed({
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -82,20 +81,14 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         }, 500)
                     }else{
-                        var dialog = AlertDialog.Builder(this@LoginActivity)
-                        dialog.setTitle("로그인 실패")
-                        dialog.setMessage("입력하신 정보가 잘못되었습니다. 다시 입력해 주세요")
-                        dialog.show()
+                        Toast.makeText(this@LoginActivity, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
-
                 }
 
                 override fun onFailure(call: Call<LoginData>, t: Throwable) {
                     Log.d("", "실패"+t.message.toString())
                 }
             })
-
-
         }
     }
 

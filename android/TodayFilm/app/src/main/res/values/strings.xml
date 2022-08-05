@@ -16,14 +16,14 @@
     <string name="change_profile">회원정보 수정</string>
     <string name="find_pw">비밀번호 찾기</string>
     <string name="rule">아이디와 비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
+    <string name="rule_pw">비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
 
     <string name="delete_data">데이터 초기화</string>
     <string name="delete_data_check">데이터 초기화 확인</string>
 
     <string name="complete">완료</string>
     <string name="complete_frame">오늘의 필름 완성!</string>
-    <string name="search">검색</string>
-    <string name="album">내 앨범</string>
+    <string name="settings">설정</string>
     <string name="save">저장하기</string>
     <string name="share">공유하기</string>
     <string name="play">재생하기</string>
@@ -49,6 +49,4 @@
     <string name="hint_show">공개 여부</string>
 
     <string name="warn_delete_account">정말 탈퇴 하시겠습니까?\n마지막으로 비밀번호를 확인해주세요.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

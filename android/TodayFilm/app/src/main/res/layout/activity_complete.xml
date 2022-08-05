@@ -31,20 +31,24 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="15sp"
-            android:layout_marginVertical="10dp"/>
+            android:layout_marginTop="10dp"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <com.aqoong.lib.hashtagedittextview.HashTagEditTextView
             android:id="@+id/complete_hashtag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_content"
             android:textColor="@color/blue_500"
+            android:textColorHint="@color/blue_200"
             android:textSize="13sp"
             android:lines="3"
-            android:maxLength="128"
             android:gravity="start|top"
             android:padding="5dp"
-            android:background="@drawable/input_border"/>
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/input_border"
+            app:itemMaxLength="32"
+            app:itemMaxCount="4"
+            app:autoPoundSign="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/complete_show_layout"
