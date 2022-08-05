@@ -1,10 +1,10 @@
 package com.example.todayfilm
 
-import android.os.Bundle
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.todayfilm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,13 +15,24 @@ class MainActivity : AppCompatActivity() {
     val TAG_PROFILE_LIST = "profile_list_fragment"
     val TAG_FILM = "film_fragment"
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 앱 최초 실행일 경우, 내부 저장소에 imgcount, isComplete, imgvids 변수 초기화
+        val sp = getSharedPreferences("isFirst", Activity.MODE_PRIVATE)
+        val first = sp.getBoolean("isFirst", false)
+        if (!first) {
+            val editor = sp.edit()
+            editor.putBoolean("isFirst", true)
+            editor.apply()
+
+            MyPreference.writeInt(this, "imgcount", 0)
+            MyPreference.writeInt(this, "isComplete", 0)
+            MyPreference.write(this, "imgvids", "")
+        }
 
         // 처음에 보여줄 프래그먼트 지정
         setFragment(TAG_HOME, FilmFragment())
@@ -98,7 +109,6 @@ class MainActivity : AppCompatActivity() {
 
     fun changeFragment(index: Int){
         when(index){
-
             1 -> {
                 supportFragmentManager
                     .beginTransaction()
@@ -110,16 +120,12 @@ class MainActivity : AppCompatActivity() {
                     .beginTransaction()
                     .replace(R.id.fragment_content_main, ProfileListFragment())
                     .addToBackStack(null).commit()
-
-
+            }
         }
     }
-}
+    
     fun clearBackStack() {
         val fragmentManager: FragmentManager = supportFragmentManager
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
-
-
-
 }

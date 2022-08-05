@@ -36,6 +36,9 @@ class CompleteActivity : AppCompatActivity() {
             } else {
                 // 서버로 데이터 전송
 
+                // 내부 저장소에 오늘 필름 완성했다는 정보 남기기
+                MyPreference.writeInt(this, "isComplete", 1)
+
                 // 응답 받은 후 토스트 띄우고 main 액티비티로 이동
                 Toast.makeText(this, "성공적으로 기록되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)

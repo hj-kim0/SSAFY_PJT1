@@ -120,14 +120,15 @@ class CheckActivity : AppCompatActivity() {
             val tempArray = ArrayList<Imgvid>()
 
             // 데이터가 비어있지 않다면 객체 수 확인해서 imgnumber값 지정하고 tempArray에 기존 데이터 추가
-            var imgnumber = 1
-            if (prev != "" && prev != "[]") {
+            var imgcount = MyPreference.readInt(this, "imgcount")
+            if (imgcount != 0 && prev != "" && prev != "[]") {
                 tempArray.addAll(gson.fromJson(prev, groupListType))
-                imgnumber += tempArray.size
             }
+            imgcount += 1
+            MyPreference.writeInt(this, "imgcount", imgcount)
 
             // 결과 영상을 cache에서 file 디렉토리로 이름 바꿔 옮기기
-            val movedFile = File(this.getExternalFilesDir(null), "${imgnumber}.mp4")
+            val movedFile = File(this.getExternalFilesDir(null), "${imgcount}.mp4")
             resultFile.copyTo(movedFile)
             resultFile.delete()
 
@@ -136,14 +137,13 @@ class CheckActivity : AppCompatActivity() {
             val rotateMatrix = Matrix()
             rotateMatrix.postRotate(270F)
             bitmap = Bitmap.createBitmap(bitmap!!, 0,0, bitmap.width, bitmap.height, rotateMatrix, false)
-            val imageFile = File(this.getExternalFilesDir(null), "${imgnumber}.png")
+            val imageFile = File(this.getExternalFilesDir(null), "${imgcount}.png")
             val fileOutputStream = FileOutputStream(imageFile)
             bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
             fileOutputStream.flush()
 
             // 저장할 Imgvid 객체 생성
             val data = Imgvid()
-            data.imgnumber = imgnumber
             data.imgpath = imageFile.absolutePath
             data.vidpath = movedFile.absolutePath
 
