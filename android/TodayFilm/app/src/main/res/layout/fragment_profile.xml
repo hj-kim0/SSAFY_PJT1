@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment"
-    android:background="@color/blue_200"
+    android:background="#E9F8FF"
     android:orientation="vertical"
     android:overScrollMode="never">
 

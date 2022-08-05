@@ -1,12 +1,10 @@
 package com.example.todayfilm
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.todayfilm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,14 +15,16 @@ class MainActivity : AppCompatActivity() {
     val TAG_PROFILE_LIST = "profile_list_fragment"
     val TAG_FILM = "film_fragment"
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         // 처음에 보여줄 프래그먼트 지정
-        setFragment(TAG_HOME, HomeFragment())
+        setFragment(TAG_HOME, FilmFragment())
         binding.navBar.selectedItemId = R.id.homeFragment
 
         // 네비 항목 클릭 시 프래그먼트 변경

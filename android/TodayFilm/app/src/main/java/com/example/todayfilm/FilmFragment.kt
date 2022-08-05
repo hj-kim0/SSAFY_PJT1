@@ -1,20 +1,19 @@
 package com.example.todayfilm
 
+import CustomDialogFragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.camera.core.impl.utils.ContextUtil.getApplicationContext
+import androidx.core.os.bundleOf
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.fragment_film.*
@@ -55,7 +54,7 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
     }
     private fun showPopup(v: View) {
 
-        val popup = PopupMenu(context,v) // PopupMenu 객체 선언
+        val popup = PopupMenu(context,v,  Gravity.TOP, 0, R.style.popup) // PopupMenu 객체 선언
         popup.menuInflater.inflate(R.menu.popup, popup.menu) // 메뉴 레이아웃 inflate
         popup.setOnMenuItemClickListener(this)
         popup.show() // 팝업 보여주기
@@ -63,41 +62,87 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
     override fun onMenuItemClick(p0: MenuItem?): Boolean {
         val builder = AlertDialog.Builder(activity)
+        val dialog = CustomDialogFragment()
+        val normaldialog = NormalDialogFragment()
+        val duration = Toast.LENGTH_SHORT
 
 
 
         when (p0?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
-            R.id.delete ->  { builder.setTitle("정말 삭제 하시겠습니까?")
-                .setMessage("삭제하시면 복구되지 않습니다.")
-                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
+            R.id.delete -> {
+                val btn= arrayOf("네","아니오")
+                normaldialog.arguments = bundleOf(
 
+                    "bodyContext" to "삭제하면 복구되지 않습니다",
+                    "bodyTitle" to "정말 삭제하시겠습니까?",
+                    "btnData" to btn
+                )
+                normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
+
+                normaldialog.setButtonClickListener(object :
+                    NormalDialogFragment.OnButtonClickListener {
+                    override fun onButton1Clicked() {
+                        //취소버튼을 눌렀을 때 처리할 곳
+                        Toast.makeText(context, "삭제가 완료되었습니다.", duration).show()
+                    }
+
+                    override fun onButton2Clicked() {
+                        //확인버튼을 눌렀을 때 처리할 곳
+                        Toast.makeText(context, "삭제가 취소되었습니다.", duration).show()
+                    }
                 })
-                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
-            builder.show() }
 
-            R.id.share -> { builder.setTitle("공유")
-                .setMessage("공유여부를 어떻게 설정 하시겠습니까?")
-                .setNegativeButton("팔로워에게 공유",DialogInterface.OnClickListener { dialog, id ->
 
+            }
+
+            R.id.share -> {
+
+                dialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
+
+            }
+
+            R.id.save -> {
+                val btn= arrayOf("네","아니오")
+                normaldialog.arguments = bundleOf(
+
+                    "bodyTitle" to "정말 저장하시겠습니까?",
+                    "bodyContext" to "프레임이 갤러리에 저장됩니다.",
+                    "btnData" to btn
+                )
+
+                normaldialog.setButtonClickListener(object :
+                    NormalDialogFragment.OnButtonClickListener {
+                    override fun onButton1Clicked() {
+                        //취소버튼을 눌렀을 때 처리할 곳
+                        Log.d("눌렸냐?","눌렸냐?")
+
+                        Toast.makeText(context, "저장이 완료되었습니다.", duration).show()
+
+
+                    }
+
+                    override fun onButton2Clicked() {
+                        //확인버튼을 눌렀을 때 처리할 곳
+                        Toast.makeText(context, "저장이 취소되었습니다.", duration).show()
+
+
+
+                    }
                 })
-                .setNeutralButton("전체공개",DialogInterface.OnClickListener { dialog, id ->
+                normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
 
-                })
-                .setPositiveButton("비공개",DialogInterface.OnClickListener { dialog, id ->
 
-                })
+            }
 
-                builder.show() }
 
-            R.id.save -> { builder.setTitle("정말 저장 하시겠습니까?")
-                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
 
-                })
-                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
-                builder.show() }
-        }
 
-        return p0 != null
+
+
+            }
+
+
+            return p0 != null
     }
 
 
