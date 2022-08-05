@@ -75,11 +75,9 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
     }
 
     override fun onMenuItemClick(p0: MenuItem?): Boolean {
-        val builder = AlertDialog.Builder(activity)
         val dialog = CustomDialogFragment()
         val normaldialog = NormalDialogFragment()
         val duration = Toast.LENGTH_SHORT
-        val baseContext = "today"
 
 
 
@@ -142,13 +140,15 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
                         if (bgDrawable != null) {
                             bgDrawable.draw(canvas);
                         } else {
+
                             canvas.drawColor(Color.WHITE);
                         }
                         fragment_content_film.draw(canvas);
 
 
+
                         var fos: OutputStream? = null
-                        var title = "20"
+                        var title = "이것은 당시 날짜이다."
                         // 3
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             // 4
