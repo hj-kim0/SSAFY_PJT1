@@ -29,4 +29,9 @@ interface NetWorkInterface {
     fun findpw(
         @Body findPw: FindPwRequest
     ): Call<FindPwResponse>
+
+    @POST("api/account/changeuserdetail")
+    fun changeuserdetail(
+        @Body changeUserDetail: ChangeUserDetailRequest
+    ): Call<ChangeUserDetailResponse>
 }

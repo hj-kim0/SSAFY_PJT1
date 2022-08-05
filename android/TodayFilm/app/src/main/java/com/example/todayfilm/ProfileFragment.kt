@@ -1,6 +1,8 @@
 package com.example.todayfilm
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,16 +14,23 @@ import com.example.todayfilm.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentProfileBinding
-
+    var userid = ""
+    var username = ""
+    var userdesc = ""
     var isMyProfile = true
     var isFollow = true
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater,container,false)
+
+        Log.d("test1:", username + userdesc)
+        binding.profileId.setText(userid)
+
+
+
 
         // 본인 프로필인지 확인 후 isMyProfile과 profile_btn 텍스트 변경, profile_to_settings visiblity 변경
         if (isMyProfile) {
@@ -39,7 +48,20 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
         return binding.root
     }
+    override fun onResume() {
+        super.onResume()
+        userid = MyPreference.read(requireContext(), "userid")
 
+        username = MyPreference.read(requireContext(), "username")
+        userdesc = MyPreference.read(requireContext(), "userdesc")
+        if (username != ""){
+            binding.profileUsername.setText(username)
+        }
+        if (userdesc != ""){
+            binding.profileDescription.setText(userdesc)
+        }
+        setOnClickListener()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
