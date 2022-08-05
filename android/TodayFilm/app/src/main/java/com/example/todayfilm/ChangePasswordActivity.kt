@@ -44,7 +44,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 // 서버로 요청 보내기
                 var changepw = ChangePwRequest()
                 changepw.userpid = userpid
-                changepw.usernewpw = newPw
+                changepw.userpassword = newPw
                 val call = NetWorkClient.GetNetwork.changepw(changepw)
                 call.enqueue(object : Callback<ChangePwResponse> {
                     override fun onResponse(

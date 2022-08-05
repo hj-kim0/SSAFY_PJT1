@@ -33,7 +33,7 @@ class DeleteAccountActivity : AppCompatActivity() {
             }else{
                 var deleteUser = DeleteAccountRequest()
                 deleteUser.userpid = userpid
-                deleteUser.userpw = userpw
+                deleteUser.userpassword = userpw
 
                 val call = NetWorkClient.GetNetwork.singout(deleteUser)
                 call.enqueue(object : Callback<DeleteAccountResponse> {

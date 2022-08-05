@@ -76,8 +76,9 @@ class SignupActivity : AppCompatActivity() {
                 var user = User()
                 user.userid = id
                 user.userpassword = pw
-                user.usernickname = nickname
-                user.useranswer = answer
+                user.username = nickname
+                user.userpwq = question
+                user.userpwa = answer
                 val call = GetNetwork.signUp(user)
                 call.enqueue(object : Callback<SignupData> {
                     override fun onResponse(
@@ -92,7 +93,7 @@ class SignupActivity : AppCompatActivity() {
                             dialog.show()
 
                             Handler(Looper.getMainLooper()).postDelayed({
-                                val intent = Intent(this@SignupActivity, MainActivity::class.java)
+                                val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 startActivity(intent)
                                 finish()

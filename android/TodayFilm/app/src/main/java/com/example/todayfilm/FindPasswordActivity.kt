@@ -80,7 +80,7 @@ class FindPasswordActivity : AppCompatActivity() {
                         // 서버로 요청 보내기11
                     var changepw = ChangePwRequest()
                     changepw.userpid = pid
-                    changepw.usernewpw = newPw
+                    changepw.userpassword = newPw
                     val call = NetWorkClient.GetNetwork.changepw(changepw)
                     call.enqueue(object : retrofit2.Callback<ChangePwResponse> {
                         override fun onResponse(
