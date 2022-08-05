@@ -27,7 +27,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.abs
 
 class CameraActivity : AppCompatActivity() {
-    private val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+    private val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
     // 파일명
     private var path = ""
 
@@ -151,8 +151,8 @@ class CameraActivity : AppCompatActivity() {
             val videoDimensions = map!!.getOutputSizes(MediaRecorder::class.java)
 
             for (dimension in videoDimensions) {
-                val ratio = dimension.width.toDouble() / dimension.height
-                if (abs(ratio) == 1.5) {
+                val ratio = abs(dimension.width.toDouble() / dimension.height)
+                if (1.77 < ratio && ratio < 1.78 ) {
                     width = dimension.width
                     height = dimension.height
                     break
@@ -228,7 +228,7 @@ class CameraActivity : AppCompatActivity() {
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE)
         mediaRecorder.setOutputFile(file)
         mediaRecorder.setOrientationHint(ORIENTATIONS.get(rotation))
-        mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_480P))
+        mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_1080P))
 
         mediaRecorder.prepare()
     }

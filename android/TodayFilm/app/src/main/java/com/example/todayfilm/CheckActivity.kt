@@ -1,20 +1,35 @@
 package com.example.todayfilm
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.media.MediaMetadataRetriever
 import android.os.Bundle
 import android.util.Log
 import android.widget.MediaController
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.daasuu.mp4compose.FillMode
 import com.daasuu.mp4compose.Rotation
 import com.daasuu.mp4compose.composer.Mp4Composer
+import com.example.todayfilm.data.Imgvid
 import com.example.todayfilm.databinding.ActivityCheckBinding
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileOutputStream
-
+import java.io.IOException
+import java.lang.IllegalArgumentException
+import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CheckActivity : AppCompatActivity() {
     private val TAG = "테스트용 로그"
@@ -48,7 +63,7 @@ class CheckActivity : AppCompatActivity() {
         // 영상 길이 자르기
         Mp4Composer(srcPath, destPath)
             .rotation(Rotation.ROTATION_270)
-            .size(720, 480)
+            .size(1920, 1080)
             .fillMode(FillMode.PRESERVE_ASPECT_FIT)
             .trim(startTime, endTime)
             .listener(object : Mp4Composer.Listener {
@@ -98,8 +113,21 @@ class CheckActivity : AppCompatActivity() {
 
         // 확인 버튼
         binding.cameraOk.setOnClickListener{
-            // 결과 영상을 cache에서 file 디렉토리로 옮기기
-            val movedFile = File(this.getExternalFilesDir(null), "${name}.mp4")
+            // 내부 저장소에 저장된 사진 정보 확인
+            val prev = MyPreference.read(this, "imgvids") // 내부 저장소에 저장된 string(json)
+            val gson = GsonBuilder().create()
+            val groupListType: Type = object: TypeToken<ArrayList<Imgvid?>?>() {}.type // json을 객체로 바꿀 때 타입 추론을 위함
+            val tempArray = ArrayList<Imgvid>()
+
+            // 데이터가 비어있지 않다면 객체 수 확인해서 imgnumber값 지정하고 tempArray에 기존 데이터 추가
+            var imgnumber = 1
+            if (prev != "" && prev != "[]") {
+                tempArray.addAll(gson.fromJson(prev, groupListType))
+                imgnumber += tempArray.size
+            }
+
+            // 결과 영상을 cache에서 file 디렉토리로 이름 바꿔 옮기기
+            val movedFile = File(this.getExternalFilesDir(null), "${imgnumber}.mp4")
             resultFile.copyTo(movedFile)
             resultFile.delete()
 
@@ -108,10 +136,21 @@ class CheckActivity : AppCompatActivity() {
             val rotateMatrix = Matrix()
             rotateMatrix.postRotate(270F)
             bitmap = Bitmap.createBitmap(bitmap!!, 0,0, bitmap.width, bitmap.height, rotateMatrix, false)
-            val imageFile = File(this.getExternalFilesDir(null), "${name}.jpg")
+            val imageFile = File(this.getExternalFilesDir(null), "${imgnumber}.png")
             val fileOutputStream = FileOutputStream(imageFile)
-            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+            bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
             fileOutputStream.flush()
+
+            // 저장할 Imgvid 객체 생성
+            val data = Imgvid()
+            data.imgnumber = imgnumber
+            data.imgpath = imageFile.absolutePath
+            data.vidpath = movedFile.absolutePath
+
+            // tempArray에 객체 추가하고 내부 저장소에 ArrayList를 String으로 변경해서 저장
+            tempArray.add(data)
+            val strList = gson.toJson(tempArray, groupListType)
+            MyPreference.write(this, "imgvids", strList)
 
             // 소스 파일 지우기
             File(srcPath).delete()

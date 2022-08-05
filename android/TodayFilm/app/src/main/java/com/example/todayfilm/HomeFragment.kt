@@ -26,12 +26,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 현재 frame 데이터 받아오기
-
         // 사진 4장이라면 isFour 변경
 
         // 데이터 넣어서 frame 프래그먼트 호출
         val frameFragment = FrameFragment()
+        val bundle = Bundle()
+        bundle.putString("parent", "home")
+        frameFragment.arguments = bundle
 
         childFragmentManager.beginTransaction().add(R.id.fragment_content_home, frameFragment).commit()
         setOnClickListener()

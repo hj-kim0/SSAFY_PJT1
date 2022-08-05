@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -32,8 +33,12 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
     viewBinding {
+        enabled = true
+    }
+    dataBinding {
         enabled = true
     }
 }
@@ -68,4 +73,7 @@ dependencies {
 
     // Mp4Composer 라이브러리
     implementation 'com.github.MasayukiSuda:Mp4Composer-android:v0.4.1'
+
+    // Gson 라이브러리
+    implementation 'com.google.code.gson:gson:2.9.1'
 }
