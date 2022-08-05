@@ -8,9 +8,14 @@
         android:title="삭제하기"
         />
     <item
-        android:id="@+id/share"
-        android:title="공유하기" />
+        android:id="@+id/shareFile"
+        android:title="공유하기"
+        />
     <item
         android:id="@+id/save"
         android:title="저장하기" />
+    <item
+        android:id="@+id/share"
+        android:title="공유대상설정" />
+
 </menu>

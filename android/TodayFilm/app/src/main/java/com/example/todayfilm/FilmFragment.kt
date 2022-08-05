@@ -2,9 +2,12 @@ package com.example.todayfilm
 
 import CustomDialogFragment
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,10 +16,21 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.camera.core.impl.utils.ContextUtil.getApplicationContext
+import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.fragment_film.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import java.io.*
 
 class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
@@ -65,6 +79,7 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
         val dialog = CustomDialogFragment()
         val normaldialog = NormalDialogFragment()
         val duration = Toast.LENGTH_SHORT
+        val baseContext = "today"
 
 
 
@@ -101,6 +116,11 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
             }
 
+            R.id.shareFile -> {
+
+
+            }
+
             R.id.save -> {
                 val btn= arrayOf("네","아니오")
                 normaldialog.arguments = bundleOf(
@@ -113,10 +133,59 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
                 normaldialog.setButtonClickListener(object :
                     NormalDialogFragment.OnButtonClickListener {
                     override fun onButton1Clicked() {
-                        //취소버튼을 눌렀을 때 처리할 곳
-                        Log.d("눌렸냐?","눌렸냐?")
 
-                        Toast.makeText(context, "저장이 완료되었습니다.", duration).show()
+
+
+                        val bitmap = Bitmap.createBitmap(fragment_content_film.getWidth(), fragment_content_film.getHeight(), Bitmap.Config.ARGB_8888);
+                        val canvas = Canvas(bitmap);
+                        val bgDrawable = fragment_content_film.getBackground();
+                        if (bgDrawable != null) {
+                            bgDrawable.draw(canvas);
+                        } else {
+                            canvas.drawColor(Color.WHITE);
+                        }
+                        fragment_content_film.draw(canvas);
+
+
+                        var fos: OutputStream? = null
+                        var title = "20"
+                        // 3
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            // 4
+                            context?.contentResolver?.also { resolver ->
+
+                                // 5
+                                val contentValues = ContentValues().apply {
+                                    put(MediaStore.MediaColumns.DISPLAY_NAME, "$title.png")
+                                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                                }
+
+                                // 6
+                                val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+                                // 7
+                                fos = imageUri?.let { resolver.openOutputStream(it) }
+                            }
+                        } else {
+                            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                            val image = File(imagesDir, "$title.png")
+                            fos = FileOutputStream(image)
+                        }
+
+                        fos?.use {
+
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                            Toast.makeText(context, "저장이 완료되었습니다.", duration).show()
+                        }
+
+
+
+
+
+
+//                        Toast.makeText(context, "저장이 완료되었습니다.", duration).show()
+
 
 
                     }
@@ -144,6 +213,13 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
             return p0 != null
     }
+
+
+
+
+
+
+
 
 
 
