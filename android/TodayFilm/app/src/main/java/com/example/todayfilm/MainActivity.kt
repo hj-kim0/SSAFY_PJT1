@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> { clearBackStack()
                     setFragment(TAG_HOME, HomeFragment())}
                 R.id.profileFragment -> { clearBackStack()
-                        setFragment(TAG_PROFILE, ProfileFragment())}
+                    setFragment(TAG_PROFILE, ProfileFragment())}
             }
             true
         }
@@ -80,10 +80,12 @@ class MainActivity : AppCompatActivity() {
         // 선택한 프래그먼트만 보이기
         if (tag == TAG_FEED) {
             if (feed != null) {
+
                 transaction.show(feed)
             }
         } else if (tag == TAG_HOME) {
             if (home != null) {
+
                 transaction.show(home)
             }
         } else if (tag == TAG_PROFILE) {
@@ -110,16 +112,12 @@ class MainActivity : AppCompatActivity() {
     fun changeFragment(index: Int){
         when(index){
             1 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_content_main, SearchFragment())
-                    .addToBackStack(null).commit()
+                moveFragment(SearchFragment())
+
             }
             2-> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_content_main, ProfileListFragment())
-                    .addToBackStack(null).commit()
+                moveFragment(ProfileListFragment())
+
             }
         }
     }
@@ -127,5 +125,13 @@ class MainActivity : AppCompatActivity() {
     fun clearBackStack() {
         val fragmentManager: FragmentManager = supportFragmentManager
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+    fun moveFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.xml.enter,R.xml.none,R.xml.none,R.xml.exit)
+            .replace(R.id.fragment_content_main, fragment)
+            .addToBackStack(null).commit()
     }
 }
