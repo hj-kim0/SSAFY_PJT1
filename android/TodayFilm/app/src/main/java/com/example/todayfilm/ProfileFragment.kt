@@ -70,10 +70,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun setOnClickListener() {
         binding.profileToSettings.setOnClickListener(this)
         binding.profileBtn.setOnClickListener(this)
+        binding.profileFilmImage1.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.profile_film_image_1 -> {
+                (activity as MainActivity).changeFragment(3)
+            }
+
             R.id.profile_to_settings -> {
                 val intent = Intent(activity, SettingsActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

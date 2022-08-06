@@ -249,7 +249,7 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
         if (inImage != null) {
             inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         }
-        val path = MediaStore.Images.Media.insertImage(inContext?.getContentResolver(), inImage, "Title" + " - " + Calendar.getInstance().getTime(), null)
+        val path: String? = MediaStore.Images.Media.insertImage(inContext?.getContentResolver(), inImage, "Title" + " - " + Calendar.getInstance().getTime(), null)
         return Uri.parse(path)
     }
 
