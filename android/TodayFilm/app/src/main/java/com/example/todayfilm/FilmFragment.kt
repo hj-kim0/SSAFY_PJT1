@@ -128,7 +128,7 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
                 // bitmap
 
 
-                var path = getImageUri(context,bitmap)
+                val path :Uri? = getImageUri(context,bitmap)
 
 
                 // uri
