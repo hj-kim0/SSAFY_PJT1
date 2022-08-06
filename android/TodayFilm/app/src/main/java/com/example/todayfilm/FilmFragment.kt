@@ -1,36 +1,33 @@
 package com.example.todayfilm
 
 import CustomDialogFragment
-import android.app.AlertDialog
+import android.R.attr.path
 import android.content.ContentValues
-import android.content.DialogInterface
+import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.os.Build
-import android.os.Bundle
-import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.camera.core.impl.utils.ContextUtil.getApplicationContext
-import androidx.core.app.ActivityCompat
-import androidx.core.os.bundleOf
-import com.example.todayfilm.databinding.FragmentFilmBinding
-import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.fragment_film.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import java.io.*
+import android.util.Log
+import android.view.*
+import android.widget.FrameLayout
+import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import com.example.todayfilm.databinding.FragmentFilmBinding
+import kotlinx.android.synthetic.main.fragment_film.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.util.*
+
 
 class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
@@ -116,6 +113,38 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
             R.id.shareFile -> {
 
+//                val bitmap = Bitmap.createBitmap(fragment_content_film.getWidth(), fragment_content_film.getHeight(), Bitmap.Config.ARGB_8888);
+//                val canvas = Canvas(bitmap);
+//                val bgDrawable = fragment_content_film.getBackground();
+//                if (bgDrawable != null) {
+//                    bgDrawable.draw(canvas);
+//                } else {
+//
+//                    canvas.drawColor(Color.WHITE);
+//                }
+//                fragment_content_film.draw(canvas);
+                val bitmap = getBitmap(fragment_content_film)
+
+                // bitmap
+
+
+                var path = getImageUri(context,bitmap)
+
+
+                // uri
+
+
+
+
+
+                val sharingIntent = Intent(Intent.ACTION_SEND)
+                val screenshotUri = Uri.parse(path.toString()) // android image path
+
+
+                sharingIntent.type = "image/png"
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
+                startActivity(Intent.createChooser(sharingIntent, "Share image using")) // 변경가능
+
 
             }
 
@@ -134,16 +163,18 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
 
 
-                        val bitmap = Bitmap.createBitmap(fragment_content_film.getWidth(), fragment_content_film.getHeight(), Bitmap.Config.ARGB_8888);
-                        val canvas = Canvas(bitmap);
-                        val bgDrawable = fragment_content_film.getBackground();
-                        if (bgDrawable != null) {
-                            bgDrawable.draw(canvas);
-                        } else {
+//                        val bitmap = Bitmap.createBitmap(fragment_content_film.getWidth(), fragment_content_film.getHeight(), Bitmap.Config.ARGB_8888);
+//                        val canvas = Canvas(bitmap);
+//                        val bgDrawable = fragment_content_film.getBackground();
+//                        if (bgDrawable != null) {
+//                            bgDrawable.draw(canvas);
+//                        } else {
+//
+//                            canvas.drawColor(Color.WHITE);
+//                        }
+//                        fragment_content_film.draw(canvas);
 
-                            canvas.drawColor(Color.WHITE);
-                        }
-                        fragment_content_film.draw(canvas);
+                        val bitmap = getBitmap(fragment_content_film)
 
 
 
@@ -184,7 +215,6 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
 
 
-//                        Toast.makeText(context, "저장이 완료되었습니다.", duration).show()
 
 
 
@@ -212,6 +242,31 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
 
             return p0 != null
+    }
+
+    fun getImageUri(inContext: Context?, inImage: Bitmap?): Uri? {
+        val bytes = ByteArrayOutputStream()
+        if (inImage != null) {
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        }
+        val path = MediaStore.Images.Media.insertImage(inContext?.getContentResolver(), inImage, "Title" + " - " + Calendar.getInstance().getTime(), null)
+        return Uri.parse(path)
+    }
+
+    fun getBitmap(fragment: FrameLayout): Bitmap{
+
+        val bitmap = Bitmap.createBitmap(fragment.getWidth(), fragment.getHeight(), Bitmap.Config.ARGB_8888);
+        val canvas = Canvas(bitmap);
+        val bgDrawable = fragment.getBackground();
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas);
+        } else {
+
+            canvas.drawColor(Color.WHITE);
+        }
+        fragment.draw(canvas);
+
+        return bitmap
     }
 
 

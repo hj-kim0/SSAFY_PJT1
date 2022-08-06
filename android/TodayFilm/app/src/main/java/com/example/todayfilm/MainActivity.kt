@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 처음에 보여줄 프래그먼트 지정
-        setFragment(TAG_HOME, HomeFragment())
+        setFragment(TAG_HOME, FilmFragment())
         binding.navBar.selectedItemId = R.id.homeFragment
 
         // 네비 항목 클릭 시 프래그먼트 변경

@@ -26,10 +26,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodayFilm"
         tools:targetApi="31">
-         <activity
-         android:name=".MainActivity"
-         android:screenOrientation="portrait"
-         android:exported="false" />
+<!--         <activity-->
+<!--         android:name=".MainActivity"-->
+<!--         android:screenOrientation="portrait"-->
+<!--         android:exported="false" />-->
         <activity
             android:name=".FindPasswordActivity"
             android:exported="false"
@@ -78,7 +78,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CompleteActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
