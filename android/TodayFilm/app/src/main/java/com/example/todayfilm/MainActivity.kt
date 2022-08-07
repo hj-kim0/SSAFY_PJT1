@@ -1,11 +1,16 @@
 package com.example.todayfilm
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.todayfilm.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     val TAG_FEED = "feed_fragment"
@@ -15,24 +20,13 @@ class MainActivity : AppCompatActivity() {
     val TAG_PROFILE_LIST = "profile_list_fragment"
     val TAG_FILM = "film_fragment"
 
+    var fromResetNotification = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // 앱 최초 실행일 경우, 내부 저장소에 imgcount, isComplete, imgvids 변수 초기화
-        val sp = getSharedPreferences("isFirst", Activity.MODE_PRIVATE)
-        val first = sp.getBoolean("isFirst", false)
-        if (!first) {
-            val editor = sp.edit()
-            editor.putBoolean("isFirst", true)
-            editor.apply()
-
-            MyPreference.writeInt(this, "imgcount", 0)
-            MyPreference.writeInt(this, "isComplete", 0)
-            MyPreference.write(this, "imgvids", "")
-        }
 
         // 처음에 보여줄 프래그먼트 지정
         setFragment(TAG_HOME, HomeFragment())
@@ -49,6 +43,40 @@ class MainActivity : AppCompatActivity() {
                     setFragment(TAG_PROFILE, ProfileFragment())}
             }
             true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // reset 알림을 받고 왔거나, 내부 저장소의 date가 오늘 날짜와 다르면 다이얼로그 띄우기
+        fromResetNotification = intent.getBooleanExtra("fromResetNotification", false)
+        val today = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
+            .format(System.currentTimeMillis())
+        val date = MyPreference.read(this, "date")
+
+        if (fromResetNotification || today != date) {
+            // 완성이 아니고 이미지가 4개 미만인 상태
+            fromResetNotification = false
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
+                .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다.")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
+                    // complete 액티비티로 이동
+                    val intent = Intent(this, CompleteActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                })
+                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id ->
+                    // 필름 데이터 초기화, date 갱신
+                    resetData(this)
+                    MyPreference.write(this, "date", today)
+
+                    // Frame 재호출
+                })
+            builder.show()
         }
     }
 

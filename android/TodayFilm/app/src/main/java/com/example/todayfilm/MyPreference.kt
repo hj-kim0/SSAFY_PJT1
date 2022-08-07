@@ -36,7 +36,7 @@ object MyPreference {
         val sp: SharedPreferences = context.getSharedPreferences(sp_name, Context.MODE_PRIVATE)
         val remover = sp.edit()
         remover.clear()
-        remover.commit()
+        remover.apply()
 
     }
 }

@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_film.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CompleteActivity : AppCompatActivity() {
     var mainImage = 0
@@ -41,27 +43,44 @@ class CompleteActivity : AppCompatActivity() {
 
         MyPreference.writeInt(this, "mainImage", 0)
 
-
         binding.completeBtn.setOnClickListener {
             val hashtags = binding.completeHashtag.insertTag
+            var isHashtagsOK = true
+
+            // 해시태그 유효성 검사
+            if (hashtags.size < 0 || hashtags.size > 4) {
+                isHashtagsOK = false
+            }
+            for (hashtag in hashtags) {
+                if (hashtag.length < 0 || hashtag.length > 32) {
+                    isHashtagsOK = false
+                    break
+                }
+            }
+
+            // 오늘 날짜 확인
+            val today = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
+                .format(System.currentTimeMillis())
+            val date = MyPreference.read(this, "date")
 
             mainImage = MyPreference.readInt(this, "mainImage")
 
-            mainImage =  1
-
-
             if (mainImage == 0) {
-                Toast.makeText(this, "대표 사진을 선택해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "대표 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            } else if (!isHashtagsOK) {
+                Toast.makeText(this, "해시태그가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
             } else {
                 // 서버로 데이터 전송
 
-                // 내부 저장소에 오늘 필름 완성했다는 정보 남기기
-                MyPreference.writeInt(this, "isComplete", 1)
-
-
+                // 오늘 필름을 저장했다면 내부 저장소에 필름 완성했다는 정보 남기기
+                if (today == date) {
+                    MyPreference.writeInt(this, "isComplete", 1)
+                } else {
+                    // 어제 필름을 저장했다면 내부 저장소에 date 갱신
+                    MyPreference.write(this, "date", today)
+                }
 
                 if(complete_save.isChecked){
-
                     val duration = Toast.LENGTH_SHORT
                     val bitmap = Bitmap.createBitmap(fragment_content_complete.getWidth(), fragment_content_complete.getHeight(), (Bitmap.Config.ARGB_8888));
                     val canvas = Canvas(bitmap);
@@ -73,10 +92,8 @@ class CompleteActivity : AppCompatActivity() {
                     }
                     fragment_content_complete.draw(canvas);
 
-
-
                     var fos: OutputStream? = null
-                    var title = "이것은 당시 날짜이다."
+                    val title = "이것은 당시 날짜이다."
                     // 3
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         // 4
@@ -102,17 +119,10 @@ class CompleteActivity : AppCompatActivity() {
                     }
 
                     fos?.use {
-
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
                         Toast.makeText(baseContext, "성공적으로 저장되었습니다..", duration).show()
                     }
-
-
-
-
                 }
-
-
 
                 // 응답 받은 후 토스트 띄우고 main 액티비티로 이동
                 Toast.makeText(this, "성공적으로 기록되었습니다.", Toast.LENGTH_SHORT).show()

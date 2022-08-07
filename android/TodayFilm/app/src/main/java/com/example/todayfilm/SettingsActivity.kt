@@ -53,10 +53,10 @@ class SettingsActivity : AppCompatActivity() {
         val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
             when (key) {
                 "repeat" -> {
-                    val value = prefs.getBoolean("repeat", false)
+                    val value = prefs.getBoolean("repeat", true)
                 }
                 "shake" -> {
-                    val value = prefs.getBoolean("shake", false)
+                    val value = prefs.getBoolean("shake", true)
                 }
             }
         }

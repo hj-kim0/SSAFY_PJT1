@@ -11,11 +11,15 @@ class IntroActivity : AppCompatActivity() {
 
         val binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var logout = intent.getStringExtra("logout")
+
+        // settings에서 logout 버튼 눌러서 넘어온 경우, 내부 데이터 전부 삭제
+        val logout = intent.getStringExtra("logout")
         println(logout)
         if (logout == "1"){
+            resetData(this)
             MyPreference.clear(this)
         }
+
         val usertoken = MyPreference.read(this, "usertoken")
 
         if (usertoken != ""){
