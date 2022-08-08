@@ -52,6 +52,7 @@
             android:textColorHint="@color/gray_200"
             android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             android:maxLength="20"
+            android:privateImeOptions="defaultInputmode=english"
             android:drawableStart="@drawable/ic_person"
             android:drawablePadding="10dp"/>
 

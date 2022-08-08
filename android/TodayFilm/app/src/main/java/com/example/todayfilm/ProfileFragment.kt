@@ -62,8 +62,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             binding.profileDescription.setText(userdesc)
         }
 
-//        val imgview = binding.profileImageFile
-//        Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/profileimg/baseimg.png").into(imgview)
+        val imgview = binding.profileImageFile
+        Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/profileimg/baseimg.png").into(imgview)
 
         setOnClickListener()
     }
