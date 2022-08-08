@@ -95,4 +95,7 @@ dependencies {
 
     // CircleImageView 라이브러리
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // ViewModel 사용을 위한 라이브러리
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }

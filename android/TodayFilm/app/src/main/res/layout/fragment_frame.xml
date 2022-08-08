@@ -67,7 +67,6 @@
                         android:id="@+id/image1_video"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_200"
                         android:visibility="gone"/>
                 </FrameLayout>
                 <androidx.appcompat.widget.AppCompatImageView
@@ -116,7 +115,6 @@
                         android:id="@+id/image2_video"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_200"
                         android:visibility="gone"/>
                 </FrameLayout>
                 <androidx.appcompat.widget.AppCompatImageView
@@ -165,7 +163,6 @@
                         android:id="@+id/image3_video"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_200"
                         android:visibility="gone"/>
                 </FrameLayout>
                 <androidx.appcompat.widget.AppCompatImageView
@@ -214,7 +211,6 @@
                         android:id="@+id/image4_video"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_200"
                         android:visibility="gone"/>
                 </FrameLayout>
                 <androidx.appcompat.widget.AppCompatImageView

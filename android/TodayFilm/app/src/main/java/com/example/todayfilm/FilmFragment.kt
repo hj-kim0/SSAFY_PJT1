@@ -20,8 +20,10 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import kotlinx.android.synthetic.main.fragment_film.*
+import kotlinx.coroutines.NonDisposableHandle.parent
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -29,14 +31,21 @@ import java.io.OutputStream
 import java.util.*
 
 
-class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickListener{
+class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
+    var play_userpid: Int? = null
+    var play_articlecreatedate: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFilmBinding.inflate(inflater, container, false)
+
+        play_userpid = arguments?.getInt("userpid")
+        play_articlecreatedate = arguments?.getString("articlecreatedate")
+
         return binding.root
     }
 
@@ -48,6 +57,7 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
 
     private fun setOnClickListener() {
         binding.filmMenu.setOnClickListener(this)
+        binding.filmPlayBtn.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -56,7 +66,14 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
                 showPopup(binding.filmMenu)
             }
             R.id.film_play_btn -> {
+                Log.d("확인", "눌렀음")
 
+                // 테스트용
+                play_userpid = 4
+                play_articlecreatedate = "20220808"
+
+                val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+                sharedViewModel.setLiveText((play_articlecreatedate + play_userpid.toString()) ?: "")
             }
         }
     }
@@ -76,7 +93,6 @@ class FilmFragment : Fragment(), View.OnClickListener,PopupMenu.OnMenuItemClickL
             R.id.delete -> {
                 val btn= arrayOf("네","아니오")
                 normaldialog.arguments = bundleOf(
-
                     "bodyContext" to "삭제하면 복구되지 않습니다",
                     "bodyTitle" to "정말 삭제하시겠습니까?",
                     "btnData" to btn

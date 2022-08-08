@@ -2,23 +2,24 @@ package com.example.todayfilm
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings.System.DATE_FORMAT
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.VideoView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.todayfilm.data.Imgvid
 import com.example.todayfilm.databinding.FragmentFrameBinding
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.NonDisposableHandle.parent
 import java.lang.reflect.Type
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class FrameFragment : Fragment(), View.OnClickListener {
@@ -26,6 +27,8 @@ class FrameFragment : Fragment(), View.OnClickListener {
     var parent: String? = null
     var imgnumber = 0
     lateinit var sharedPreferences: SharedPreferences
+    var play_userpid: Int? = null
+    var play_articlecreatedate: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,11 +106,28 @@ class FrameFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // 부모가 complete면 대표 이미지 지정할 수 있게 함
         if (parent == "complete") {
             setOnClickListener()
         }
+
+        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel.getLiveText().observe(requireActivity(), androidx.lifecycle.Observer {
+            play_articlecreatedate = it.substring(0, 8)
+            play_userpid = it.substring(8).toInt()
+
+            if (play_userpid!! > 0 && play_articlecreatedate!!.length > 0) {
+                binding.image1Photo.visibility = View.GONE
+                binding.image2Photo.visibility = View.GONE
+                binding.image3Photo.visibility = View.GONE
+                binding.image4Photo.visibility = View.GONE
+
+                playVideo(binding.image1Video, 1)
+                playVideo(binding.image2Video, 2)
+                playVideo(binding.image3Video, 3)
+                playVideo(binding.image4Video, 4)
+            }
+        })
     }
 
     private fun setOnClickListener() {
@@ -171,19 +191,30 @@ class FrameFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    // 리스너 등록
     override fun onResume() {
         super.onResume()
-        if (parent == "home" || parent == "complete") {
-            sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener)
-        }
+        // 리스너 등록
+        sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener)
     }
 
-    // 리스너 해제
     override fun onPause() {
         super.onPause()
-        if (parent == "home" || parent == "complete") {
-            sharedPreferences.unregisterOnSharedPreferenceChangeListener(prefListener)
+        // 리스너 해제
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(prefListener)
+    }
+
+    fun playVideo(videoView: VideoView, vidnum: Int) {
+        videoView.visibility = View.VISIBLE
+
+        // 동영상 주소 준비
+        val videoUri = Uri.parse("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${play_userpid}/${play_articlecreatedate}/${vidnum}.mp4")
+
+        // 동영상 주소 지정
+        videoView.setVideoURI(videoUri)
+
+        // 동영상 재생
+        videoView.setOnPreparedListener {
+            videoView.start()
         }
     }
 }
