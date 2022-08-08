@@ -43,7 +43,6 @@
                 android:layout_marginVertical="10dp"
                 app:cardCornerRadius="105dp"
 
-                android:src="@drawable/poppy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -51,6 +50,7 @@
 
                 >
                 <ImageView
+                    android:id="@+id/profile_image_file"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/poppy"/>

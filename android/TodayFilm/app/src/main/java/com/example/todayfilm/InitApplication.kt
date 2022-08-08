@@ -70,7 +70,7 @@ class InitApplication: Application() {
 
 //            // 테스트용
 //            // 작업 생성 --- 필름 리셋 알림
-//            val workResetPeriodicWorkRequest = PeriodicWorkRequest.Builder(ResetNotificationWorker::class.java, 24, TimeUnit.HOURS)
+//            val workResetPeriodicWorkRequest = OneTimeWorkRequest.Builder(ResetNotificationWorker::class.java)
 //                .setInitialDelay(Test(), TimeUnit.MILLISECONDS)
 //                .build()
 //            workManager.enqueue(workResetPeriodicWorkRequest)

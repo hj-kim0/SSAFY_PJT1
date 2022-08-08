@@ -83,25 +83,25 @@ class MainActivity : AppCompatActivity() {
         val date = MyPreference.read(this, "date")
 
         if (fromResetNotification || today != date) {
-            // 완성이 아니고 이미지가 4개 미만인 상태
-            fromResetNotification = false
-
+            // 완성이 아니고 이미지가 1개 이상인 상태
             val builder = AlertDialog.Builder(this)
 
             builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
                 .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다.")
                 .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
+                    fromResetNotification = false
+
                     // complete 액티비티로 이동
                     val intent = Intent(this, CompleteActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 })
                 .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id ->
+                    fromResetNotification = false
+
                     // 필름 데이터 초기화, date 갱신
                     resetData(this)
                     MyPreference.write(this, "date", today)
-
-                    // Frame 재호출
                 })
             builder.show()
         }
@@ -135,12 +135,10 @@ class MainActivity : AppCompatActivity() {
         // 선택한 프래그먼트만 보이기
         if (tag == TAG_FEED) {
             if (feed != null) {
-
                 transaction.show(feed)
             }
         } else if (tag == TAG_HOME) {
             if (home != null) {
-
                 transaction.show(home)
             }
         } else if (tag == TAG_PROFILE) {
@@ -169,6 +167,7 @@ class MainActivity : AppCompatActivity() {
             1 -> {
                 moveFragment(SearchFragment())
             }
+
             2-> {
                 moveFragment(ProfileListFragment())
             }

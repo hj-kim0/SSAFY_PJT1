@@ -1,5 +1,7 @@
 package com.example.todayfilm
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.Settings.System.DATE_FORMAT
 import android.util.Log
@@ -8,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.example.todayfilm.data.Imgvid
 import com.example.todayfilm.databinding.FragmentFrameBinding
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.NonDisposableHandle.parent
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +24,8 @@ import kotlin.collections.ArrayList
 class FrameFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentFrameBinding
     var parent: String? = null
+    var imgnumber = 0
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +34,8 @@ class FrameFragment : Fragment(), View.OnClickListener {
     ): View {
         binding = FragmentFrameBinding.inflate(inflater, container, false)
         parent = arguments?.getString("parent")
+
+        sharedPreferences = requireActivity().getSharedPreferences(MyPreference.sp_name, Context.MODE_PRIVATE)
 
         // 부모가 home이나 complete라면 내부 저장소의 데이터 가져와서 보여주기
         if (parent == "home" || parent == "complete") {
@@ -38,7 +46,6 @@ class FrameFragment : Fragment(), View.OnClickListener {
             val tempArray = ArrayList<Imgvid>()
 
             // 데이터가 비어있지 않다면 객체 수 확인해서 imgnumber값 지정하고 tempArray에 기존 데이터 추가
-            var imgnumber = 0
             if (prev != "none" && prev != "" && prev != "[]") {
                 tempArray.addAll(gson.fromJson(prev, groupListType))
                 imgnumber += tempArray.size
@@ -56,6 +63,33 @@ class FrameFragment : Fragment(), View.OnClickListener {
             }
             if (imgnumber > 3) {
                 binding.imgvid4 = tempArray[3]
+            }
+
+            // 설정에서 반복하기로 한 경우
+            val isRepeat = PreferenceManager.getDefaultSharedPreferences(requireActivity()).getBoolean("repeat", true)
+            if (parent == "complete" && isRepeat && imgnumber < 4) {
+                when (imgnumber) {
+                    1 -> {
+                        binding.imgvid1 = tempArray[0]
+                        binding.imgvid2 = tempArray[0]
+                        binding.imgvid3 = tempArray[0]
+                        binding.imgvid4 = tempArray[0]
+                    }
+
+                    2 -> {
+                        binding.imgvid1 = tempArray[0]
+                        binding.imgvid2 = tempArray[1]
+                        binding.imgvid3 = tempArray[0]
+                        binding.imgvid4 = tempArray[1]
+                    }
+
+                     3 -> {
+                         binding.imgvid1 = tempArray[0]
+                         binding.imgvid2 = tempArray[1]
+                         binding.imgvid3 = tempArray[2]
+                         binding.imgvid4 = tempArray[0]
+                     }
+                }
             }
 
             binding.date = MyPreference.read(requireActivity(), "date")
@@ -77,10 +111,18 @@ class FrameFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setOnClickListener() {
-        binding.image1Section.setOnClickListener(this)
-        binding.image2Section.setOnClickListener(this)
-        binding.image3Section.setOnClickListener(this)
-        binding.image4Section.setOnClickListener(this)
+        if (imgnumber > 0) {
+            binding.image1Section.setOnClickListener(this)
+        }
+        if (imgnumber > 1) {
+            binding.image2Section.setOnClickListener(this)
+        }
+        if (imgnumber > 2) {
+            binding.image3Section.setOnClickListener(this)
+        }
+        if (imgnumber > 3) {
+            binding.image4Section.setOnClickListener(this)
+        }
     }
 
     override fun onClick(p0: View?) {
@@ -113,6 +155,35 @@ class FrameFragment : Fragment(), View.OnClickListener {
                 binding.image4Section.foreground = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_check_yellow)
                 MyPreference.writeInt(requireActivity(), "mainImage", 4)
             }
+        }
+    }
+
+    // 설정 변경 이벤트 처리
+    val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
+        when (key) {
+            "date" -> {
+                binding.imgvid1 = null
+                binding.imgvid2 = null
+                binding.imgvid3 = null
+                binding.imgvid4 = null
+                binding.date = sharedPreferences!!.getString("date", "")
+            }
+        }
+    }
+
+    // 리스너 등록
+    override fun onResume() {
+        super.onResume()
+        if (parent == "home" || parent == "complete") {
+            sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener)
+        }
+    }
+
+    // 리스너 해제
+    override fun onPause() {
+        super.onPause()
+        if (parent == "home" || parent == "complete") {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(prefListener)
         }
     }
 }

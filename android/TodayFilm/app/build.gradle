@@ -88,4 +88,8 @@ dependencies {
     // WorkManager 라이브러리
     def work_version = "2.7.1"
     implementation("androidx.work:work-runtime-ktx:$work_version")
+
+    // Gilde 라이브러리
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }

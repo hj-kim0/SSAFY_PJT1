@@ -87,27 +87,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
                         .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.")
                         .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-                            completeDialog(builder)
+                            moveToComplete()
                         })
                         .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
                     builder.show()
                 } else {
-                    completeDialog(builder)
+                    moveToComplete()
                 }
             }
         }
     }
 
-    private fun completeDialog(builder: AlertDialog.Builder) {
-        builder.setTitle("오늘의 필름을 현상할까요?")
-            .setMessage("예 선택 시, 더 이상 수정할 수 없습니다.")
-            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-                // complete 액티비티로 이동
-                val intent = Intent(activity, CompleteActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-            })
-            .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
-        builder.show()
+    private fun moveToComplete() {
+        // complete 액티비티로 이동
+        val intent = Intent(activity, CompleteActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }
