@@ -1,5 +1,6 @@
 package com.example.todayfilm
 
+
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -15,15 +16,13 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import kotlinx.android.synthetic.main.fragment_film.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
+import java.io.*
 import java.util.*
 
 
@@ -110,28 +109,25 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             R.id.shareFile -> {
-//                val bitmap = Bitmap.createBitmap(fragment_content_film.getWidth(), fragment_content_film.getHeight(), Bitmap.Config.ARGB_8888);
-//                val canvas = Canvas(bitmap);
-//                val bgDrawable = fragment_content_film.getBackground();
-//                if (bgDrawable != null) {
-//                    bgDrawable.draw(canvas);
-//                } else {
-//
-//                    canvas.drawColor(Color.WHITE);
-//                }
-//                fragment_content_film.draw(canvas);
+
                 val bitmap = getBitmap(fragment_content_film)
-                // bitmap
 
-                val path :Uri? = getImageUri(context,bitmap)
-                // uri
+                val path :Uri = getImageUri(context,bitmap)
 
-                val sharingIntent = Intent(Intent.ACTION_SEND)
-                val screenshotUri = Uri.parse(path.toString()) // android image path
 
-                sharingIntent.type = "image/png"
-                sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
-                startActivity(Intent.createChooser(sharingIntent, "Share image using")) // 변경가능
+
+                val shareIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, path)
+                    type = "image/jpeg"
+                }
+                startActivity(Intent.createChooser(shareIntent, "esources.getText(R.string.send_to"))
+
+
+
+
+
+
             }
 
             R.id.save -> {
@@ -145,16 +141,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 normaldialog.setButtonClickListener(object :
                     NormalDialogFragment.OnButtonClickListener {
                     override fun onButton1Clicked() {
-//                        val bitmap = Bitmap.createBitmap(fragment_content_film.getWidth(), fragment_content_film.getHeight(), Bitmap.Config.ARGB_8888);
-//                        val canvas = Canvas(bitmap);
-//                        val bgDrawable = fragment_content_film.getBackground();
-//                        if (bgDrawable != null) {
-//                            bgDrawable.draw(canvas);
-//                        } else {
-//
-//                            canvas.drawColor(Color.WHITE);
-//                        }
-//                        fragment_content_film.draw(canvas);
+
 
                         val bitmap = getBitmap(fragment_content_film)
 
@@ -201,13 +188,54 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         return p0 != null
     }
 
-    fun getImageUri(inContext: Context?, inImage: Bitmap?): Uri? {
-        val bytes = ByteArrayOutputStream()
-        if (inImage != null) {
-            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
+
+
+
+
+
+
+
+
+
+
+
+        val storage: File =  File(context!!.cacheDir, "images")
+
+
+        val fileName: String = "cache"+ ".jpg"
+
+
+        val tempFile = File(storage, fileName)
+
+        try {
+
+            // 자동으로 빈 파일을 생성합니다.
+            tempFile.createNewFile()
+
+            // 파일을 쓸 수 있는 스트림을 준비합니다.
+            val out = FileOutputStream(tempFile)
+
+            // compress 함수를 사용해 스트림에 비트맵을 저장합니다.
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
+
+            // 스트림 사용후 닫아줍니다.
+            out.close()
+        } catch (e: FileNotFoundException) {
+
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+
         }
-        val path: String? = MediaStore.Images.Media.insertImage(inContext?.getContentResolver(), inImage, "Title" + " - " + Calendar.getInstance().getTime(), null)
-        return Uri.parse(path)
+
+
+        val uri = FileProvider.getUriForFile(requireActivity(),"com.example.todayfilm.Fileprovider",tempFile)
+
+
+        return uri
+
+
     }
 
     fun getBitmap(fragment: FrameLayout): Bitmap{
@@ -223,4 +251,5 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         return bitmap
     }
+
 }
