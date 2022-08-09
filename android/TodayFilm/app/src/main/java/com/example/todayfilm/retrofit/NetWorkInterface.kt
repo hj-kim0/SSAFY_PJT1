@@ -47,7 +47,7 @@ interface NetWorkInterface {
         @Part("articleshare") articleshare: RequestBody
     ): Call<FindPwResponse>
 
-    @POST("")
+    @POST("api/article/sharecontrol")
     fun changearticleshare(
         @Body changeArticleShare: ChangeArticleShareRequest
     ): Call<ChangeUserDetailResponse>

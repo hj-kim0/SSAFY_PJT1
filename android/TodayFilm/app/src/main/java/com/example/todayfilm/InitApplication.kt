@@ -1,25 +1,17 @@
 package com.example.todayfilm
 
-import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
-import androidx.work.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class InitApplication: Application() {
     private lateinit var mContext: Context
     var isNotificationChannelCreated = false
-    val EMPTY_NOTIFICATION_WORK_NAME = "Empty Notification"
-    val RESET_NOTIFICATION_WORK_NAME = "Reset Notification"
 
     override fun onCreate() {
         super.onCreate()
@@ -48,32 +40,10 @@ class InitApplication: Application() {
             Toast.makeText(mContext, "푸시 알림 채널 생성이 실패했습니다. 앱을 재실행하거나 재설치해주세요.", Toast.LENGTH_SHORT).show()
         }
 
-        // 푸시 알림 채널 생성 체크 후 WorkManager에 백그라운드 작업 등록
-        val workManager = WorkManager.getInstance(applicationContext)
-
+        // 푸시 알림 채널 생성 체크 후 AlarmManager 사용
         if (isNotificationChannelCreated) {
-            // 작업 생성 --- 필름 기록 알림
-            val workEmptyPeriodicWorkRequest = PeriodicWorkRequest.Builder(EmptyNotificationWorker::class.java, 6, TimeUnit.HOURS)
-                .setInitialDelay(EverySixHour(), TimeUnit.MILLISECONDS)
-                .build()
-
-            // 작업 등록
-            workManager.enqueueUniquePeriodicWork(EMPTY_NOTIFICATION_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, workEmptyPeriodicWorkRequest)
-
-            // 작업 생성 --- 필름 리셋 알림
-            val workResetPeriodicWorkRequest = PeriodicWorkRequest.Builder(ResetNotificationWorker::class.java, 24, TimeUnit.HOURS)
-                .setInitialDelay(EveryMidnight(), TimeUnit.MILLISECONDS)
-                .build()
-
-            // 작업 등록
-            workManager.enqueueUniquePeriodicWork(RESET_NOTIFICATION_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, workResetPeriodicWorkRequest)
-
-//            // 테스트용
-//            // 작업 생성 --- 필름 리셋 알림
-//            val workResetPeriodicWorkRequest = OneTimeWorkRequest.Builder(ResetNotificationWorker::class.java)
-//                .setInitialDelay(Test(), TimeUnit.MILLISECONDS)
-//                .build()
-//            workManager.enqueue(workResetPeriodicWorkRequest)
+            setEmptyNotification(applicationContext)
+            setResetNotification(applicationContext)
         }
 
         // 앱 최초 실행일 경우에 실행되는 작업

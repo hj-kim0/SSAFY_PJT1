@@ -51,7 +51,7 @@ class CustomDialogFragment: DialogFragment() {
             share = "0"
             val changeArticleShareRequest = ChangeArticleShareRequest()
             changeArticleShareRequest.articleidx = articleidx
-            changeArticleShareRequest.articleshare = share
+            changeArticleShareRequest.sharenum = share
 
             val call = NetWorkClient.GetNetwork.changearticleshare(changeArticleShareRequest)
             call.enqueue(object : Callback<ChangeUserDetailResponse> {
@@ -73,7 +73,7 @@ class CustomDialogFragment: DialogFragment() {
 
             val changeArticleShareRequest = ChangeArticleShareRequest()
             changeArticleShareRequest.articleidx = articleidx
-            changeArticleShareRequest.articleshare = share
+            changeArticleShareRequest.sharenum = share
 
             val call = NetWorkClient.GetNetwork.changearticleshare(changeArticleShareRequest)
             call.enqueue(object : Callback<ChangeUserDetailResponse> {
@@ -95,7 +95,7 @@ class CustomDialogFragment: DialogFragment() {
 
             val changeArticleShareRequest = ChangeArticleShareRequest()
             changeArticleShareRequest.articleidx = articleidx
-            changeArticleShareRequest.articleshare = share
+            changeArticleShareRequest.sharenum = share
 
             val call = NetWorkClient.GetNetwork.changearticleshare(changeArticleShareRequest)
             call.enqueue(object : Callback<ChangeUserDetailResponse> {
