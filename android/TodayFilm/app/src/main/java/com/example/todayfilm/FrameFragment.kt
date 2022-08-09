@@ -27,7 +27,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
     var parent: String? = null
     var imgnumber = 0
     lateinit var sharedPreferences: SharedPreferences
-    var play_userpid: Int? = null
+    var play_userpid: String? = null
     var play_articlecreatedate: String? = null
 
     override fun onCreateView(
@@ -114,9 +114,9 @@ class FrameFragment : Fragment(), View.OnClickListener {
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.getLiveText().observe(requireActivity(), androidx.lifecycle.Observer {
             play_articlecreatedate = it.substring(0, 8)
-            play_userpid = it.substring(8).toInt()
+            play_userpid = it.substring(8)
 
-            if (play_userpid!! > 0 && play_articlecreatedate!!.length > 0) {
+            if (play_userpid!!.length > 0 && play_articlecreatedate!!.length > 0) {
                 binding.image1Photo.visibility = View.GONE
                 binding.image2Photo.visibility = View.GONE
                 binding.image3Photo.visibility = View.GONE

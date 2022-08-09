@@ -1,7 +1,5 @@
 package com.example.todayfilm
 
-import CustomDialogFragment
-import android.R.attr.path
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -13,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupMenu
@@ -23,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import kotlinx.android.synthetic.main.fragment_film.*
-import kotlinx.coroutines.NonDisposableHandle.parent
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -33,8 +29,9 @@ import java.util.*
 
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
-    var play_userpid: Int? = null
-    var play_articlecreatedate: String? = null
+    var article_userpid: String? = null
+    var articlecreatedate: String? = null
+    var articleidx: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,8 +40,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     ): View {
         binding = FragmentFilmBinding.inflate(inflater, container, false)
 
-        play_userpid = arguments?.getInt("userpid")
-        play_articlecreatedate = arguments?.getString("articlecreatedate")
+        articleidx = arguments?.getString("articleidx")
 
         return binding.root
     }
@@ -66,14 +62,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 showPopup(binding.filmMenu)
             }
             R.id.film_play_btn -> {
-                Log.d("확인", "눌렀음")
-
-                // 테스트용
-                play_userpid = 4
-                play_articlecreatedate = "20220808"
-
                 val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-                sharedViewModel.setLiveText((play_articlecreatedate + play_userpid.toString()) ?: "")
+                sharedViewModel.setLiveText((articlecreatedate + article_userpid) ?: "")
             }
         }
     }
@@ -114,6 +104,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             R.id.share -> {
+                val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+                sharedViewModel.setArticleIdx(articleidx ?: "")
                 dialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
             }
 

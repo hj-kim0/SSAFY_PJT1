@@ -51,7 +51,7 @@
             app:autoPoundSign="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/complete_show_layout"
+            android:id="@+id/complete_share_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -59,7 +59,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_show"
+                android:text="@string/hint_share"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="15sp"
@@ -68,7 +68,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <RadioGroup
-                android:id="@+id/complete_show_group"
+                android:id="@+id/complete_share_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -78,7 +78,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/complete_show_all"
+                    android:id="@+id/complete_share_all"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:paddingHorizontal="10dp"
@@ -89,7 +89,7 @@
                     android:checked="true" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/complete_show_followers"
+                    android:id="@+id/complete_share_followers"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:paddingHorizontal="10dp"
@@ -99,7 +99,7 @@
                     android:text="팔로워만"/>
 
                 <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/complete_show_nobody"
+                    android:id="@+id/complete_share_nobody"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:paddingHorizontal="10dp"

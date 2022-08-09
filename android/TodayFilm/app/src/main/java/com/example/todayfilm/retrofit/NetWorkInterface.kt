@@ -43,6 +43,12 @@ interface NetWorkInterface {
         @Part imgdata: List<MultipartBody.Part?>,
         @Part videodata: List<MultipartBody.Part?>,
         @Part("userpid") userpid: RequestBody,
-        @Part("articlethumbnail") articlethumbnail: RequestBody
+        @Part("articlethumbnail") articlethumbnail: RequestBody,
+        @Part("articleshare") articleshare: RequestBody
     ): Call<FindPwResponse>
+
+    @POST("")
+    fun changearticleshare(
+        @Body changeArticleShare: ChangeArticleShareRequest
+    ): Call<ChangeUserDetailResponse>
 }
