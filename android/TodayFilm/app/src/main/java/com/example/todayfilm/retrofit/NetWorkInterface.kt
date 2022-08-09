@@ -1,6 +1,8 @@
 package com.example.todayfilm.retrofit
 
 import com.example.todayfilm.data.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -34,4 +36,13 @@ interface NetWorkInterface {
     fun changeuserdetail(
         @Body changeUserDetail: ChangeUserDetailRequest
     ): Call<ChangeUserDetailResponse>
+
+    @Multipart
+    @POST("api/article/create")
+    fun createarticle(
+        @Part imgdata: List<MultipartBody.Part?>,
+        @Part videodata: List<MultipartBody.Part?>,
+        @Part("userpid") userpid: RequestBody,
+        @Part("articlethumbnail") articlethumbnail: RequestBody
+    ): Call<FindPwResponse>
 }
