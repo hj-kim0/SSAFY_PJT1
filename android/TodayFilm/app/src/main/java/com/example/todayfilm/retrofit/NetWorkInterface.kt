@@ -60,22 +60,16 @@ interface NetWorkInterface {
     @POST("api/profile/join")
     fun getprofile(
         @Body getProfile: GetProfile
-
     ): Call<CompleteProfile>
 
 
     @POST("api/article/showarticle")
     fun showarticle(
         @Body getArticle : GetArticle
-
     ): Call<List<ShowProfile>>
 
-
-
-
     @POST("api/search/user")
-    fun search(
-        @Body search: SearchRequest
-    ): Call<SearchResponse>
+    fun searchuser(
+        @Body search: SearchUserRequest
+    ): Call<SearchUserResponse>
 }
-

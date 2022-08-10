@@ -1,5 +1,5 @@
 package com.example.todayfilm.data
 
-class SearchResponse {
+class SearchUserResponse {
     var userlist = listOf<SearchUser>()
 }

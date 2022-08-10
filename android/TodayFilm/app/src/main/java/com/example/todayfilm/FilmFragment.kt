@@ -1,6 +1,5 @@
 package com.example.todayfilm
 
-
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -12,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupMenu
@@ -23,8 +23,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import kotlinx.android.synthetic.main.fragment_film.*
 import java.io.*
-import java.util.*
-
 
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
@@ -46,7 +44,15 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        childFragmentManager.beginTransaction().add(R.id.fragment_content_film, FrameFragment()).commit()
+
+        // 데이터 넣어서 frame 프래그먼트 호출
+        val frameFragment = FrameFragment()
+        val bundle = Bundle()
+        bundle.putString("parent", "film")
+        bundle.putString("articleidx", articleidx)
+        frameFragment.arguments = bundle
+
+        childFragmentManager.beginTransaction().add(R.id.fragment_content_film, frameFragment).commit()
         setOnClickListener()
     }
 
@@ -66,6 +72,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
         }
     }
+
     private fun showPopup(v: View) {
         val popup = PopupMenu(context,v,  Gravity.TOP, 0, R.style.popup) // PopupMenu 객체 선언
         popup.menuInflater.inflate(R.menu.popup, popup.menu) // 메뉴 레이아웃 inflate
@@ -109,12 +116,9 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             R.id.shareFile -> {
-
                 val bitmap = getBitmap(fragment_content_film)
 
                 val path :Uri = getImageUri(context,bitmap)
-
-
 
                 val shareIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -122,12 +126,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                     type = "image/jpeg"
                 }
                 startActivity(Intent.createChooser(shareIntent, "esources.getText(R.string.send_to"))
-
-
-
-
-
-
             }
 
             R.id.save -> {
@@ -141,8 +139,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 normaldialog.setButtonClickListener(object :
                     NormalDialogFragment.OnButtonClickListener {
                     override fun onButton1Clicked() {
-
-
                         val bitmap = getBitmap(fragment_content_film)
 
                         var fos: OutputStream? = null
@@ -189,27 +185,11 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     }
 
     fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
-
-
-
-
-
-
-
-
-
-
-
-        val storage: File =  File(context!!.cacheDir, "images")
-
-
+        val storage: File = File(requireContext().cacheDir, "images")
         val fileName: String = "cache"+ ".jpg"
-
-
         val tempFile = File(storage, fileName)
 
         try {
-
             // 자동으로 빈 파일을 생성합니다.
             tempFile.createNewFile()
 
@@ -222,20 +202,14 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             // 스트림 사용후 닫아줍니다.
             out.close()
         } catch (e: FileNotFoundException) {
-
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
-
         }
-
 
         val uri = FileProvider.getUriForFile(requireActivity(),"com.example.todayfilm.Fileprovider",tempFile)
 
-
         return uri
-
-
     }
 
     fun getBitmap(fragment: FrameLayout): Bitmap{
@@ -251,5 +225,4 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         return bitmap
     }
-
 }

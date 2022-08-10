@@ -35,22 +35,36 @@ class MainActivity : AppCompatActivity() {
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.feedFragment ->{ clearBackStack()
-                    setFragment(TAG_FEED, FeedFragment())}
-                R.id.homeFragment -> { clearBackStack()
-                    setFragment(TAG_HOME, HomeFragment())}
-                R.id.profileFragment -> { clearBackStack()
-                    setFragment(TAG_PROFILE, ProfileFragment())}
+                R.id.feedFragment -> {
+                    clearBackStack()
+                    setFragment(TAG_FEED, FeedFragment())
+                }
+
+                R.id.homeFragment -> {
+                    clearBackStack()
+                    setFragment(TAG_HOME, HomeFragment())
+                }
+
+                R.id.profileFragment -> {
+                    clearBackStack()
+                    val fragment = ProfileFragment()
+                    val bundle = Bundle()
+                    bundle.putString("search_userpid", MyPreference.read(this, "userpid"))
+                    fragment.arguments = bundle
+                    setFragment(TAG_PROFILE, fragment)
+                }
             }
             true
         }
-
-
-
     }
 
     override fun onResume() {
         super.onResume()
+        // changeprofile에서 왔다면 Profile Fragment 띄우기
+        val parent = intent.getStringExtra("parent")
+        if (parent == "changeprofile") {
+            changeFragment(4, MyPreference.read(this, "userpid"))
+        }
 
         // reset 알림을 받고 왔거나, 내부 저장소의 date가 오늘 날짜와 다르면 다이얼로그 띄우기
         fromResetNotification = intent.getBooleanExtra("fromResetNotification", false)
@@ -139,18 +153,34 @@ class MainActivity : AppCompatActivity() {
         transaction.commitAllowingStateLoss()
     }
 
-    fun changeFragment(index: Int){
+    fun changeFragment(index: Int, data: String?=null){
         when(index){
             1 -> {
                 moveFragment(SearchFragment())
             }
 
-            2-> {
+            2 -> {
                 moveFragment(ProfileListFragment())
             }
 
-            3-> {
-                moveFragment(FilmFragment())
+            3 -> {
+                if (data != null) {
+                    val fragment = FilmFragment()
+                    val bundle = Bundle()
+                    bundle.putString("articleidx", data)
+                    fragment.arguments = bundle
+                    moveFragment(fragment)
+                }
+            }
+
+            4 -> {
+                if (data != null) {
+                    val fragment = ProfileFragment()
+                    val bundle = Bundle()
+                    bundle.putString("search_userpid", data)
+                    fragment.arguments = bundle
+                    moveFragment(fragment)
+                }
             }
         }
     }

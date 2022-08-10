@@ -25,6 +25,7 @@ import kotlin.collections.ArrayList
 class FrameFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentFrameBinding
     var parent: String? = null
+    var articleidx: String? = null
     var imgnumber = 0
     lateinit var sharedPreferences: SharedPreferences
     var play_userpid: String? = null
@@ -37,6 +38,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
     ): View {
         binding = FragmentFrameBinding.inflate(inflater, container, false)
         parent = arguments?.getString("parent")
+        articleidx = arguments?.getString("articleidx")
 
         sharedPreferences = requireActivity().getSharedPreferences(MyPreference.sp_name, Context.MODE_PRIVATE)
 
@@ -98,7 +100,9 @@ class FrameFragment : Fragment(), View.OnClickListener {
             binding.date = MyPreference.read(requireActivity(), "date")
 
         } else {
-            // 부모가 film이라면 넘겨받은 정보로 서버 데이터 보여주기
+            // 부모가 film이라면 서버에 게시글 조회 요청 //////////////////////////////////////////
+
+
         }
 
         return binding.root

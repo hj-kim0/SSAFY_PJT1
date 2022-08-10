@@ -33,37 +33,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlSymmetry" />
 
-
-
-
-            <androidx.cardview.widget.CardView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginVertical="10dp"
-                app:cardCornerRadius="105dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/profile_id"
-
-                >
-                <ImageView
-                    android:id="@+id/profile_image_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/poppy"/>
-
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintBottom_toTopOf="@id/profile_id" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:text="이것이 아이디이다"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -77,7 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:text="이것은 닉네임이다"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +122,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:text="이것은 당신의 한줄 설명이다."
                 android:textColor="@color/gray_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +133,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/change_profile"
                 android:textSize="12sp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -160,351 +141,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TableLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-            <TableRow>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/calen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_1"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_1"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_2"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_2"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </TableRow>
-            <TableRow>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_3"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_3"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_4"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_4"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </TableRow>
-            <TableRow>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_5"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_5"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_5"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_6"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_6"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_6"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </TableRow>
-            <TableRow>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_7"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_7"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_7"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_8"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_8"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_8"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </TableRow>
-            <TableRow>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_9"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_9"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_9"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_film_image_10"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="H, 1.78:1"
-                        android:background="@color/gray_200"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_date"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_10"
-                        app:layout_constraintStart_toStartOf="parent"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#해시태그"
-                        android:textColor="@color/blue_500"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toBottomOf="@id/profile_film_image_10"
-                        app:layout_constraintEnd_toEndOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </TableRow>
-        </TableLayout>
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            android:orientation="vertical" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

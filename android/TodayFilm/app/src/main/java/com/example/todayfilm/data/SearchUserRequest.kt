@@ -1,5 +1,5 @@
 package com.example.todayfilm.data
 
-class SearchRequest {
+class SearchUserRequest {
     var keyword = ""
 }
