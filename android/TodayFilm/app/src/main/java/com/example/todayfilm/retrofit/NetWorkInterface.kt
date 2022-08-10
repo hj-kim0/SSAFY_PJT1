@@ -55,4 +55,9 @@ interface NetWorkInterface {
     fun changearticleshare(
         @Body changeArticleShare: ChangeArticleShareRequest
     ): Call<ChangeUserDetailResponse>
+
+    @POST("api/search/user")
+    fun search(
+        @Body search: SearchRequest
+    ): Call<SearchResponse>
 }

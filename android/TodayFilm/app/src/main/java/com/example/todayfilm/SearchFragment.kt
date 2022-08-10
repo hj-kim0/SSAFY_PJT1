@@ -38,6 +38,22 @@ class SearchFragment : Fragment(),View.OnClickListener {
 
 
 }
-
+// 여기야 예지야!!
+//val search = SearchRequest()
+//search.keyword = LoginId.toString()
+//val call = NetWorkClient.GetNetwork.search(search)
+//call.enqueue(object : Callback<SearchResponse> {
+//    override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+//        val result: SearchResponse? = response.body()
+//        Log.d("test", result!!.userlist.get(0).userid)
+//        Log.d("test", result!!.userlist.get(0).userpid.toString())
+//        Log.d("test", result!!.userlist.get(0).username)
+//
+//    }
+//
+//    override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+//        Log.d("", "실패"+t.message.toString())
+//    }
+//})
 
 
