@@ -182,10 +182,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/calen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/example_date"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintTop_toBottomOf="@id/profile_film_image_1"
                         app:layout_constraintStart_toStartOf="parent"/>

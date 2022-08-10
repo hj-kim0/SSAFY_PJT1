@@ -85,7 +85,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             val userpid = RequestBody.create(MediaType.parse("text/plain"), pid)
             val username = RequestBody.create(MediaType.parse("text/plain"), name)
             val userdesc = RequestBody.create(MediaType.parse("text/plain"), description)
-            Log.d("test", selectedImageUri!!.path.toString())
+//            Log.d("test", selectedImageUri!!.path.toString())
             val changeProfilePath = absolutelyPath(selectedImageUri!!)
 
             val toimage = File(changeProfilePath)
