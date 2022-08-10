@@ -33,16 +33,16 @@ class NotificationPreferenceFragment: PreferenceFragmentCompat() {
     val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
         when (key) {
             "empty" -> {
-                val value = prefs.getBoolean("empty", true)
+                val value = prefs.getBoolean("empty", false)
             }
             "follow" -> {
-                val value = prefs.getBoolean("follow", true)
+                val value = prefs.getBoolean("follow", false)
             }
             "like" -> {
-                val value = prefs.getBoolean("like", true)
+                val value = prefs.getBoolean("like", false)
             }
             "new" -> {
-                val value = prefs.getBoolean("new", true)
+                val value = prefs.getBoolean("new", false)
             }
         }
     }

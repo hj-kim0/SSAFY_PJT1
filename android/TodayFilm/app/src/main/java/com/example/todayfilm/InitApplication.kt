@@ -45,33 +45,5 @@ class InitApplication: Application() {
             setEmptyNotification(applicationContext)
             setResetNotification(applicationContext)
         }
-
-        // 앱 최초 실행일 경우에 실행되는 작업
-        // 내부 저장소에 imgcount, isComplete, imgvids 변수 초기화 및 preference 기본값 지정
-        val sp = getSharedPreferences("isFirst", MODE_PRIVATE)
-        val settingsSP = PreferenceManager.getDefaultSharedPreferences(mContext)
-        val first = sp.getBoolean("isFirst", false)
-        if (!first) {
-            val editor = sp.edit()
-            editor.putBoolean("isFirst", true)
-            editor.apply()
-
-            val date = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
-                .format(System.currentTimeMillis())
-
-            MyPreference.writeInt(this, "imgcount", 0)
-            MyPreference.writeInt(this, "isComplete", 0)
-            MyPreference.write(this, "imgvids", "")
-            MyPreference.write(this, "date", date)
-
-            val settingsEditor = settingsSP.edit()
-            settingsEditor.putBoolean("empty", true)
-            settingsEditor.putBoolean("follow", true)
-            settingsEditor.putBoolean("like", true)
-            settingsEditor.putBoolean("new", true)
-            settingsEditor.putBoolean("repeat", true)
-            settingsEditor.putBoolean("shake", true)
-            settingsEditor.apply()
-        }
     }
 }

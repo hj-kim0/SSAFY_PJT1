@@ -1,21 +1,13 @@
 package com.example.todayfilm
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
 import android.media.MediaMetadataRetriever
 import android.os.Bundle
 import android.util.Log
 import android.widget.MediaController
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.daasuu.mp4compose.FillMode
 import com.daasuu.mp4compose.Rotation
 import com.daasuu.mp4compose.composer.Mp4Composer
@@ -25,14 +17,14 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
-import java.lang.IllegalArgumentException
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
 
 class CheckActivity : AppCompatActivity() {
     private val TAG = "테스트용 로그"
+    private var srcPath = ""
+    private lateinit var resultFile: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +32,11 @@ class CheckActivity : AppCompatActivity() {
         val binding = ActivityCheckBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val loadingDialog = LoadingDialog(this)
+        loadingDialog.show()
+
         // 촬영한 영상 경로 및 확장자 제외한 파일명
-        val srcPath = intent.getStringExtra("path").toString()
+        srcPath = intent.getStringExtra("path").toString()
         var name = srcPath.substring(srcPath.lastIndexOf(File.separator)+1)
         name = name.substring(0 until (name.length - 4))
 
@@ -54,8 +49,8 @@ class CheckActivity : AppCompatActivity() {
         val endTime =
             mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
                 ?.toLong()
-        val startTime = if (endTime!! >= 2500) {
-            endTime - 2500
+        val startTime = if (endTime!! >= 3000) {
+            endTime - 3000
         }  else {
             0
         }
@@ -79,6 +74,10 @@ class CheckActivity : AppCompatActivity() {
                         // 영상 미리보기
                         binding.videoView.setVideoPath(destPath)
                         binding.videoView.setMediaController(MediaController(this@CheckActivity))
+
+                        // 로딩 화면 끝
+                        loadingDialog.dismiss()
+
                         binding.videoView.start()
                     }
                 }
@@ -96,7 +95,7 @@ class CheckActivity : AppCompatActivity() {
             .start()
 
         // 3초로 잘린 영상
-        val resultFile = File(destPath)
+        resultFile = File(destPath)
 
         // 다시시도 버튼
         binding.cameraRetry.setOnClickListener{
@@ -161,5 +160,19 @@ class CheckActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        // 소스 파일 및 결과 영상 제거
+        File(srcPath).delete()
+        resultFile.delete()
+
+        // camera activity로 이동
+        val intent = Intent(this, CameraActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        finish()
     }
 }

@@ -23,12 +23,15 @@ import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 
+
 class CameraActivity : AppCompatActivity() {
-    private val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
+    // 뷰 바인딩
+    private lateinit var binding: ActivityCameraBinding
+
     // 파일명
+    private val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
     private var path = ""
 
     // 권한 관련
@@ -63,15 +66,34 @@ class CameraActivity : AppCompatActivity() {
     private var isRecording = false
     private lateinit var mediaRecorder: MediaRecorder
 
-
+    // 로딩 화면
+    private lateinit var loadingDialog: LoadingDialog
 
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityCameraBinding.inflate(layoutInflater)
+        binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loadingDialog = LoadingDialog(this)
+        loadingDialog.show()
+
+        binding.cameraBtn.setOnClickListener{ stopRecordingVideo(false) }
+        binding.cameraSwitch.setOnClickListener{
+            if (cameraDevice != null) {
+                faceCamera = !faceCamera
+                cameraDevice!!.close()
+                stopRecordingVideo(true)
+                File(path).delete()
+                openCamera()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         if (allPermissionsGranted()) {
             binding.textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
@@ -91,18 +113,7 @@ class CameraActivity : AppCompatActivity() {
                 override fun onSurfaceTextureUpdated(p0: SurfaceTexture) {}
             }
         } else {
-                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
-
-        binding.cameraBtn.setOnClickListener{ stopRecordingVideo(false) }
-        binding.cameraSwitch.setOnClickListener{
-            if (cameraDevice != null) {
-                faceCamera = !faceCamera
-                cameraDevice!!.close()
-                stopRecordingVideo(true)
-                File(path).delete()
-                openCamera()
-            }
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
     }
 
@@ -260,6 +271,19 @@ class CameraActivity : AppCompatActivity() {
             recordRequestBuilder.addTarget(mediaRecorder.surface)
             recordRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
 
+            val captureListener: CameraCaptureSession.CaptureCallback =
+                object : CameraCaptureSession.CaptureCallback() {
+                    override fun onCaptureCompleted(
+                        session: CameraCaptureSession,
+                        request: CaptureRequest,
+                        result: TotalCaptureResult
+                    ) {
+                        super.onCaptureCompleted(session, request, result)
+                        // 로딩 화면 끝
+                        loadingDialog.dismiss()
+                    }
+                }
+
             cameraDevice!!.createCaptureSession(outputSurfaces, object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(session: CameraCaptureSession) {
                     if (cameraDevice == null) {
@@ -270,7 +294,7 @@ class CameraActivity : AppCompatActivity() {
 
                     try {
                         // session이 준비되면 미리보기 출력과 영상 녹화 시작
-                        cameraCaptureSession!!.setRepeatingRequest(recordRequestBuilder.build(), null, null)
+                        cameraCaptureSession!!.setRepeatingRequest(recordRequestBuilder.build(), captureListener, null)
                         isRecording = true
                         mediaRecorder.start()
                     } catch (e: CameraAccessException) {
@@ -303,5 +327,12 @@ class CameraActivity : AppCompatActivity() {
         intent.putExtra("path", path)
         startActivity(intent)
         finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        stopRecordingVideo(true)
+
+        File(path).delete()
     }
 }

@@ -56,7 +56,6 @@ fun EveryMidnight(): Long {
 const val EMPTY_BROADCAST_CODE = 0
 
 fun setEmptyNotification(context: Context) {
-    Log.d("확인_empty", "테스트")
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val alarmIntent = Intent(context, EmptyNotificationBroadcastReceiver::class.java).let {
         PendingIntent.getBroadcast(context, EMPTY_BROADCAST_CODE, it, FLAG_IMMUTABLE)

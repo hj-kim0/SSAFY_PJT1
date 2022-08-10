@@ -53,10 +53,10 @@ class SettingsActivity : AppCompatActivity() {
         val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
             when (key) {
                 "repeat" -> {
-                    val value = prefs.getBoolean("repeat", true)
+                    val value = prefs.getBoolean("repeat", false)
                 }
                 "shake" -> {
-                    val value = prefs.getBoolean("shake", true)
+                    val value = prefs.getBoolean("shake", false)
                 }
             }
         }
@@ -81,6 +81,7 @@ class SettingsActivity : AppCompatActivity() {
                     // 다이얼로그 띄우기
                     val builder = AlertDialog.Builder(activity)
                     builder.setTitle("로그아웃 하시겠습니까?")
+                        .setMessage("완성되지 않은 필름은 삭제됩니다.")
                         .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
                             // 서버로 로그아웃 요청
 

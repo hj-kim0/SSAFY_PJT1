@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.example.todayfilm.data.LoginData
 import com.example.todayfilm.data.User
 import com.example.todayfilm.databinding.ActivityLoginBinding
@@ -19,6 +20,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private var doubleBackToExit = false
@@ -96,13 +99,41 @@ class LoginActivity : AppCompatActivity() {
                         //*********************************************************
                         MyPreference.write(this@LoginActivity, "usertoken", result.token)
                         MyPreference.write(this@LoginActivity, "userpassword", user.userpassword)
+
+                        // 앱 최초 로그인일 경우에 실행되는 작업
+                        // 내부 저장소에 imgcount, isComplete, imgvids 변수 초기화 및 preference 기본값 지정
+                        val sp = getSharedPreferences("my_sp_storage", MODE_PRIVATE)
+                        val settingsSP = PreferenceManager.getDefaultSharedPreferences(this@LoginActivity)
+                        val first = sp.getBoolean("isFirst", false)
+                        if (!first) {
+                            val editor = sp.edit()
+                            editor.putBoolean("isFirst", true)
+                            editor.apply()
+
+                            val date = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
+                                .format(System.currentTimeMillis())
+
+                            MyPreference.writeInt(this@LoginActivity, "imgcount", 0)
+                            MyPreference.writeInt(this@LoginActivity, "isComplete", 0)
+                            MyPreference.write(this@LoginActivity, "imgvids", "")
+                            MyPreference.write(this@LoginActivity, "date", date)
+
+                            val settingsEditor = settingsSP.edit()
+                            settingsEditor.putBoolean("empty", true)
+                            settingsEditor.putBoolean("follow", true)
+                            settingsEditor.putBoolean("like", true)
+                            settingsEditor.putBoolean("new", true)
+                            settingsEditor.putBoolean("repeat", true)
+                            settingsEditor.putBoolean("shake", true)
+                            settingsEditor.apply()
+                        }
+
                         Toast.makeText(this@LoginActivity, "성공적으로 로그인되었습니다.", Toast.LENGTH_SHORT).show()
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
-                            finish()
-                        }, 500)
+
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                        finish()
                     }else{
                         Toast.makeText(this@LoginActivity, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
