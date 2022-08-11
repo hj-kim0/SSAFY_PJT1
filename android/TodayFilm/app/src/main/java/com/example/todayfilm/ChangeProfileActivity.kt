@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.ActivityChangeProfileBinding
 import com.example.todayfilm.retrofit.NetWorkClient
+import kotlinx.android.synthetic.main.fragment_film.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -43,6 +44,8 @@ class ChangeProfileActivity : AppCompatActivity() {
     lateinit var profileImage: ImageView
     var selectedImageUri: Uri? = null
     var pid = ""
+    var changeProfilePath = ""
+
 
     // 권한 관련
     private val REQUEST_CODE_PERMISSIONS = 10
@@ -70,6 +73,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                 val result = response.body()
                 val imgview = binding.changeProfileImage
                 Glide.with(this@ChangeProfileActivity).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/profile/" + result?.userimg).into(imgview)
+                Log.d("프로필 이미지", result?.userimg.toString())
                 binding.changeProfileUsername.setText(result?.username)
                 binding.changeProfileDescription.setText(result?.userdesc)
             }
@@ -98,39 +102,68 @@ class ChangeProfileActivity : AppCompatActivity() {
             val name = binding.changeProfileUsername.text.toString()
             val description = binding.changeProfileDescription.text.toString()
 
+            Log.d("testtt", pid+name+description)
+            Log.d("teststt", selectedImageUri.toString())
+
             val userpid = RequestBody.create(MediaType.parse("text/plain"), pid)
             val username = RequestBody.create(MediaType.parse("text/plain"), name)
             val userdesc = RequestBody.create(MediaType.parse("text/plain"), description)
 
             // 수정 필요 //////////////////////////////////////////////////////////////////////////
             // 사진을 변경했다면 이미지 전달
-            val changeProfilePath = absolutelyPath(selectedImageUri!!)
-            val toimage = File(changeProfilePath)
-            val body = RequestBody.create(MediaType.parse("image/*"), toimage)
-            val image = MultipartBody.Part.createFormData("userimg", toimage.name, body)
+
             /////////////////////////////////////////////////////////////////////////////////////
 
             if (name.isEmpty()) {
                 binding.changeProfileErr.text = "닉네임은 비워둘 수 없습니다."
             } else {
                 // 서버로 요청 보내기
-                val call = NetWorkClient.GetNetwork.changeuserdetail(image, userpid, username, userdesc)
-                call.enqueue(object : Callback<ChangeUserDetailResponse> {
-                    override fun onResponse(
-                        call: Call<ChangeUserDetailResponse>,
-                        response: Response<ChangeUserDetailResponse>
-                    ) {
-                        Toast.makeText(this@ChangeProfileActivity, "성공적으로 수정되었습니다.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@ChangeProfileActivity, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        intent.putExtra("parent", "changeprofile")
-                        startActivity(intent)
-                    }
+                // 선택된 이미지가 없는경우
+                if ( selectedImageUri==null ){
 
-                    override fun onFailure(call: Call<ChangeUserDetailResponse>, t: Throwable) {
-                        Log.d("회원 정보 수정 실패", t.message.toString())
-                    }
-                })
+                    val call = NetWorkClient.GetNetwork.changeuserdetail2(userpid, username, userdesc)
+                    call.enqueue(object : Callback<ChangeUserDetailResponse> {
+                        override fun onResponse(
+                            call: Call<ChangeUserDetailResponse>,
+                            response: Response<ChangeUserDetailResponse>
+                        ) {
+                            Toast.makeText(this@ChangeProfileActivity, "성공적으로 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ChangeProfileActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.putExtra("parent", "changeprofile")
+                            startActivity(intent)
+                        }
+
+                        override fun onFailure(call: Call<ChangeUserDetailResponse>, t: Throwable) {
+                            Log.d("회원 정보 수정 실패", t.message.toString())
+                        }
+                    })
+                }else{
+                    // 선택한 이미지가 있는경우
+                    changeProfilePath = absolutelyPath(selectedImageUri!!)
+
+                    val toimage = File(changeProfilePath)
+                    val body = RequestBody.create(MediaType.parse("image/*"), toimage)
+                    val image = MultipartBody.Part.createFormData("userimg", toimage.name, body)
+                    val call = NetWorkClient.GetNetwork.changeuserdetail(image, userpid, username, userdesc)
+                    call.enqueue(object : Callback<ChangeUserDetailResponse> {
+                        override fun onResponse(
+                            call: Call<ChangeUserDetailResponse>,
+                            response: Response<ChangeUserDetailResponse>
+                        ) {
+                            Toast.makeText(this@ChangeProfileActivity, "성공적으로 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ChangeProfileActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.putExtra("parent", "changeprofile")
+                            startActivity(intent)
+                        }
+
+                        override fun onFailure(call: Call<ChangeUserDetailResponse>, t: Throwable) {
+                            Log.d("회원 정보 수정 실패", t.message.toString())
+                        }
+                    })
+                }
+
             }
         }
 
@@ -209,3 +242,4 @@ class ChangeProfileActivity : AppCompatActivity() {
         return result
     }
 }
+ㅁ
