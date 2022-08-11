@@ -2,7 +2,6 @@ package com.example.todayfilm
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,13 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.todayfilm.data.SearchUser
-import com.example.todayfilm.data.ShowProfile
+import com.example.todayfilm.data.ArticleResponse
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class ProfileArticleAdapter(private val context: Context) : RecyclerView.Adapter<ProfileArticleAdapter.ViewHolder>() {
     val userpid = MyPreference.read(context, "userpid")
-    var datas = mutableListOf<ShowProfile>()
+    var datas = mutableListOf<ArticleResponse>()
 
     // ViewHolder 객체 생성 후 리턴
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,22 +38,22 @@ class ProfileArticleAdapter(private val context: Context) : RecyclerView.Adapter
         private val articlethumbnail: ImageView = itemView.findViewById(R.id.recycler_profile_article_image)
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(item: ShowProfile) {
+        fun bind(item: ArticleResponse) {
             val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-            val temp = LocalDate.parse(item.articlecreatedate, formatter)
+            val temp = LocalDate.parse(item.article.articlecreatedate, formatter)
             val changed = temp.format(DateTimeFormatter.ofPattern("yyyy/MM/dd (E)"))
 
             articlecreatedate.text = changed
-            Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${item.userpid}/${item.articlecreatedate}/${item.articlethumbnail}.png").into(articlethumbnail)
+            Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${item.article.userpid}/${item.article.articlecreatedate}/${item.article.articlethumbnail}.png").into(articlethumbnail)
 
             itemView.setOnClickListener {
-                itemClickListener.onClick(it, item.articleidx, item.articlecreatedate, item.userpid)
+                itemClickListener.onClick(it, item.article.articleidx, item.article.articlecreatedate, item.article.userpid, item.likey)
             }
         }
     }
 
     interface ItemClickListener {
-        fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String)
+        fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String)
     }
 
     private lateinit var itemClickListener: ItemClickListener

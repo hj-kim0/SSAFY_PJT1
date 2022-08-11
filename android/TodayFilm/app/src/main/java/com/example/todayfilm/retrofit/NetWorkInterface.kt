@@ -65,17 +65,15 @@ interface NetWorkInterface {
         @Body changeArticleShare: ChangeArticleShareRequest
     ): Call<ChangeUserDetailResponse>
 
-
     @POST("api/profile/join")
     fun getprofile(
         @Body getProfile: GetProfile
     ): Call<CompleteProfile>
 
-
     @POST("api/article/showarticle")
     fun showarticle(
         @Body getArticle : GetArticle
-    ): Call<List<ShowProfile>>
+    ): Call<List<ArticleResponse>>
 
     @POST("api/search/user")
     fun searchuser(
@@ -87,11 +85,15 @@ interface NetWorkInterface {
         @Body follow: FollowRequest
     ): Call<noRseponse>
 
-
     @POST("api/subscribe/create")
     fun createfollow(
         @Body follow: FollowRequest
     ): Call<noRseponse>
+
+    @POST("api/article/showsubarticle")
+    fun showsubarticle(
+        @Body getProfile: GetProfile
+    ): Call<List<ArticleResponse>>
 
     @POST("api/subscribe/follow")
     fun followsearch(

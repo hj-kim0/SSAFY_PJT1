@@ -115,6 +115,10 @@ class FrameFragment : Fragment(), View.OnClickListener {
             binding.date = articlecreatedate
 
         } else {
+            Log.d("확인1", articleidx.toString())
+            Log.d("확인2", articlecreatedate.toString())
+            Log.d("확인3", article_userpid.toString())
+
             // 부모가 film이라면 넘겨받은 정보로 데이터 보여주기
             val imgview1 = binding.image1Photo
             Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/1.png").into(imgview1)

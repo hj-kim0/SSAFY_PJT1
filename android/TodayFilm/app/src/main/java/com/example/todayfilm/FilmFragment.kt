@@ -37,6 +37,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     var article_userpid: String? = null
     var articlecreatedate: String? = null
     var articleidx: String? = null
+    var likey: String? = null
+    var userpid: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +50,12 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         articleidx = arguments?.getString("articleidx")
         articlecreatedate = arguments?.getString("articlecreatedate")
         article_userpid = arguments?.getString("article_userpid")
+        likey = arguments?.getString("likey")
+        userpid = MyPreference.read(requireActivity(), "userpid")
+
+        Log.d("확인", likey.toString())
+
+        binding.filmLikey.text = likey
 
         return binding.root
     }
@@ -84,6 +92,13 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 Log.d("사용자 정보 조회 실패", t.message.toString())
             }
         })
+
+        // 본인이면 filmMenu 보여주기
+        if (userpid == article_userpid) {
+            binding.filmMenu.visibility = View.VISIBLE
+        } else {
+            binding.filmMenu.visibility = View.GONE
+        }
 
         childFragmentManager.beginTransaction().add(R.id.fragment_content_film, frameFragment).commit()
         setOnClickListener()

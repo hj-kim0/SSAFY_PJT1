@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commitAllowingStateLoss()
     }
 
-    fun changeFragment(index: Int, data: String?=null, data1: String?=null, data2: String?=null){
+    fun changeFragment(index: Int, data: String?=null, data1: String?=null, data2: String?=null, data3: String?=null){
         when(index){
             1 -> {
                 moveFragment(SearchFragment())
@@ -220,6 +220,8 @@ class MainActivity : AppCompatActivity() {
                     bundle.putString("articleidx", data)
                     bundle.putString("articlecreatedate", data1)
                     bundle.putString("article_userpid", data2)
+                    bundle.putString("likey", data3)
+                    Log.d("확인", data3.toString())
                     fragment.arguments = bundle
                     moveFragment(fragment)
                 }

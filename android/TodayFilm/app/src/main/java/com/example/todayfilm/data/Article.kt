@@ -1,6 +1,6 @@
 package com.example.todayfilm.data
 
-class ShowProfile {
+class Article {
     var articleidx = ""
     var userpid = ""
     var articlethumbnail = ""

@@ -159,13 +159,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         article.search_userpid = search_userpid
 
         val callArticle = NetWorkClient.GetNetwork.showarticle(article)
-        callArticle.enqueue( object : Callback<List<ShowProfile>>{
+        callArticle.enqueue( object : Callback<List<ArticleResponse>>{
             override fun onResponse(
-                call: Call<List<ShowProfile>>,
-                response: Response<List<ShowProfile>>
+                call: Call<List<ArticleResponse>>,
+                response: Response<List<ArticleResponse>>
             ) {
                 val result = response.body()
-                val datas = arrayListOf<ShowProfile>()
+                val datas = arrayListOf<ArticleResponse>()
 
                 if (result != null) {
                     for (r in result) {
@@ -176,7 +176,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 initArticleRecycler(datas)
             }
 
-            override fun onFailure(call: Call<List<ShowProfile>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
                 Log.d("사용자 게시글 조회 실패", t.message.toString())
             }
         })
@@ -302,13 +302,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun initArticleRecycler(articledatas: ArrayList<ShowProfile>) {
+    private fun initArticleRecycler(articledatas: ArrayList<ArticleResponse>) {
         val articleAdapter = ProfileArticleAdapter(requireActivity())
         binding.profileArticle.adapter = articleAdapter
 
         articleAdapter.setItemClickListener(object: ProfileArticleAdapter.ItemClickListener {
-            override fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String) {
-                (activity as MainActivity).changeFragment(3, articleidx, articlecreatedate, article_userpid)
+            override fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String) {
+                (activity as MainActivity).changeFragment(3, articleidx, articlecreatedate, article_userpid, likey)
             }
         })
 
