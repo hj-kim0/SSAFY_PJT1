@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
-    private var liveString: MutableLiveData<String> = MutableLiveData()
+    private var isPlay: MutableLiveData<Boolean> = MutableLiveData()
     private var articleIdx: MutableLiveData<String> = MutableLiveData()
 
-    fun getLiveText(): LiveData<String> {
-        return liveString
+    fun getIsPlay(): LiveData<Boolean> {
+        return isPlay
     }
 
-    fun setLiveText(string: String) {
-        liveString.value = string
+    fun setIsPlay(boolean: Boolean) {
+        isPlay.value = boolean
     }
 
     fun getArticleIdx(): LiveData<String> {

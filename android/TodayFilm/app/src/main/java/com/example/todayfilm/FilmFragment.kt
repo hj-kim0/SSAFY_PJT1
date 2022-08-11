@@ -16,12 +16,20 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.example.todayfilm.data.CompleteProfile
+import com.example.todayfilm.data.GetProfile
 import com.example.todayfilm.databinding.FragmentFilmBinding
+import com.example.todayfilm.retrofit.NetWorkClient
 import kotlinx.android.synthetic.main.fragment_film.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.*
 
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
@@ -38,6 +46,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         binding = FragmentFilmBinding.inflate(inflater, container, false)
 
         articleidx = arguments?.getString("articleidx")
+        articlecreatedate = arguments?.getString("articlecreatedate")
+        article_userpid = arguments?.getString("article_userpid")
 
         return binding.root
     }
@@ -50,7 +60,30 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         val bundle = Bundle()
         bundle.putString("parent", "film")
         bundle.putString("articleidx", articleidx)
+        bundle.putString("articlecreatedate", articlecreatedate)
+        bundle.putString("article_userpid", article_userpid)
         frameFragment.arguments = bundle
+
+        // 작성자 정보 조회
+        val profile = GetProfile()
+        profile.userpid = article_userpid.toString()
+
+        val callUser = NetWorkClient.GetNetwork.getprofile(profile)
+        callUser.enqueue(object : Callback<CompleteProfile> {
+            override fun onResponse(
+                call: Call<CompleteProfile>,
+                response: Response<CompleteProfile>
+            ) {
+                val result = response.body()
+                val imgview = binding.filmUserimg
+                Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/profile/" + result?.userimg).into(imgview)
+                binding.filmUsername.text = result?.username
+            }
+
+            override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
+                Log.d("사용자 정보 조회 실패", t.message.toString())
+            }
+        })
 
         childFragmentManager.beginTransaction().add(R.id.fragment_content_film, frameFragment).commit()
         setOnClickListener()
@@ -61,18 +94,21 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         binding.filmPlayBtn.setOnClickListener(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.film_menu -> {
                 showPopup(binding.filmMenu)
             }
+
             R.id.film_play_btn -> {
-                val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-                sharedViewModel.setLiveText((articlecreatedate + article_userpid) ?: "")
+                val sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+                sharedViewModel.setIsPlay(true)
             }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private fun showPopup(v: View) {
         val popup = PopupMenu(context,v,  Gravity.TOP, 0, R.style.popup) // PopupMenu 객체 선언
         popup.menuInflater.inflate(R.menu.popup, popup.menu) // 메뉴 레이아웃 inflate
@@ -129,10 +165,10 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             R.id.save -> {
-                val btn= arrayOf("네","아니오")
+                val btn= arrayOf("네", "아니오")
                 normaldialog.arguments = bundleOf(
-                    "bodyTitle" to "정말 저장하시겠습니까?",
-                    "bodyContext" to "프레임이 갤러리에 저장됩니다.",
+                    "bodyTitle" to "프레임을 저장하시겠습니까?",
+                    "bodyContext" to "갤러리에 저장됩니다.",
                     "btnData" to btn
                 )
 
@@ -142,7 +178,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                         val bitmap = getBitmap(fragment_content_film)
 
                         var fos: OutputStream? = null
-                        val title = "이것은 당시 날짜이다."
+                        val title = articlecreatedate
                         // 3
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             // 4
@@ -185,7 +221,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     }
 
     fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
-        val storage: File = File(requireContext().cacheDir, "images")
+        val storage = File(requireContext().cacheDir, "images")
         val fileName: String = "cache"+ ".jpg"
         val tempFile = File(storage, fileName)
 
@@ -213,15 +249,15 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     }
 
     fun getBitmap(fragment: FrameLayout): Bitmap{
-        val bitmap = Bitmap.createBitmap(fragment.getWidth(), fragment.getHeight(), Bitmap.Config.ARGB_8888);
-        val canvas = Canvas(bitmap);
-        val bgDrawable = fragment.getBackground();
+        val bitmap = Bitmap.createBitmap(fragment.getWidth(), fragment.getHeight(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bgDrawable = fragment.getBackground()
         if (bgDrawable != null) {
-            bgDrawable.draw(canvas);
+            bgDrawable.draw(canvas)
         } else {
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.WHITE)
         }
-        fragment.draw(canvas);
+        fragment.draw(canvas)
 
         return bitmap
     }

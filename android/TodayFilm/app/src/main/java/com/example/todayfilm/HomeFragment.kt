@@ -32,6 +32,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val frameFragment = FrameFragment()
         val bundle = Bundle()
         bundle.putString("parent", "home")
+        bundle.putString("articlecreatedate", MyPreference.read(requireActivity(), "date"))
         frameFragment.arguments = bundle
 
         childFragmentManager.beginTransaction().add(R.id.fragment_content_home, frameFragment).commit()

@@ -6,9 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FilmFragment"
     android:orientation="vertical"
-    android:paddingHorizontal="10dp"
     android:background="@color/blue_200"
-
     android:overScrollMode="never">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -23,11 +21,10 @@
             android:paddingHorizontal="40dp"
             android:paddingVertical="7dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/film_userimg"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/switch_thumb"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="7dp"
-                android:text="이것은 아이디이다"
                 android:textColor="@color/gray_500"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"

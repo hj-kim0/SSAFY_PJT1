@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -28,9 +29,17 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val isComplete = MyPreference.readInt(this, "isComplete")
+
         // 처음에 보여줄 프래그먼트 지정
-        setFragment(TAG_HOME, HomeFragment())
-        binding.navBar.selectedItemId = R.id.homeFragment
+        if (isComplete == 0) {
+            // 미완성 상태면 Home
+            setFragment(TAG_HOME, HomeFragment())
+            binding.navBar.selectedItemId = R.id.homeFragment
+        } else {
+            // 완성 상태면 Film
+        }
+
 
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
@@ -153,7 +162,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commitAllowingStateLoss()
     }
 
-    fun changeFragment(index: Int, data: String?=null){
+    fun changeFragment(index: Int, data: String?=null, data1: String?=null, data2: String?=null){
         when(index){
             1 -> {
                 moveFragment(SearchFragment())
@@ -168,6 +177,8 @@ class MainActivity : AppCompatActivity() {
                     val fragment = FilmFragment()
                     val bundle = Bundle()
                     bundle.putString("articleidx", data)
+                    bundle.putString("articlecreatedate", data1)
+                    bundle.putString("article_userpid", data2)
                     fragment.arguments = bundle
                     moveFragment(fragment)
                 }
@@ -193,7 +204,7 @@ class MainActivity : AppCompatActivity() {
     fun moveFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(R.xml.enter,R.xml.none,R.xml.none,R.xml.exit)
+            .setCustomAnimations(R.xml.enter, R.xml.none, R.xml.none, R.xml.exit)
             .replace(R.id.fragment_content_main, fragment)
             .addToBackStack(null).commit()
     }

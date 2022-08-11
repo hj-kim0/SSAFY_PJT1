@@ -38,11 +38,14 @@ class CompleteActivity : AppCompatActivity() {
         val binding = ActivityCompleteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val date = MyPreference.read(this, "date")
+
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         val fragment = FrameFragment()
         val bundle = Bundle()
         bundle.putString("parent", "complete")
+        bundle.putString("articlecreatedate", date)
         fragment.arguments = bundle
         transaction.add(R.id.fragment_content_complete, fragment)
         transaction.commit()
@@ -67,7 +70,6 @@ class CompleteActivity : AppCompatActivity() {
             // 오늘 날짜 확인
             val today = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
                 .format(System.currentTimeMillis())
-            val date = MyPreference.read(this, "date")
 
             // 공개 여부 확인
             val shareBtn = binding.completeShareGroup.checkedRadioButtonId

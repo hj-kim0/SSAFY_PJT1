@@ -3,6 +3,7 @@ package com.example.todayfilm
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,26 +12,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.VideoView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import com.bumptech.glide.Glide
 import com.example.todayfilm.data.Imgvid
 import com.example.todayfilm.databinding.FragmentFrameBinding
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.collections.ArrayList
 
 class FrameFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentFrameBinding
     var parent: String? = null
     var articleidx: String? = null
-    var imgnumber = 0
+    var articlecreatedate: String? = null
+    var article_userpid: String? = null
+    var imgcount = 0
     lateinit var sharedPreferences: SharedPreferences
-    var play_userpid: String? = null
-    var play_articlecreatedate: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +47,8 @@ class FrameFragment : Fragment(), View.OnClickListener {
         binding = FragmentFrameBinding.inflate(inflater, container, false)
         parent = arguments?.getString("parent")
         articleidx = arguments?.getString("articleidx")
+        articlecreatedate = arguments?.getString("articlecreatedate")
+        article_userpid = arguments?.getString("article_userpid")
 
         sharedPreferences = requireActivity().getSharedPreferences(MyPreference.sp_name, Context.MODE_PRIVATE)
 
@@ -50,30 +60,31 @@ class FrameFragment : Fragment(), View.OnClickListener {
             val groupListType: Type = object: TypeToken<ArrayList<Imgvid?>?>() {}.type // json을 객체로 바꿀 때 타입 추론을 위함
             val tempArray = ArrayList<Imgvid>()
 
-            // 데이터가 비어있지 않다면 객체 수 확인해서 imgnumber값 지정하고 tempArray에 기존 데이터 추가
+            // 데이터가 비어있지 않다면 객체 수 확인해서 imgcount값 지정하고 tempArray에 기존 데이터 추가
             if (prev != "none" && prev != "" && prev != "[]") {
                 tempArray.addAll(gson.fromJson(prev, groupListType))
-                imgnumber += tempArray.size
             }
 
+            imgcount = MyPreference.readInt(requireActivity(), "imgcount")
+
             // 데이터 바인딩
-            if (imgnumber > 0) {
+            if (imgcount > 0) {
                 binding.imgvid1 = tempArray[0]
             }
-            if (imgnumber > 1) {
+            if (imgcount > 1) {
                 binding.imgvid2 = tempArray[1]
             }
-            if (imgnumber > 2) {
+            if (imgcount > 2) {
                 binding.imgvid3 = tempArray[2]
             }
-            if (imgnumber > 3) {
+            if (imgcount > 3) {
                 binding.imgvid4 = tempArray[3]
             }
 
             // 설정에서 반복하기로 한 경우
             val isRepeat = PreferenceManager.getDefaultSharedPreferences(requireActivity()).getBoolean("repeat", true)
-            if (parent == "complete" && isRepeat && imgnumber < 4) {
-                when (imgnumber) {
+            if (parent == "complete" && isRepeat && imgcount < 4) {
+                when (imgcount) {
                     1 -> {
                         binding.imgvid1 = tempArray[0]
                         binding.imgvid2 = tempArray[0]
@@ -97,12 +108,24 @@ class FrameFragment : Fragment(), View.OnClickListener {
                 }
             }
 
-            binding.date = MyPreference.read(requireActivity(), "date")
+            binding.date = articlecreatedate
 
         } else {
-            // 부모가 film이라면 서버에 게시글 조회 요청 //////////////////////////////////////////
+            // 부모가 film이라면 넘겨받은 정보로 데이터 보여주기
+            val imgview1 = binding.image1Photo
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/1.png").into(imgview1)
+            val imgview2 = binding.image2Photo
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/2.png").into(imgview2)
+            val imgview3 = binding.image3Photo
+            Glide.with(requireActivity()).load("http://i7c307.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/3.png").into(imgview3)
+            val imgview4 = binding.image4Photo
+            Glide.with(requireActivity()).load("http://i7c407.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/4.png").into(imgview4)
 
+            val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+            val temp = LocalDate.parse(articlecreatedate, formatter)
+            val changed = temp.format(DateTimeFormatter.ofPattern("yyyy/MM/dd (E)"))
 
+            binding.date = changed
         }
 
         return binding.root
@@ -115,36 +138,40 @@ class FrameFragment : Fragment(), View.OnClickListener {
             setOnClickListener()
         }
 
-        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedViewModel.getLiveText().observe(requireActivity(), androidx.lifecycle.Observer {
-            play_articlecreatedate = it.substring(0, 8)
-            play_userpid = it.substring(8)
+        var isPlay = false
 
-            if (play_userpid!!.length > 0 && play_articlecreatedate!!.length > 0) {
-                binding.image1Photo.visibility = View.GONE
-                binding.image2Photo.visibility = View.GONE
-                binding.image3Photo.visibility = View.GONE
-                binding.image4Photo.visibility = View.GONE
+        val sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel.getIsPlay().observe(
+            requireActivity(),
+        ) {
+            isPlay = it
+        }
 
-                playVideo(binding.image1Video, 1)
-                playVideo(binding.image2Video, 2)
-                playVideo(binding.image3Video, 3)
-                playVideo(binding.image4Video, 4)
-            }
-        })
+        if (isPlay) {
+            binding.image1Photo.visibility = View.GONE
+            binding.image2Photo.visibility = View.GONE
+            binding.image3Photo.visibility = View.GONE
+            binding.image4Photo.visibility = View.GONE
+
+            playVideo(binding.image1Video, 1)
+            playVideo(binding.image2Video, 2)
+            playVideo(binding.image3Video, 3)
+            playVideo(binding.image4Video, 4)
+            sharedViewModel.setIsPlay(false)
+        }
     }
 
     private fun setOnClickListener() {
-        if (imgnumber > 0) {
+        if (imgcount > 0) {
             binding.image1Section.setOnClickListener(this)
         }
-        if (imgnumber > 1) {
+        if (imgcount > 1) {
             binding.image2Section.setOnClickListener(this)
         }
-        if (imgnumber > 2) {
+        if (imgcount > 2) {
             binding.image3Section.setOnClickListener(this)
         }
-        if (imgnumber > 3) {
+        if (imgcount > 3) {
             binding.image4Section.setOnClickListener(this)
         }
     }
@@ -211,7 +238,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
         videoView.visibility = View.VISIBLE
 
         // 동영상 주소 준비
-        val videoUri = Uri.parse("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${play_userpid}/${play_articlecreatedate}/${vidnum}.mp4")
+        val videoUri = Uri.parse("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/${vidnum}.mp4")
 
         // 동영상 주소 지정
         videoView.setVideoURI(videoUri)
