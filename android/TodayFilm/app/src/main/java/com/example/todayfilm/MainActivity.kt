@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity() {
                     bundle.putString("articlecreatedate", data1)
                     bundle.putString("article_userpid", data2)
                     bundle.putString("likey", data3)
-                    Log.d("확인", data3.toString())
+//                    Log.d("확인", data3.toString())
                     fragment.arguments = bundle
                     moveFragment(fragment)
                 }
