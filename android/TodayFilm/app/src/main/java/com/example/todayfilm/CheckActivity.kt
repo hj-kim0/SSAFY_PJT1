@@ -6,7 +6,9 @@ import android.graphics.Matrix
 import android.media.MediaMetadataRetriever
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.MediaController
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.daasuu.mp4compose.FillMode
 import com.daasuu.mp4compose.Rotation
@@ -24,6 +26,7 @@ class CheckActivity : AppCompatActivity() {
     private val TAG = "테스트용 로그"
     private var srcPath = ""
     private lateinit var resultFile: File
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +34,7 @@ class CheckActivity : AppCompatActivity() {
         val binding = ActivityCheckBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val loadingDialog = LoadingDialog(this)
+        loadingDialog = LoadingDialog(this)
         loadingDialog.show()
 
         // 촬영한 영상 경로 및 확장자 제외한 파일명
@@ -83,12 +86,14 @@ class CheckActivity : AppCompatActivity() {
 
                 override fun onCanceled() {
                     File(srcPath).delete()
-                    Log.d(TAG, "onCanceled")
+                    loadingDialog.dismiss()
+                    Toast.makeText(this@CheckActivity, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailed(exception: Exception) {
                     File(srcPath).delete()
-                    Log.e(TAG, "onFailed()", exception)
+                    loadingDialog.dismiss()
+                    Toast.makeText(this@CheckActivity, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
             })
             .start()
@@ -97,7 +102,7 @@ class CheckActivity : AppCompatActivity() {
         resultFile = File(destPath)
 
         // 다시시도 버튼
-        binding.cameraRetry.setOnClickListener{
+        binding.cameraRetry.setOnClickListener {
             // 소스 파일 및 결과 영상 제거
             File(srcPath).delete()
             resultFile.delete()
@@ -110,7 +115,10 @@ class CheckActivity : AppCompatActivity() {
         }
 
         // 확인 버튼
-        binding.cameraOk.setOnClickListener{
+        binding.cameraOk.setOnClickListener {
+            binding.cameraOk.isClickable = false
+            loadingDialog.show()
+
             // 내부 저장소에 저장된 사진 정보 확인
             val prev = MyPreference.read(this, "imgvids") // 내부 저장소에 저장된 string(json)
             val gson = GsonBuilder().create()
@@ -174,5 +182,12 @@ class CheckActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        loadingDialog.dismiss()
+
+        this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 }

@@ -107,8 +107,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         binding.profileArticle.adapter = articleAdapter
 
         articleAdapter.setItemClickListener(object: ProfileArticleAdapter.ItemClickListener {
-            override fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String) {
-                (activity as MainActivity).changeFragment(3, articleidx, articlecreatedate, article_userpid, likey)
+            override fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String, hashstring: String) {
+                (activity as MainActivity).changeFragment(3, articleidx, articlecreatedate, article_userpid, likey, hashstring)
             }
         })
 

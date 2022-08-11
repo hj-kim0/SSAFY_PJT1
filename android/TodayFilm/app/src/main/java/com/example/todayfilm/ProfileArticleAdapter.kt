@@ -2,6 +2,7 @@ package com.example.todayfilm
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,26 +35,34 @@ class ProfileArticleAdapter(private val context: Context) : RecyclerView.Adapter
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val likes: TextView = itemView.findViewById(R.id.recycler_profile_article_likes)
         private val articlecreatedate: TextView = itemView.findViewById(R.id.recycler_profile_article_date)
         private val articlethumbnail: ImageView = itemView.findViewById(R.id.recycler_profile_article_image)
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(item: ArticleResponse) {
+            var hashstring = ""
+
+            for (hashtag in item.hash) {
+                hashstring += "#$hashtag "
+            }
+
             val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
             val temp = LocalDate.parse(item.article.articlecreatedate, formatter)
             val changed = temp.format(DateTimeFormatter.ofPattern("yyyy/MM/dd (E)"))
 
             articlecreatedate.text = changed
+            likes.text = item.likey
             Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${item.article.userpid}/${item.article.articlecreatedate}/${item.article.articlethumbnail}.png").into(articlethumbnail)
 
             itemView.setOnClickListener {
-                itemClickListener.onClick(it, item.article.articleidx, item.article.articlecreatedate, item.article.userpid, item.likey)
+                itemClickListener.onClick(it, item.article.articleidx, item.article.articlecreatedate, item.article.userpid, item.likey, hashstring)
             }
         }
     }
 
     interface ItemClickListener {
-        fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String)
+        fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String, hashstring: String)
     }
 
     private lateinit var itemClickListener: ItemClickListener

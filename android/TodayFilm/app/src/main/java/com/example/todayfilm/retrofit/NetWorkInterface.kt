@@ -62,7 +62,8 @@ interface NetWorkInterface {
         @Part videodata: List<MultipartBody.Part?>,
         @Part("userpid") userpid: RequestBody,
         @Part("articlethumbnail") articlethumbnail: RequestBody,
-        @Part("articleshare") articleshare: RequestBody
+        @Part("articleshare") articleshare: RequestBody,
+        @Part("hashlist") hashlist: RequestBody
     ): Call<FindPwResponse>
 
     @POST("api/article/sharecontrol")

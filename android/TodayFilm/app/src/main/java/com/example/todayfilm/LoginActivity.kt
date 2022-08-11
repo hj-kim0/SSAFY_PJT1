@@ -61,7 +61,10 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.loginBtn.setOnClickListener {
+        binding.loginBtn.setOnClickListener{
+            val loadingDialog = LoadingDialog(this)
+            loadingDialog.show()
+
             val LoginId = binding.loginId.text.toString()
             val LoginPw = binding.loginPw.text.toString()
 
@@ -135,21 +138,21 @@ class LoginActivity : AppCompatActivity() {
                                         this@LoginActivity,
                                         "성공적으로 로그인되었습니다.",
                                         Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                                    ).show()
 
-                                    val intent =
-                                        Intent(this@LoginActivity, MainActivity::class.java)
+                                    loadingDialog.dismiss()
+
+                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     startActivity(intent)
                                     finish()
                                 } else {
+                                    loadingDialog.dismiss()
                                     Toast.makeText(
                                         this@LoginActivity,
                                         "로그인에 실패했습니다.",
                                         Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                                    ).show()
                                 }
                             }
 

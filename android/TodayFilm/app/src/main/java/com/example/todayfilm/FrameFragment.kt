@@ -5,11 +5,11 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.VideoView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -33,6 +33,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
     var article_userpid: String? = null
     var imgcount = 0
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var sharedViewModel: SharedViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -61,10 +62,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
                 tempArray.addAll(gson.fromJson(prev, groupListType))
             }
 
-//            imgcount = MyPreference.readInt(requireActivity(), "imgcount")
-            imgcount = tempArray.size
-
-
+            imgcount = MyPreference.readInt(requireActivity(), "imgcount")
 
             // 데이터 바인딩
             if (imgcount > 0) {
@@ -75,7 +73,6 @@ class FrameFragment : Fragment(), View.OnClickListener {
             }
             if (imgcount > 2) {
                 binding.imgvid3 = tempArray[2]
-
             }
             if (imgcount > 3) {
                 binding.imgvid4 = tempArray[3]
@@ -99,31 +96,27 @@ class FrameFragment : Fragment(), View.OnClickListener {
                         binding.imgvid4 = tempArray[1]
                     }
 
-                     3 -> {
-                         binding.imgvid1 = tempArray[0]
-                         binding.imgvid2 = tempArray[1]
-                         binding.imgvid3 = tempArray[2]
-                         binding.imgvid4 = tempArray[0]
-                     }
+                    3 -> {
+                        binding.imgvid1 = tempArray[0]
+                        binding.imgvid2 = tempArray[1]
+                        binding.imgvid3 = tempArray[2]
+                        binding.imgvid4 = tempArray[0]
+                    }
                 }
             }
 
             binding.date = articlecreatedate
 
         } else {
-            Log.d("확인1", articleidx.toString())
-            Log.d("확인2", articlecreatedate.toString())
-            Log.d("확인3", article_userpid.toString())
-
             // 부모가 film이라면 넘겨받은 정보로 데이터 보여주기
             val imgview1 = binding.image1Photo
             Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/1.png").into(imgview1)
             val imgview2 = binding.image2Photo
             Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/2.png").into(imgview2)
             val imgview3 = binding.image3Photo
-            Glide.with(requireActivity()).load("http://i7c307.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/3.png").into(imgview3)
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/3.png").into(imgview3)
             val imgview4 = binding.image4Photo
-            Glide.with(requireActivity()).load("http://i7c407.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/4.png").into(imgview4)
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/4.png").into(imgview4)
 
             val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
             val temp = LocalDate.parse(articlecreatedate, formatter)
@@ -137,32 +130,6 @@ class FrameFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 부모가 complete면 대표 이미지 지정할 수 있게 함
-        if (parent == "complete") {
-            setOnClickListener()
-        }
-
-        var isPlay = false
-
-        val sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-        sharedViewModel.getIsPlay().observe(
-            requireActivity(),
-        ) {
-            isPlay = it
-        }
-
-        if (isPlay) {
-            binding.image1Photo.visibility = View.GONE
-            binding.image2Photo.visibility = View.GONE
-            binding.image3Photo.visibility = View.GONE
-            binding.image4Photo.visibility = View.GONE
-
-            playVideo(binding.image1Video, 1)
-            playVideo(binding.image2Video, 2)
-            playVideo(binding.image3Video, 3)
-            playVideo(binding.image4Video, 4)
-            sharedViewModel.setIsPlay(false)
-        }
     }
 
     private fun setOnClickListener() {
@@ -230,6 +197,69 @@ class FrameFragment : Fragment(), View.OnClickListener {
         super.onResume()
         // 리스너 등록
         sharedPreferences.registerOnSharedPreferenceChangeListener(prefListener)
+
+        // 부모가 complete면 대표 이미지 지정할 수 있게 함
+        if (parent == "complete") {
+            setOnClickListener()
+        }
+
+        // 동영상 재생 관련
+        val image1 = binding.image1Photo
+        val image2 = binding.image2Photo
+        val image3 = binding.image3Photo
+        val image4 = binding.image4Photo
+
+        val video1 = binding.image1Video
+        val video2 = binding.image2Video
+        val video3 = binding.image3Video
+        val video4 = binding.image4Video
+
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel.getIsPlay().observe(
+            requireActivity(),
+        ) {
+            image1.visibility = View.GONE
+            image2.visibility = View.GONE
+            image3.visibility = View.GONE
+            image4.visibility = View.GONE
+
+            prepareVideo(video1, image1, 1)
+            prepareVideo(video2, image2, 2)
+            prepareVideo(video3, image3, 3)
+            prepareVideo(video4, image4, 4)
+        }
+
+        sharedViewModel.getIsPrepared().observe(requireActivity()) {
+            if (it == 10) {
+                video1.start()
+
+                video1.setOnCompletionListener {
+                    video2.start()
+                }
+
+                video2.setOnCompletionListener {
+                    video3.start()
+                }
+
+                video3.setOnCompletionListener {
+                    video4.start()
+                }
+
+                video4.setOnCompletionListener {
+                    image1.visibility = View.VISIBLE
+                    image2.visibility = View.VISIBLE
+                    image3.visibility = View.VISIBLE
+                    image4.visibility = View.VISIBLE
+
+                    video1.visibility = View.GONE
+                    video2.visibility = View.GONE
+                    video3.visibility = View.GONE
+                    video4.visibility = View.GONE
+
+                    sharedViewModel.setIsPrepared(-10)
+                }
+            }
+        }
     }
 
     override fun onPause() {
@@ -238,7 +268,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(prefListener)
     }
 
-    fun playVideo(videoView: VideoView, vidnum: Int) {
+    fun prepareVideo(videoView: VideoView, imageView: ImageView, vidnum: Int) {
         videoView.visibility = View.VISIBLE
 
         // 동영상 주소 준비
@@ -247,9 +277,9 @@ class FrameFragment : Fragment(), View.OnClickListener {
         // 동영상 주소 지정
         videoView.setVideoURI(videoUri)
 
-        // 동영상 재생
+        // 동영상 재생 준비가 되면 알림
         videoView.setOnPreparedListener {
-            videoView.start()
+            sharedViewModel.setIsPrepared(vidnum)
         }
     }
 }

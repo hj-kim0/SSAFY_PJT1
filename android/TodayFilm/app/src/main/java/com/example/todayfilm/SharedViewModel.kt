@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
     private var isPlay: MutableLiveData<Boolean> = MutableLiveData()
+    private var isPrepared: MutableLiveData<Int> = MutableLiveData(0)
     private var articleIdx: MutableLiveData<String> = MutableLiveData()
 
     fun getIsPlay(): LiveData<Boolean> {
@@ -22,5 +23,13 @@ class SharedViewModel: ViewModel() {
 
     fun setArticleIdx(string: String) {
         articleIdx.value = string
+    }
+
+    fun getIsPrepared(): LiveData<Int> {
+        return isPrepared
+    }
+
+    fun setIsPrepared(int: Int) {
+        isPrepared.value = isPrepared.value?.plus(int)
     }
 }

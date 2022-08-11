@@ -59,18 +59,22 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
                 }
             })
 
+            var hashstring = ""
+
+            for (hashtag in item.hash) {
+                hashstring += "#$hashtag "
+            }
+
             Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${item.article.userpid}/${item.article.articlecreatedate}/${item.article.articlethumbnail}.png").into(articlethumbnail)
 
             itemView.setOnClickListener {
-                itemClickListener.onClick(it, item.article.articleidx, item.article.articlecreatedate, item.article.userpid, item.likey)
+                itemClickListener.onClick(it, item.article.articleidx, item.article.articlecreatedate, item.article.userpid, item.likey, hashstring)
             }
-
-            Log.d("확인 어댑터", item.likey)
         }
     }
 
     interface ItemClickListener {
-        fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String)
+        fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String, hashstring: String)
     }
 
     private lateinit var itemClickListener: ItemClickListener

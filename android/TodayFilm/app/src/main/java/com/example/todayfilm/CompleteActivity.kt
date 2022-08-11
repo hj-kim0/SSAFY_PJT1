@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -32,6 +33,9 @@ import java.util.*
 
 class CompleteActivity : AppCompatActivity() {
     private var thumbnail = 0
+
+    // 로딩 화면
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +59,7 @@ class CompleteActivity : AppCompatActivity() {
         binding.completeBtn.setOnClickListener {
             val hashtags = binding.completeHashtag.insertTag
             var isHashtagsOK = true
+            var hashstring = ""
 
             // 해시태그 유효성 검사
             if (hashtags.size < 0 || hashtags.size > 4) {
@@ -64,8 +69,12 @@ class CompleteActivity : AppCompatActivity() {
                 if (hashtag.length < 0 || hashtag.length > 32) {
                     isHashtagsOK = false
                     break
+                } else {
+                    hashstring += ",$hashtag"
                 }
             }
+
+            hashstring = hashstring.substring(1)
 
             // 오늘 날짜 확인
             val today = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
@@ -94,6 +103,9 @@ class CompleteActivity : AppCompatActivity() {
             } else if (!isHashtagsOK) {
                 Toast.makeText(this, "해시태그가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
             } else {
+                loadingDialog = LoadingDialog(this)
+                loadingDialog.show()
+
                 // 서버로 데이터 전송
                 val imgcount = MyPreference.readInt(this, "imgcount")
 
@@ -123,8 +135,11 @@ class CompleteActivity : AppCompatActivity() {
                 // 공개 여부
                 val articleshare = RequestBody.create(MediaType.parse("text/plain"), share.toString())
 
+                // 해시태그
+                val hashlist = RequestBody.create(MediaType.parse("text/plain"), hashstring)
+
                 // 전송
-                val call = NetWorkClient.GetNetwork.createarticle(images, videos, userpid, articlethumbnail, articleshare)
+                val call = NetWorkClient.GetNetwork.createarticle(images, videos, userpid, articlethumbnail, articleshare, hashlist)
                 call.enqueue(object : Callback<FindPwResponse> {
 
                     override fun onResponse(call: Call<FindPwResponse>, response: Response<FindPwResponse>) {
@@ -178,6 +193,9 @@ class CompleteActivity : AppCompatActivity() {
                             MyPreference.write(applicationContext, "date", today)
                         }
 
+                        // 로딩 화면 끝
+                        loadingDialog.dismiss()
+
                         // 응답 받은 후 토스트 띄우고 main 액티비티로 이동
                         Toast.makeText(applicationContext, "성공적으로 기록되었습니다.", Toast.LENGTH_SHORT).show()
                         val intent = Intent(applicationContext, MainActivity::class.java)
@@ -186,6 +204,9 @@ class CompleteActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<FindPwResponse>, t: Throwable) {
+                        // 로딩 화면 끝
+                        loadingDialog.dismiss()
+
                         Toast.makeText(applicationContext, "전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
                 })
