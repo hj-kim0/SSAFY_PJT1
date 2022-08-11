@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentProfileBinding
@@ -52,8 +53,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             binding.profileToSettings.visibility = View.INVISIBLE
             if (isFollow) {
                 binding.profileBtn.text = "언팔로우"
+
             } else {
                 binding.profileBtn.text = "팔로우"
+
             }
         }
 
@@ -135,12 +138,77 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     val intent = Intent(activity, ChangeProfileActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
+
+
                 } else {
                     // 팔로우 중인지 확인 후 서버로 팔로우 / 언팔로우 요청 보내기
+
                     if (isFollow) {
                         // 언팔로우 요청
+
+                        val deleteFollowR = FollowRequest()
+                        deleteFollowR.subfrom = search_userpid
+                        deleteFollowR.subto = userpid
+
+                        val calldeletefollow = NetWorkClient.GetNetwork.deletefollow(deleteFollowR)
+                        calldeletefollow.enqueue( object : Callback<noRseponse> {
+                            override fun onResponse(
+                                call: Call<noRseponse>,
+                                response: Response<noRseponse>
+                            ) {
+
+                                val result: noRseponse? = response.body()
+                                if (result?.success!!) {
+                                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+
+                                } else {
+                                    Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+
+
+                            }
+
+                        })
+
+
                         Log.d("확인용", "언팔로우")
+
+
                     } else {
+
+
+
+                        val addFollowR = FollowRequest()
+                        addFollowR.subfrom = search_userpid
+                        addFollowR.subto = userpid
+
+                        val calldeletefollow = NetWorkClient.GetNetwork.createfollow(addFollowR)
+                        calldeletefollow.enqueue( object : Callback<noRseponse> {
+                            override fun onResponse(
+                                call: Call<noRseponse>,
+                                response: Response<noRseponse>
+                            ) {
+
+                                val result: noRseponse? = response.body()
+                                if (result?.success!!) {
+                                    Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+
+                                } else {
+                                    Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+
+
+                            }
+
+                        })
+
+                        
                         // 팔로우 요청
                         Log.d("확인용", "팔로우")
                     }

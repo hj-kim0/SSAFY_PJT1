@@ -72,4 +72,15 @@ interface NetWorkInterface {
     fun searchuser(
         @Body search: SearchUserRequest
     ): Call<SearchUserResponse>
+
+    @POST("api/subscribe/delete")
+    fun deletefollow(
+        @Body follow: FollowRequest
+    ): Call<noRseponse>
+
+
+    @POST("api/subscribe/create")
+    fun createfollow(
+        @Body follow: FollowRequest
+    ): Call<noRseponse>
 }
