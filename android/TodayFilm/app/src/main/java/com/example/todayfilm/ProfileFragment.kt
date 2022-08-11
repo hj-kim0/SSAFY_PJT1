@@ -46,46 +46,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         search_userpid = arguments?.getString("search_userpid").toString()
 
 
-
-
-
-
-
-
-
-
-//        calldeletefollow.enqueue( object : Callback<noRseponse> {
-//            override fun onResponse(
-//                call: Call<noRseponse>,
-//                response: Response<noRseponse>
-//            ) {
-//
-//                val result: noRseponse? = response.body()
-//                if (result?.success!!) {
-//                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-//
-//                } else {
-//                    Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-//
-//
-//            }
-//
-//        })
-//
-
-
-
-
-
-
-
-
-
-
         if (userpid == search_userpid) {
             isMyProfile = true
         }
@@ -97,93 +57,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         } else {
             // 다른 사용자 프로필
             binding.profileToSettings.visibility = View.INVISIBLE
-
-            val searchFollowr = FollowRequest()
-            searchFollowr.subfrom = search_userpid
-            searchFollowr.subto = userpid
-
-            val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
-            searchFollow.enqueue(object : Callback<FollowBoolean>{
-                override fun onResponse(call: Call<FollowBoolean>, response: Response<FollowBoolean>) {
-                    var isFollow = response.body()?.followBoolean
-                    Log.d("팔로우인",search_userpid)
-                    Log.d("팔로우인",userpid)
-                    Log.d("팔로우?",isFollow.toString())
-
-                    if (isFollow!!) {
-                        binding.profileBtn.text = "언팔로우"
-
-                    } else {
-                        binding.profileBtn.text = "팔로우"
-
-                    }
-
-
-                }
-
-                override fun onFailure(call: Call<FollowBoolean>, t: Throwable) {
-
-
-                }
-
-            })
-            //서버 통신되면
-
-
-
+            searchProfile(true)
 
         }
-
         // 사용자 정보 조회
-        val profile = GetProfile()
-        profile.userpid = search_userpid
-
-        val callUser = NetWorkClient.GetNetwork.getprofile(profile)
-        callUser.enqueue(object : Callback<CompleteProfile>{
-            override fun onResponse(
-                call: Call<CompleteProfile>,
-                response: Response<CompleteProfile>
-            ) {
-                val result = response.body()
-                val imgview = binding.profileImage
-                Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/profile/" + result?.userimg).into(imgview)
-                binding.profileId.text = result?.userid
-                binding.profileUsername.text = result?.username
-                binding.profileDescription.text = result?.userdesc
-            }
-
-            override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
-                Log.d("사용자 정보 조회 실패", t.message.toString())
-            }
-        })
-
+        getProfile()
         // 사용자 게시글 조회
-        val article = GetArticle()
-        article.userpid = userpid
-        article.search_userpid = search_userpid
-
-        val callArticle = NetWorkClient.GetNetwork.showarticle(article)
-        callArticle.enqueue( object : Callback<List<ArticleResponse>>{
-            override fun onResponse(
-                call: Call<List<ArticleResponse>>,
-                response: Response<List<ArticleResponse>>
-            ) {
-                val result = response.body()
-                val datas = arrayListOf<ArticleResponse>()
-
-                if (result != null) {
-                    for (r in result) {
-                        datas.add(r)
-                    }
-                }
-
-                initArticleRecycler(datas)
-            }
-
-            override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
-                Log.d("사용자 게시글 조회 실패", t.message.toString())
-            }
-        })
+        getArticle()
 
         setOnClickListener()
     }
@@ -215,202 +95,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
 
                 } else {
+                    searchProfile(false)
                     // 팔로우 중인지 확인 후 서버로 팔로우 / 언팔로우 요청 보내기
 
-
-                    Log.d("isfo체크",isFollow.toString())
-
-
-
-                    val searchFollowr = FollowRequest()
-                    searchFollowr.subfrom = search_userpid
-                    searchFollowr.subto = userpid
-
-                    val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
-                    searchFollow.enqueue(object : Callback<FollowBoolean>{
-                        override fun onResponse(call: Call<FollowBoolean>, response: Response<FollowBoolean>) {
-                            var isFollow = response.body()?.followBoolean
-                            Log.d("팔로우인",search_userpid)
-                            Log.d("팔로우인",userpid)
-                            Log.d("팔로우?",isFollow.toString())
-
-                            if (isFollow!!) {
-
-
-                                val deleteFollowR = FollowRequest()
-                                deleteFollowR.subfrom = search_userpid
-                                deleteFollowR.subto = userpid
-
-                                val calldeletefollow = NetWorkClient.GetNetwork.deletefollow(deleteFollowR)
-                                calldeletefollow.enqueue( object : Callback<noRseponse> {
-                                    override fun onResponse(
-                                        call: Call<noRseponse>,
-                                        response: Response<noRseponse>
-                                    ) {
-
-                                        val result: noRseponse? = response.body()
-                                        Log.d("체크석세스",result?.success.toString())
-                                        if (result?.success!!) {
-                                            binding.profileBtn.text = "팔로우"
-                                            Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-
-                                        } else {
-                                            Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                        }
-                                    }
-
-                                    override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-
-
-                                    }
-
-                                })
-
-
-                                Log.d("확인용", "언팔로우")
-
-
-
-
-
-
-
-                            } else {
-
-                                val addFollowR = FollowRequest()
-                                addFollowR.subfrom = search_userpid
-                                addFollowR.subto = userpid
-
-                                val calldeletefollow = NetWorkClient.GetNetwork.createfollow(addFollowR)
-                                calldeletefollow.enqueue( object : Callback<noRseponse> {
-                                    override fun onResponse(
-                                        call: Call<noRseponse>,
-                                        response: Response<noRseponse>
-                                    ) {
-
-                                        val result: noRseponse? = response.body()
-                                        if (result?.success!!) {
-                                            binding.profileBtn.text = "언팔로우"
-                                            Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-
-                                        } else {
-                                            Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                        }
-                                    }
-
-
-
-                                    override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-
-
-                                    }
-
-                                })
-
-
-
-
-
-
-
-
-                            }
-
-
-                        }
-
-                        override fun onFailure(call: Call<FollowBoolean>, t: Throwable) {
-
-
-                        }
-
-                    })
-
-
-
-
-
-
-
-
-
-
-
-
-//                    if (isFollow) {
-//                        // 언팔로우 요청
-//
-//                        val deleteFollowR = FollowRequest()
-//                        deleteFollowR.subfrom = search_userpid
-//                        deleteFollowR.subto = userpid
-//
-//                        val calldeletefollow = NetWorkClient.GetNetwork.deletefollow(deleteFollowR)
-//                        calldeletefollow.enqueue( object : Callback<noRseponse> {
-//                            override fun onResponse(
-//                                call: Call<noRseponse>,
-//                                response: Response<noRseponse>
-//                            ) {
-//
-//                                val result: noRseponse? = response.body()
-//                                Log.d("체크석세스",result?.success.toString())
-//                                if (result?.success!!) {
-//                                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-//
-//                                } else {
-//                                    Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//                                }
-//                            }
-//
-//                            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-//
-//
-//                            }
-//
-//                        })
-//
-//
-//                        Log.d("확인용", "언팔로우")
-//
-//
-//                    } else {
-//
-//
-//
-//                        val addFollowR = FollowRequest()
-//                        addFollowR.subfrom = search_userpid
-//                        addFollowR.subto = userpid
-//
-//                        val calldeletefollow = NetWorkClient.GetNetwork.createfollow(addFollowR)
-//                        calldeletefollow.enqueue( object : Callback<noRseponse> {
-//                            override fun onResponse(
-//                                call: Call<noRseponse>,
-//                                response: Response<noRseponse>
-//                            ) {
-//
-//                                val result: noRseponse? = response.body()
-//                                if (result?.success!!) {
-//                                    Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-//
-//                                } else {
-//                                    Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//                                }
-//                            }
-//
-//
-//
-//                            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-//
-//
-//                            }
-//
-//                        })
-//
-//
-//
-//
-//                        // 팔로우 요청
-//                        Log.d("확인용", "팔로우")
-//                    }
                 }
             }
         }
@@ -427,5 +114,147 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         })
 
         articleAdapter.datas = articledatas
+    }
+
+
+    private fun unfollow(){
+        val deleteFollowR = FollowRequest()
+        deleteFollowR.subfrom = search_userpid
+        deleteFollowR.subto = userpid
+
+        val calldeletefollow = NetWorkClient.GetNetwork.deletefollow(deleteFollowR)
+        calldeletefollow.enqueue( object : Callback<noRseponse> {
+            override fun onResponse(
+                call: Call<noRseponse>,
+                response: Response<noRseponse>
+            ) {
+                val result: noRseponse? = response.body()
+                Log.d("체크석세스",result?.success.toString())
+                if (result?.success!!) {
+                    binding.profileBtn.text = "팔로우"
+                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+            }
+        })
+    }
+
+    private fun follow(){
+        val addFollowR = FollowRequest()
+        addFollowR.subfrom = search_userpid
+        addFollowR.subto = userpid
+
+        val calldeletefollow = NetWorkClient.GetNetwork.createfollow(addFollowR)
+        calldeletefollow.enqueue( object : Callback<noRseponse> {
+            override fun onResponse(
+                call: Call<noRseponse>,
+                response: Response<noRseponse>
+            ) {
+
+                val result: noRseponse? = response.body()
+                if (result?.success!!) {
+                    binding.profileBtn.text = "언팔로우"
+                    Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
+
+
+            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+            }
+        })
+    }
+
+    private fun getArticle(){
+        val article = GetArticle()
+        article.userpid = userpid
+        article.search_userpid = search_userpid
+
+        val callArticle = NetWorkClient.GetNetwork.showarticle(article)
+        callArticle.enqueue( object : Callback<List<ArticleResponse>>{
+            override fun onResponse(
+                call: Call<List<ArticleResponse>>,
+                response: Response<List<ArticleResponse>>
+            ) {
+                val result = response.body()
+                val datas = arrayListOf<ArticleResponse>()
+
+                if (result != null) {
+                    for (r in result) {
+                        datas.add(r)
+                    }
+                }
+
+                initArticleRecycler(datas)
+            }
+
+            override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
+                Log.d("사용자 게시글 조회 실패", t.message.toString())
+            }
+        })
+    }
+    private fun getProfile(){
+        val profile = GetProfile()
+        profile.userpid = search_userpid
+
+        val callUser = NetWorkClient.GetNetwork.getprofile(profile)
+        callUser.enqueue(object : Callback<CompleteProfile>{
+            override fun onResponse(
+                call: Call<CompleteProfile>,
+                response: Response<CompleteProfile>
+            ) {
+                val result = response.body()
+                val imgview = binding.profileImage
+                Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/profile/" + result?.userimg).into(imgview)
+                binding.profileId.text = result?.userid
+                binding.profileUsername.text = result?.username
+                binding.profileDescription.text = result?.userdesc
+            }
+
+            override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
+                Log.d("사용자 정보 조회 실패", t.message.toString())
+            }
+        })
+    }
+
+    private fun searchProfile(switch:Boolean){
+        val searchFollowr = FollowRequest()
+        searchFollowr.subfrom = search_userpid
+        searchFollowr.subto = userpid
+
+        val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
+        searchFollow.enqueue(object : Callback<FollowBoolean>{
+            override fun onResponse(call: Call<FollowBoolean>, response: Response<FollowBoolean>) {
+                var isFollow = response.body()?.followBoolean
+
+                if (isFollow!!) {
+                    if (switch){
+                        binding.profileBtn.text = "언팔로우"
+                    }else{
+                        unfollow()
+                    }
+
+                } else {
+                    if (switch){
+                        binding.profileBtn.text = "팔로우"
+                    }else{
+                        follow()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<FollowBoolean>, t: Throwable) {
+
+            }
+        })
+
     }
 }

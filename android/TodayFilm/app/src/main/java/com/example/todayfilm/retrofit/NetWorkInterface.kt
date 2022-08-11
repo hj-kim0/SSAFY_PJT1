@@ -104,5 +104,10 @@ interface NetWorkInterface {
     fun articledelete(
         @Body articledelete: ArticleDeleteRequest
     ): Call<ArticleDeleteResponse>
+
+    @POST("api/subscribe/followed")
+    fun followed(
+        @Body getProfile: GetProfile
+    ):Call<List<FollowProfile>>
 }
 

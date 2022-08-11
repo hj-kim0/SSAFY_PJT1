@@ -89,7 +89,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val btn= arrayOf("네","아니오")
                 Log.d("왜 안되니2","왜 안되는데")
                 normaldialog.arguments = bundleOf(
-                    "bodyContext" to "예 선택 시, 설정의 '사진 반복 여부'에 따라 필름의 남은 칸을 채웁니다.",
+                    "bodyContext" to "네 선택 시, 설정의 '사진 반복 여부'에 따라 필름의 남은 칸을 채웁니다.",
                     "bodyTitle" to "필름이 채워지지 않은 상태로 완성 하시겠습니까?",
                     "btnData" to btn
                 )
