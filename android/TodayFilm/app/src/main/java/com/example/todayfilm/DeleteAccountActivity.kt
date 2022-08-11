@@ -41,6 +41,11 @@ class DeleteAccountActivity : AppCompatActivity() {
                         call: Call<DeleteAccountResponse>,
                         response: Response<DeleteAccountResponse>
                     ) {
+
+
+
+
+
                         var dialog = AlertDialog.Builder(this@DeleteAccountActivity)
                         dialog.setTitle("회원탈퇴")
                         dialog.setMessage("회원탈퇴가 정상적으로 완료되었습니다.")

@@ -128,6 +128,7 @@ class CheckActivity : AppCompatActivity() {
 
             // 결과 영상을 cache에서 file 디렉토리로 이름 바꿔 옮기기
             val movedFile = File(this.getExternalFilesDir(null), "${imgcount}.mp4")
+
             resultFile.copyTo(movedFile)
             resultFile.delete()
 

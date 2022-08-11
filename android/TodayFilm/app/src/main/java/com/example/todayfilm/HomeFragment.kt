@@ -83,52 +83,38 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.home_to_complete -> {
+                if (imgcount < 4){
+                    val normaldialog = NormalDialogFragment()
+                    val duration = Toast.LENGTH_SHORT
+                    val btn= arrayOf("네","아니오")
+                    normaldialog.arguments = bundleOf(
+                        "bodyContext" to "예 선택 시, 설정의 '사진 반복 여부'에 따라 필름의 남은 칸을 채웁니다.",
+                        "bodyTitle" to "필름이 채워지지 않은 상태로 완성 하시겠습니까?",
+                        "btnData" to btn
+                    )
 
-                val normaldialog = NormalDialogFragment()
-                val duration = Toast.LENGTH_SHORT
-                val btn= arrayOf("네","아니오")
-                normaldialog.arguments = bundleOf(
-                    "bodyContext" to "예 선택 시, 설정의 '사진 반복 여부'에 따라 필름의 남은 칸을 채웁니다.",
-                    "bodyTitle" to "필름이 채워지지 않은 상태로 완성 하시겠습니까?",
-                    "btnData" to btn
-                )
+                    normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
 
-                normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
+                    normaldialog.setButtonClickListener(object :
+                        NormalDialogFragment.OnButtonClickListener {
+                        override fun onButton1Clicked() {
+                            //취소버튼을 눌렀을 때 처리할 곳
+                            moveToComplete()
 
-                normaldialog.setButtonClickListener(object :
-                    NormalDialogFragment.OnButtonClickListener {
-                    override fun onButton1Clicked() {
-                        //취소버튼을 눌렀을 때 처리할 곳
-                        moveToComplete()
+                        }
 
-                    }
+                        override fun onButton2Clicked() {
+                            //확인버튼을 눌렀을 때 처리할 곳
+                            Toast.makeText(context, "필름을 더 채워주세요!", duration).show()
+                        }
+                    })
 
-                    override fun onButton2Clicked() {
-                        //확인버튼을 눌렀을 때 처리할 곳
-                        Toast.makeText(context, "필름을 더 채워주세요!", duration).show()
-                    }
-                })
+                }else{
+                    moveToComplete()
+
+                }
 
 
-
-
-
-
-
-//                val builder = AlertDialog.Builder(activity)
-//
-//                // 사진 4장 미만인 경우 다이얼로그
-//                if (imgcount < 4) {
-//                    builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
-//                        .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.")
-//                        .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-//                            moveToComplete()
-//                        })
-//                        .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
-//                    builder.show()
-//                } else {
-//                    moveToComplete()
-//                }
             }
         }
     }

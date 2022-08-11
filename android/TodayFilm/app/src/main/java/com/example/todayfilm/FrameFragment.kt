@@ -65,7 +65,10 @@ class FrameFragment : Fragment(), View.OnClickListener {
                 tempArray.addAll(gson.fromJson(prev, groupListType))
             }
 
-            imgcount = MyPreference.readInt(requireActivity(), "imgcount")
+//            imgcount = MyPreference.readInt(requireActivity(), "imgcount")
+            imgcount = tempArray.size
+
+
 
             // 데이터 바인딩
             if (imgcount > 0) {
@@ -76,6 +79,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
             }
             if (imgcount > 2) {
                 binding.imgvid3 = tempArray[2]
+
             }
             if (imgcount > 3) {
                 binding.imgvid4 = tempArray[3]
