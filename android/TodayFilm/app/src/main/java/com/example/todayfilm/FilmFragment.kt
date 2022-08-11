@@ -22,6 +22,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.todayfilm.data.ArticleDeleteRequest
+import com.example.todayfilm.data.ArticleDeleteResponse
 import com.example.todayfilm.data.CompleteProfile
 import com.example.todayfilm.data.GetProfile
 import com.example.todayfilm.databinding.FragmentFilmBinding
@@ -149,12 +151,33 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 normaldialog.setButtonClickListener(object :
                     NormalDialogFragment.OnButtonClickListener {
                     override fun onButton1Clicked() {
-                        //취소버튼을 눌렀을 때 처리할 곳
+                        //확인버튼을 눌렀을 때 처리할 곳
+                        Log.d("게시글 번호", articleidx.toString())
+                        var articledelete = ArticleDeleteRequest()
+                        articledelete.articleidx = articleidx!!.toInt()
+                        Log.d("게시글번호2", articledelete.articleidx.toString())
+                        val call = NetWorkClient.GetNetwork.articledelete(articledelete)
+                        call.enqueue(object : Callback<ArticleDeleteResponse> {
+                            override fun onResponse(
+                                call: Call<ArticleDeleteResponse>,
+                                response: Response<ArticleDeleteResponse>
+                            ) {
+                                val result: ArticleDeleteResponse? = response.body()
+
+                                Log.d("성공", result?.message.toString() + " " + result?.success.toString())
+                                Toast.makeText(context, "삭제가 완료되었습니다.", duration).show()
+                                moveToMain()
+                            }
+
+                            override fun onFailure(call: Call<ArticleDeleteResponse>, t: Throwable) {
+                                Log.d("실패:", t.message.toString())
+                            }
+                        })
                         Toast.makeText(context, "삭제가 완료되었습니다.", duration).show()
                     }
 
                     override fun onButton2Clicked() {
-                        //확인버튼을 눌렀을 때 처리할 곳
+                        //취소버튼을 눌렀을 때 처리할 곳
                         Toast.makeText(context, "삭제가 취소되었습니다.", duration).show()
                     }
                 })
@@ -275,5 +298,11 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         fragment.draw(canvas)
 
         return bitmap
+    }
+    private fun moveToMain() {
+        // complete 액티비티로 이동
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }
