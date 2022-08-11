@@ -2,5 +2,6 @@ package com.example.todayfilm.data
 
 class ChangePwRequest {
     var userpid = ""
-    var userpassword = ""
+    var userpw = ""
+    var usernewpw = ""
 }

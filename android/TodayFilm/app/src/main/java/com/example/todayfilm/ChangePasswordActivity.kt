@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.todayfilm.data.ChangePwRequest
 import com.example.todayfilm.data.ChangePwResponse
+import com.example.todayfilm.data.SignupData
 import com.example.todayfilm.databinding.ActivityChangePasswordBinding
 import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
@@ -46,13 +47,16 @@ class ChangePasswordActivity : AppCompatActivity() {
                 // 서버로 요청 보내기
                 var changepw = ChangePwRequest()
                 changepw.userpid = userpid
-                changepw.userpassword = newPw
+                changepw.userpw = oldPw
+                changepw.usernewpw = newPw
                 val call = NetWorkClient.GetNetwork.changepw(changepw)
                 call.enqueue(object : Callback<ChangePwResponse> {
                     override fun onResponse(
                         call: Call<ChangePwResponse>,
                         response: Response<ChangePwResponse>
                     ) {
+                        val result: ChangePwResponse? = response.body()
+                        Log.d("test", result?.message.toString())
                         MyPreference.write(this@ChangePasswordActivity, "userpassword", newPw)
                         Toast.makeText(this@ChangePasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
                         onBackPressed()

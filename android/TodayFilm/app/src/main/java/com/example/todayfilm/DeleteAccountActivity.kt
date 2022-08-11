@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import com.example.todayfilm.data.ChangePwResponse
 import com.example.todayfilm.data.DeleteAccountRequest
 import com.example.todayfilm.data.DeleteAccountResponse
 
@@ -22,7 +23,7 @@ class DeleteAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var userpid = MyPreference.read(this, "userid")
+        var userpid = MyPreference.read(this, "userpid")
         var userpw = MyPreference.read(this, "userpassword")
 
         binding.deleteAccountBtn.setOnClickListener{
@@ -32,7 +33,7 @@ class DeleteAccountActivity : AppCompatActivity() {
                 binding.deleteAccountErr.setText("비밀번호가 일치하지 않습니다.")
             }else{
                 var deleteUser = DeleteAccountRequest()
-                deleteUser.userpid = userpid
+                deleteUser.userpid = userpid.toInt()
                 deleteUser.userpassword = userpw
 
                 val call = NetWorkClient.GetNetwork.signdown(deleteUser)
@@ -41,7 +42,8 @@ class DeleteAccountActivity : AppCompatActivity() {
                         call: Call<DeleteAccountResponse>,
                         response: Response<DeleteAccountResponse>
                     ) {
-
+                        val result: DeleteAccountResponse? = response.body()
+                        Log.d("test", result?.message.toString())
                         var dialog = AlertDialog.Builder(this@DeleteAccountActivity)
                         dialog.setTitle("회원탈퇴")
                         dialog.setMessage("회원탈퇴가 정상적으로 완료되었습니다.")

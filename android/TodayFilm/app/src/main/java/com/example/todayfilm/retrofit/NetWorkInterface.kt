@@ -32,7 +32,7 @@ interface NetWorkInterface {
         @Body changePw: ChangePwRequest
     ): Call<ChangePwResponse>
 
-    @GET("api/account/findpw")
+    @POST("api/account/findpw")
     fun findpw(
         @Body findPw: FindPwRequest
     ): Call<FindPwResponse>

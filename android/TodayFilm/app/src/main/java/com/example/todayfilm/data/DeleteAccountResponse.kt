@@ -1,5 +1,6 @@
 package com.example.todayfilm.data
 
 class DeleteAccountResponse {
-    var result = ""
+    var message = ""
+    var success = ""
 }
