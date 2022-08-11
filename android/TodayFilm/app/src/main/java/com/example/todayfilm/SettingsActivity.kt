@@ -5,8 +5,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
@@ -79,22 +81,76 @@ class SettingsActivity : AppCompatActivity() {
             when (key) {
                 "logout" -> {
                     // 다이얼로그 띄우기
-                    val builder = AlertDialog.Builder(activity)
-                    builder.setTitle("로그아웃 하시겠습니까?")
-                        .setMessage("완성되지 않은 필름은 삭제됩니다.")
-                        .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-                            // 서버로 로그아웃 요청
+                    val normaldialog = NormalDialogFragment()
+                    val duration = Toast.LENGTH_SHORT
+                    val btn= arrayOf("네","아니오")
+                    normaldialog.arguments = bundleOf(
+                        "bodyContext" to "정말 로그아웃 하시겠습니까?",
+                        "bodyTitle" to "로그아웃",
+                        "btnData" to btn
+                    )
 
-                            // 응답 받은 후 토스트 띄우고 intro 액티비티로 이동
-                            showToast()
+                    normaldialog.show((activity as SettingsActivity).supportFragmentManager, "CustomDialog")
+
+                    normaldialog.setButtonClickListener(object :
+                        NormalDialogFragment.OnButtonClickListener {
+                        override fun onButton1Clicked() {
+                            //취소버튼을 눌렀을 때 처리할 곳
                             val intent = Intent(activity, IntroActivity::class.java)
                             intent.putExtra("logout", "1")
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
-                        })
-                        .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
-                    builder.show()
+
+                            Toast.makeText(context, "로그아웃이 완료되었습니다.", duration).show()
+                        }
+
+                        override fun onButton2Clicked() {
+                            //확인버튼을 눌렀을 때 처리할 곳
+                            Toast.makeText(context, "로그아웃이 취소되었습니다.", duration).show()
+                        }
+                    })
                 }
+
+
+
+
+
+
+
+
+
+
+                    
+
+//                    val builder = AlertDialog.Builder(activity)
+//                    builder.setTitle("로그아웃 하시겠습니까?")
+//                        .setMessage("완성되지 않은 필름은 삭제됩니다.")
+//                        .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
+//                            // 서버로 로그아웃 요청
+//
+//                            // 응답 받은 후 토스트 띄우고 intro 액티비티로 이동
+//                            showToast()
+//                            val intent = Intent(activity, IntroActivity::class.java)
+//                            intent.putExtra("logout", "1")
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                            startActivity(intent)
+//                        })
+//                        .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
+//                    builder.show()
+//                }
+
+
+
+
+
+
+
+
+
+
+
+
+
                 "deleteAccount" -> {
                     // delete account 액티비티로 이동
                     val intent = Intent(activity, DeleteAccountActivity::class.java)

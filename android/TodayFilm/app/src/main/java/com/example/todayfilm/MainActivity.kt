@@ -4,8 +4,9 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.todayfilm.databinding.ActivityMainBinding
@@ -83,26 +84,66 @@ class MainActivity : AppCompatActivity() {
 
         if (fromResetNotification || today != date) {
             // 완성이 아니고 이미지가 1개 이상인 상태
-            val builder = AlertDialog.Builder(this)
 
-            builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
-                .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다.")
-                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-                    fromResetNotification = false
 
-                    // complete 액티비티로 이동
-                    val intent = Intent(this, CompleteActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
-                })
-                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id ->
-                    fromResetNotification = false
+            val normaldialog = NormalDialogFragment()
+            val duration = Toast.LENGTH_SHORT
+            val btn= arrayOf("네","아니오")
+            normaldialog.arguments = bundleOf(
+                "bodyContext" to "예 선택 시, 설정의 '사진 반복 여부'에 따라\\n필름의 남은 칸을 채웁니다.\\n아니오 선택 시, 필름을 초기화합니다",
+                "bodyTitle" to "아직 필름이 다 채워지지 않았습니다.\\n이대로 완성하시겠습니까?",
+                "btnData" to btn
+            )
 
-                    // 필름 데이터 초기화, date 갱신
-                    resetData(this)
-                    MyPreference.write(this, "date", today)
-                })
-            builder.show()
+            normaldialog.show(this.supportFragmentManager, "CustomDialog")
+
+            normaldialog.setButtonClickListener(object :
+                NormalDialogFragment.OnButtonClickListener {
+                override fun onButton1Clicked() {
+                    //취소버튼을 눌렀을 때 처리할 곳
+//                    fromResetNotification = false
+//                    val intent = Intent(this, CompleteActivity::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                    startActivity(intent)
+//
+//
+//                    Toast.makeText(context, "로그아웃이 완료되었습니다.", duration).show()
+                }
+
+                override fun onButton2Clicked() {
+//                    fromResetNotification = false
+//                    // 필름 데이터 초기화, date 갱신
+//                    resetData(this)
+//                    MyPreference.write(this, "date", today)
+//
+//
+//                    //확인버튼을 눌렀을 때 처리할 곳
+//                    Toast.makeText(context, "로그아웃이 취소되었습니다.", duration).show()
+                }
+            })
+
+
+
+//            val builder = AlertDialog.Builder(this)
+//
+//            builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
+//                .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다.")
+//                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
+//                    fromResetNotification = false
+//
+//                    // complete 액티비티로 이동
+//                    val intent = Intent(this, CompleteActivity::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                    startActivity(intent)
+//                })
+//                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id ->
+//                    fromResetNotification = false
+//
+//                    // 필름 데이터 초기화, date 갱신
+//                    resetData(this)
+//                    MyPreference.write(this, "date", today)
+//                })
+//            builder.show()
         }
 
     }

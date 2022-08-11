@@ -24,6 +24,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     var search_userpid = ""
     var userpid = ""
 
+
+
+        
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -143,6 +147,17 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 } else {
                     // 팔로우 중인지 확인 후 서버로 팔로우 / 언팔로우 요청 보내기
 
+
+
+
+
+
+
+
+
+
+
+
                     if (isFollow) {
                         // 언팔로우 요청
 
@@ -201,6 +216,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                                 }
                             }
 
+
+
                             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
 
 
@@ -208,7 +225,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
                         })
 
-                        
+
+
+
                         // 팔로우 요청
                         Log.d("확인용", "팔로우")
                     }
