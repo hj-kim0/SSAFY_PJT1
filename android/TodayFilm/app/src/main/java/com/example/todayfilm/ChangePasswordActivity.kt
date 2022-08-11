@@ -1,16 +1,11 @@
 package com.example.todayfilm
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.example.todayfilm.data.ChangePwRequest
 import com.example.todayfilm.data.ChangePwResponse
-import com.example.todayfilm.data.DeleteAccountResponse
 import com.example.todayfilm.databinding.ActivityChangePasswordBinding
 import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call

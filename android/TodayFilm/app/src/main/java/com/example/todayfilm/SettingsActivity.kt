@@ -1,7 +1,5 @@
 package com.example.todayfilm
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,7 +10,14 @@ import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import com.example.todayfilm.data.ArticleDeleteResponse
+import com.example.todayfilm.data.LogoutRequest
+import com.example.todayfilm.data.LogoutResponse
 import com.example.todayfilm.databinding.ActivitySettingsBinding
+import com.example.todayfilm.retrofit.NetWorkClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -22,6 +27,7 @@ class SettingsActivity : AppCompatActivity() {
         val binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
@@ -29,6 +35,9 @@ class SettingsActivity : AppCompatActivity() {
                     .commit()
         }
     }
+
+
+
 
     class SettingsPreference : PreferenceFragmentCompat() {
         // 저장되는 데이터에 접근하기 위한 SharedPreferences
@@ -78,6 +87,7 @@ class SettingsActivity : AppCompatActivity() {
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
             val key = preference.key
 
+
             when (key) {
                 "logout" -> {
                     // 다이얼로그 띄우기
@@ -96,12 +106,31 @@ class SettingsActivity : AppCompatActivity() {
                         NormalDialogFragment.OnButtonClickListener {
                         override fun onButton1Clicked() {
                             //취소버튼을 눌렀을 때 처리할 곳
-                            val intent = Intent(activity, IntroActivity::class.java)
-                            intent.putExtra("logout", "1")
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
 
-                            Toast.makeText(context, "로그아웃이 완료되었습니다.", duration).show()
+                            val logoutuser = LogoutRequest()
+                            var userpid = MyPreference.read(requireActivity(), "userpid").toInt()
+                            logoutuser.userpid = userpid
+                            val call = NetWorkClient.GetNetwork.signout(logoutuser)
+                            call.enqueue(object : Callback<LogoutResponse> {
+                                override fun onResponse(
+                                    call: Call<LogoutResponse>,
+                                    response: Response<LogoutResponse>
+                                ) {
+
+                                    val intent = Intent(activity, IntroActivity::class.java)
+                                    intent.putExtra("logout", "1")
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    startActivity(intent)
+
+                                    Toast.makeText(context, "로그아웃이 완료되었습니다.", duration).show()
+
+                                }
+
+                                override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
+                                    Log.d("실패:", t.message.toString())
+                                }
+                            })
+
                         }
 
                         override fun onButton2Clicked() {

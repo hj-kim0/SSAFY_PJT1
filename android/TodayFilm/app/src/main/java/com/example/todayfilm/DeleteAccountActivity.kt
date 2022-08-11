@@ -35,16 +35,12 @@ class DeleteAccountActivity : AppCompatActivity() {
                 deleteUser.userpid = userpid
                 deleteUser.userpassword = userpw
 
-                val call = NetWorkClient.GetNetwork.singout(deleteUser)
+                val call = NetWorkClient.GetNetwork.signdown(deleteUser)
                 call.enqueue(object : Callback<DeleteAccountResponse> {
                     override fun onResponse(
                         call: Call<DeleteAccountResponse>,
                         response: Response<DeleteAccountResponse>
                     ) {
-
-
-
-
 
                         var dialog = AlertDialog.Builder(this@DeleteAccountActivity)
                         dialog.setTitle("회원탈퇴")

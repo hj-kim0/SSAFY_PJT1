@@ -10,11 +10,8 @@ import android.widget.Toast
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.ActivityFindPasswordBinding
 import com.example.todayfilm.retrofit.NetWorkClient
-import kotlinx.android.synthetic.main.activity_find_password.*
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
-import kotlin.reflect.typeOf
 
 class FindPasswordActivity : AppCompatActivity() {
     val binding by lazy { ActivityFindPasswordBinding.inflate(layoutInflater) }

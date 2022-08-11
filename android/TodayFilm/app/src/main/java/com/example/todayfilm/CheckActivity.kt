@@ -18,7 +18,6 @@ import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.reflect.Type
-import java.util.*
 import kotlin.collections.ArrayList
 
 class CheckActivity : AppCompatActivity() {
