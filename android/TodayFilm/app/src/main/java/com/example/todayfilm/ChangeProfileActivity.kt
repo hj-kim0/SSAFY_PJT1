@@ -242,4 +242,3 @@ class ChangeProfileActivity : AppCompatActivity() {
         return result
     }
 }
-ㅁ
