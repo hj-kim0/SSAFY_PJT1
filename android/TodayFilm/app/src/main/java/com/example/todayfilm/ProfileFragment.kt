@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentProfileBinding
@@ -23,7 +24,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     var isFollow = false
     var search_userpid = ""
     var userpid = ""
-
 
 
         
@@ -42,7 +42,49 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
+
         search_userpid = arguments?.getString("search_userpid").toString()
+
+
+
+
+
+
+
+
+
+
+//        calldeletefollow.enqueue( object : Callback<noRseponse> {
+//            override fun onResponse(
+//                call: Call<noRseponse>,
+//                response: Response<noRseponse>
+//            ) {
+//
+//                val result: noRseponse? = response.body()
+//                if (result?.success!!) {
+//                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+//
+//                } else {
+//                    Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+//
+//
+//            }
+//
+//        })
+//
+
+
+
+
+
+
+
+
+
 
         if (userpid == search_userpid) {
             isMyProfile = true
@@ -55,13 +97,37 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         } else {
             // 다른 사용자 프로필
             binding.profileToSettings.visibility = View.INVISIBLE
-            if (isFollow) {
-                binding.profileBtn.text = "언팔로우"
 
-            } else {
-                binding.profileBtn.text = "팔로우"
+            val searchFollowr = FollowRequest()
+            searchFollowr.subfrom = search_userpid
+            searchFollowr.subto = userpid
 
-            }
+//            val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
+//            searchFollow.enqueue(object : Callback<FollowBoolean>{
+//                override fun onResponse(call: Call<FollowBoolean>, response: Response<FollowBoolean>) {
+//                    var isFollow = response.body()?.followBoolean
+//                    if (isFollow!!) {
+//                        binding.profileBtn.text = "언팔로우"
+//
+//                    } else {
+//                        binding.profileBtn.text = "팔로우"
+//
+//                    }
+//
+//
+//                }
+//
+//                override fun onFailure(call: Call<FollowBoolean>, t: Throwable) {
+//
+//
+//                }
+//
+//            })
+            //서버 통신되면
+
+
+
+
         }
 
         // 사용자 정보 조회
