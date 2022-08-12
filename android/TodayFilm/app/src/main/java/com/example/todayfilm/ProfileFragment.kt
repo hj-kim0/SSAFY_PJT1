@@ -136,7 +136,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
                     getFollowNumber()
                     getFollowing()
-                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
 
                 } else {
                     Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
@@ -165,10 +164,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 if (result?.success!!) {
                     binding.profileBtn.text = "언팔로우"
 
-                    Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
                     getFollowNumber()
                     getFollowing()
-
 
                 } else {
                     Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
@@ -280,7 +277,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         callFollowUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followNumber = response.body()?.list!!.size
-                binding.profileFollowingCnt.text = followNumber.toString()
+                binding.profileFollowerCnt.text = followNumber.toString()
             }
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
@@ -297,7 +294,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         callFollowingUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followedNumber = response.body()?.list!!.size
-                binding.profileFollowerCnt.text = followedNumber.toString()
+                binding.profileFollowingCnt.text = followedNumber.toString()
             }
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {

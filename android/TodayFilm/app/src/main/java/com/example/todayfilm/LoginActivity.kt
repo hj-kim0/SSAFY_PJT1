@@ -65,18 +65,18 @@ class LoginActivity : AppCompatActivity() {
             val loadingDialog = LoadingDialog(this)
             loadingDialog.show()
 
-            val LoginId = binding.loginId.text.toString()
-            val LoginPw = binding.loginPw.text.toString()
+            val loginId = binding.loginId.text.toString()
+            val loginPw = binding.loginPw.text.toString()
 
             val user = User()
-            user.userid = LoginId
-            user.userpassword = LoginPw
+            user.userid = loginId
+            user.userpassword = loginPw
 
             FirebaseMessaging.getInstance().token
                 .addOnCompleteListener(object : OnCompleteListener<String?> {
                     override fun onComplete(@NonNull task: Task<String?>) {
                         // 새로운 토큰 생성 성공 시
-                        user.userfcmtoken = task.getResult();
+                        user.userfcmtoken = task.getResult()
                         val call = NetWorkClient.GetNetwork.login(user)
 
                         call.enqueue(object : Callback<LoginData> {
@@ -86,24 +86,12 @@ class LoginActivity : AppCompatActivity() {
                             ) {
                                 val result: LoginData? = response.body()
 
-                                if (result?.message == "로그인 완료") {
-                                    Log.d("test:", result.token)
-                                    MyPreference.write(
-                                        this@LoginActivity,
-                                        "userpid",
-                                        result.userpid
-                                    )
-                                    MyPreference.write(this@LoginActivity, "userid", LoginId)
-                                    MyPreference.write(
-                                        this@LoginActivity,
-                                        "usertoken",
-                                        result.token
-                                    )
-                                    MyPreference.write(
-                                        this@LoginActivity,
-                                        "userpassword",
-                                        user.userpassword
-                                    )
+                                if (result != null) {
+                                    MyPreference.write(this@LoginActivity, "userpid", result.userpid)
+                                    MyPreference.write(this@LoginActivity, "usertoken", result.token)
+                                    MyPreference.write(this@LoginActivity, "userid", loginId)
+                                    MyPreference.write(this@LoginActivity, "userpassword", loginPw)
+                                    MyPreference.write(this@LoginActivity, "todayarticleidx", result.todayarticleidx)
 
                                     // 앱 최초 로그인일 경우에 실행되는 작업
                                     // 내부 저장소에 imgcount, isComplete, imgvids 변수 초기화 및 preference 기본값 지정
@@ -134,11 +122,9 @@ class LoginActivity : AppCompatActivity() {
                                         settingsEditor.apply()
                                     }
 
-                                    Toast.makeText(
-                                        this@LoginActivity,
-                                        "성공적으로 로그인되었습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    if (result.todayarticleidx != "-1") {
+                                        MyPreference.writeInt(this@LoginActivity, "isComplete", 1)
+                                    }
 
                                     loadingDialog.dismiss()
 
@@ -148,16 +134,13 @@ class LoginActivity : AppCompatActivity() {
                                     finish()
                                 } else {
                                     loadingDialog.dismiss()
-                                    Toast.makeText(
-                                        this@LoginActivity,
-                                        "로그인에 실패했습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this@LoginActivity, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
                                 }
                             }
 
                             override fun onFailure(call: Call<LoginData>, t: Throwable) {
-                                Log.d("", "실패" + t.message.toString())
+                                Toast.makeText(this@LoginActivity, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                Log.d("로그인 실패", t.message.toString())
                             }
                         })
                     }

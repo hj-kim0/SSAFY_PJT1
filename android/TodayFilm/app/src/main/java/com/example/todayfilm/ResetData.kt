@@ -7,6 +7,7 @@ fun resetData(context: Context) {
     MyPreference.writeInt(context, "isComplete", 0)
     MyPreference.writeInt(context, "imgcount", 0)
     MyPreference.write(context, "imgvids", "")
+    MyPreference.write(context, "todayarticleidx", "-1")
 
     val path = context.getExternalFilesDir(null)!!.absolutePath
     val cashPath = context.externalCacheDir!!.absolutePath

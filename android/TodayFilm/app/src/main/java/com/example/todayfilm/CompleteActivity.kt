@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -143,6 +144,24 @@ class CompleteActivity : AppCompatActivity() {
                 call.enqueue(object : Callback<FindPwResponse> {
 
                     override fun onResponse(call: Call<FindPwResponse>, response: Response<FindPwResponse>) {
+                        when (thumbnail) {
+                            1 -> {
+                                findViewById<FrameLayout>(R.id.image1_section).foreground = null
+                            }
+
+                            2 -> {
+                                findViewById<FrameLayout>(R.id.image2_section).foreground = null
+                            }
+
+                            3 -> {
+                                findViewById<FrameLayout>(R.id.image3_section).foreground = null
+                            }
+
+                            4 -> {
+                                findViewById<FrameLayout>(R.id.image4_section).foreground = null
+                            }
+                        }
+
                         // 기기에 저장
                         if(complete_save.isChecked){
                             val bitmap = Bitmap.createBitmap(fragment_content_complete.getWidth(), fragment_content_complete.getHeight(), (Bitmap.Config.ARGB_8888))

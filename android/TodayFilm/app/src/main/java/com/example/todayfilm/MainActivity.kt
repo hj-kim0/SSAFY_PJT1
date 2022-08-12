@@ -1,5 +1,6 @@
 package com.example.todayfilm
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -7,12 +8,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.todayfilm.data.ArticleResponse
+import com.example.todayfilm.data.getArticleRequest
+import com.example.todayfilm.data.getArticleResponse
 import com.example.todayfilm.databinding.ActivityMainBinding
+import com.example.todayfilm.retrofit.NetWorkClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     val TAG_FEED = "feed_fragment"
     val TAG_HOME = "home_fragment"
     val TAG_PROFILE = "profile_fragment"
@@ -21,18 +29,25 @@ class MainActivity : AppCompatActivity() {
     val TAG_FILM = "film_fragment"
 
     var fromResetNotification = false
+    var isComplete = 0
+    var todayarticleidx = "-1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val isComplete = MyPreference.readInt(this, "isComplete")
+        isComplete = MyPreference.readInt(this, "isComplete")
+        todayarticleidx = MyPreference.read(this, "todayarticleidx")
 
         // 처음에 보여줄 프래그먼트 지정
-        setFragment(TAG_HOME, HomeFragment())
-        binding.navBar.selectedItemId = R.id.homeFragment
+        if (isComplete == 1 && todayarticleidx != "-1") {
+            isLoginAfterComplete()
+        } else {
+            setFragment(TAG_HOME, HomeFragment())
+            binding.navBar.selectedItemId = R.id.homeFragment
+        }
 
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
@@ -44,7 +59,11 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.homeFragment -> {
                     clearBackStack()
-                    setFragment(TAG_HOME, HomeFragment())
+                    if (isComplete == 1 && todayarticleidx != "-1") {
+                        isLoginAfterComplete()
+                    } else {
+                        setFragment(TAG_HOME, HomeFragment())
+                    }
                 }
 
                 R.id.profileFragment -> {
@@ -62,7 +81,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // changeprofile에서 왔다면 Profile Fragment 띄우기
+
+        // changeprofile에서 왔다면 본인 Profile Fragment 띄우기
         val parent = intent.getStringExtra("parent")
         if (parent == "changeprofile") {
             changeFragment(4, MyPreference.read(this, "userpid"))
@@ -77,13 +97,11 @@ class MainActivity : AppCompatActivity() {
         if (fromResetNotification || today != date) {
             // 완성이 아니고 이미지가 1개 이상인 상태
 
-
             val normaldialog = NormalDialogFragment()
-            val duration = Toast.LENGTH_SHORT
             val btn= arrayOf("네","아니오")
             normaldialog.arguments = bundleOf(
-                "bodyContext" to "예 선택 시, 설정의 '사진 반복 여부'에 따라\\n필름의 남은 칸을 채웁니다.\\n아니오 선택 시, 필름을 초기화합니다",
-                "bodyTitle" to "아직 필름이 다 채워지지 않았습니다.\\n이대로 완성하시겠습니까?",
+                "bodyContext" to "네 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다",
+                "bodyTitle" to "어제의 필름이 완성되지 않았습니다.\n이대로 완성하시겠습니까?",
                 "btnData" to btn
             )
 
@@ -92,52 +110,23 @@ class MainActivity : AppCompatActivity() {
             normaldialog.setButtonClickListener(object :
                 NormalDialogFragment.OnButtonClickListener {
                 override fun onButton1Clicked() {
-                    //취소버튼을 눌렀을 때 처리할 곳
-//                    fromResetNotification = false
-//                    val intent = Intent(this, CompleteActivity::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    startActivity(intent)
-//
-//
-//                    Toast.makeText(context, "로그아웃이 완료되었습니다.", duration).show()
+                    // 네
+                    fromResetNotification = false
+                    // complete 액티비티로 이동
+                    val intent = Intent(this@MainActivity, CompleteActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
                 }
 
                 override fun onButton2Clicked() {
-//                    fromResetNotification = false
-//                    // 필름 데이터 초기화, date 갱신
-//                    resetData(this)
-//                    MyPreference.write(this, "date", today)
-//
-//
-//                    //확인버튼을 눌렀을 때 처리할 곳
-//                    Toast.makeText(context, "로그아웃이 취소되었습니다.", duration).show()
+                    // 아니오
+                    fromResetNotification = false
+                    // 필름 데이터 초기화, date 갱신
+                    resetData(this@MainActivity)
+                    MyPreference.write(this@MainActivity, "date", today)
                 }
             })
-
-
-
-//            val builder = AlertDialog.Builder(this)
-//
-//            builder.setTitle("아직 필름이 다 채워지지 않았습니다.\n이대로 완성하시겠습니까?")
-//                .setMessage("예 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다.")
-//                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-//                    fromResetNotification = false
-//
-//                    // complete 액티비티로 이동
-//                    val intent = Intent(this, CompleteActivity::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                    startActivity(intent)
-//                })
-//                .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id ->
-//                    fromResetNotification = false
-//
-//                    // 필름 데이터 초기화, date 갱신
-//                    resetData(this)
-//                    MyPreference.write(this, "date", today)
-//                })
-//            builder.show()
         }
-
     }
 
     fun setFragment(tag: String, fragment: Fragment) {
@@ -249,5 +238,35 @@ class MainActivity : AppCompatActivity() {
             .setCustomAnimations(R.xml.enter, R.xml.none, R.xml.none, R.xml.exit)
             .replace(R.id.fragment_content_main, fragment)
             .addToBackStack(null).commit()
+    }
+
+    fun isLoginAfterComplete() {
+    // 완성했으면서 todayarticleidx 값이 -1이 아니라면 통신해서 게시글 정보 가져오고 Film Fragment 띄우기
+        val getArticleReqeust = getArticleRequest()
+        getArticleReqeust.articleidx = todayarticleidx
+        val call =  NetWorkClient.GetNetwork.getarticledetail(getArticleReqeust)
+        call.enqueue(object : Callback<ArticleResponse> {
+            override fun onResponse(
+                call: Call<ArticleResponse>,
+                response: Response<ArticleResponse>
+            ) {
+                val result: ArticleResponse? = response.body()
+
+                if (result != null) {
+                    var hashstring = ""
+                    for (hashtag in result.hash) {
+                        hashstring += "#$hashtag "
+                    }
+                    changeFragment(3, result.article.articleidx, result.article.articlecreatedate, result.article.userpid, result.likey, hashstring)
+                } else {
+                    Toast.makeText(this@MainActivity, "게시글 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ArticleResponse>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "게시글 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.e("게시글 조회 실패", t.message.toString())
+            }
+        })
     }
 }
