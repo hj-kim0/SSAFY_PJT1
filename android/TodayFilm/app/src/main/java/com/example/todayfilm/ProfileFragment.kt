@@ -133,6 +133,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 val result: noRseponse? = response.body()
                 if (result?.success!!) {
                     binding.profileBtn.text = "팔로우"
+
+                    getFollowNumber()
+                    getFollowing()
+                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+
                 } else {
                     Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -159,6 +164,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 val result: noRseponse? = response.body()
                 if (result?.success!!) {
                     binding.profileBtn.text = "언팔로우"
+
+                    Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
+                    getFollowNumber()
+                    getFollowing()
+
+
                 } else {
                     Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -248,6 +259,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         binding.profileBtn.text = "팔로우"
                     }else{
                         follow()
+
                     }
                 }
             }
