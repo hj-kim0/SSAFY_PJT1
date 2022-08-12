@@ -3,13 +3,13 @@
     <item
         android:id="@+id/feedFragment"
         android:icon="@drawable/ic_home"
-        android:title="피드" />
+        android:title="@string/feed" />
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_camera"
-        android:title="홈" />
+        android:title="@string/home" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_account"
-        android:title="마이페이지" />
+        android:title="@string/mypage" />
 </menu>

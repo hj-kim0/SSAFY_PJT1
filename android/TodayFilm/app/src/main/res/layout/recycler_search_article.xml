@@ -24,15 +24,13 @@
                 android:id="@+id/recycler_article_userimg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/poppy" />
+                android:layout_margin="10dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/recycler_article_userid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="이것은 닉네임이다"
                 android:textColor="@color/gray_500"
                 android:textSize="11sp" />
 

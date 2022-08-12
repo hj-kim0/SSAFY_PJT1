@@ -12,14 +12,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recycler_profile_userid"
-        android:src="@drawable/poppy" />
+        app:layout_constraintBottom_toTopOf="@id/recycler_profile_userid" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recycler_profile_userid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이것은아이디이다"
         android:textColor="@color/gray_500"
         android:textSize="11sp"
         android:maxLines="1"

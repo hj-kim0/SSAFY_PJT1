@@ -20,14 +20,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentProfileBinding
     var userid = ""
     var isMyProfile = false
-    var isFollow = false
     var search_userpid = ""
     var userpid = ""
     var followedNumber = 0
     var followNumber = 0
-
-
-        
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,11 +37,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
+    }
+
     override fun onResume() {
         super.onResume()
 
         search_userpid = arguments?.getString("search_userpid").toString()
-
 
         if (userpid == search_userpid) {
             isMyProfile = true
@@ -59,36 +59,20 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             // 다른 사용자 프로필
             binding.profileToSettings.visibility = View.INVISIBLE
             searchProfile(true)
-
         }
-        // 사용자 정보 조회
+
         getProfile()
-        // 사용자 게시글 조회
         getArticle()
-
         getFollowNumber()
-
         getFollowing()
-
-        Log.d("팔로우넘버",followNumber.toString())
-        Log.d("팔로잉넘버",followedNumber.toString())
-
-
-
-
-
-
-        setOnClickListener()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
     }
 
     private fun setOnClickListener() {
         binding.profileToSettings.setOnClickListener(this)
         binding.profileBtn.setOnClickListener(this)
+        binding.profileFollowing.setOnClickListener(this)
+        binding.profileFollower.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -105,16 +89,19 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                     val intent = Intent(activity, ChangeProfileActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-
-
                 } else {
                     searchProfile(false)
-                    // 팔로우 중인지 확인 후 서버로 팔로우 / 언팔로우 요청 보내기
                     getFollowNumber()
-
                     getFollowing()
-
                 }
+            }
+
+            R.id.profile_following -> {
+                (activity as MainActivity).changeFragment(2, "following", search_userpid)
+            }
+
+            R.id.profile_follower -> {
+                (activity as MainActivity).changeFragment(2, "follower", search_userpid)
             }
         }
     }
@@ -132,7 +119,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         articleAdapter.datas = articledatas
     }
 
-
     private fun unfollow(){
         val deleteFollowR = FollowRequest()
         deleteFollowR.subfrom = search_userpid
@@ -145,16 +131,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 response: Response<noRseponse>
             ) {
                 val result: noRseponse? = response.body()
-                Log.d("체크석세스",result?.success.toString())
                 if (result?.success!!) {
                     binding.profileBtn.text = "팔로우"
-                    Toast.makeText(requireActivity(), "언팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-
                 } else {
-                    Toast.makeText(requireActivity(), "언팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+                Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("팔로우 요청 실패", t.message.toString())
             }
         })
     }
@@ -174,17 +159,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 val result: noRseponse? = response.body()
                 if (result?.success!!) {
                     binding.profileBtn.text = "언팔로우"
-                    Toast.makeText(requireActivity(), "팔로우에 성공했습니다", Toast.LENGTH_SHORT).show()
-
                 } else {
-                    Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
-
             }
 
-
-
             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+                Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("팔로우 요청 실패", t.message.toString())
             }
         })
     }
@@ -213,10 +195,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
+                Toast.makeText(requireActivity(), "사용자 게시글 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("사용자 게시글 조회 실패", t.message.toString())
             }
         })
     }
+
     private fun getProfile(){
         val profile = GetProfile()
         profile.userpid = search_userpid
@@ -236,6 +220,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
+                Toast.makeText(requireActivity(), "사용자 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("사용자 정보 조회 실패", t.message.toString())
             }
         })
@@ -249,7 +234,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
         searchFollow.enqueue(object : Callback<FollowBoolean>{
             override fun onResponse(call: Call<FollowBoolean>, response: Response<FollowBoolean>) {
-                var isFollow = response.body()?.followBoolean
+                val isFollow = response.body()?.followBoolean
 
                 if (isFollow!!) {
                     if (switch){
@@ -268,14 +253,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<FollowBoolean>, t: Throwable) {
-
+                Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("팔로우 실패", t.message.toString())
             }
         })
-
     }
 
     private fun getFollowNumber() {
-
         val getFollow = GetProfile()
         getFollow.userpid = search_userpid
         val callFollowUser = NetWorkClient.GetNetwork.followed(getFollow)
@@ -283,17 +267,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         callFollowUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followNumber = response.body()?.list!!.size
-                binding.profileFollower.text = followNumber.toString()
-
+                binding.profileFollowerCnt.text = followNumber.toString()
             }
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
-
+                Toast.makeText(requireActivity(), "팔로우 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("팔로우 정보 조회 실패", t.message.toString())
             }
         })
-
-
-
     }
 
     private fun getFollowing(){
@@ -303,12 +284,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         callFollowingUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followedNumber = response.body()?.list!!.size
-                binding.profileFollowing.text = followedNumber.toString()
-
+                binding.profileFollowingCnt.text = followedNumber.toString()
             }
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
-
+                Toast.makeText(requireActivity(), "팔로잉 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("팔로잉 정보 조회 실패", t.message.toString())
             }
         })
     }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
@@ -33,6 +34,7 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val user: LinearLayoutCompat = itemView.findViewById(R.id.recycler_article_user)
         private val userid: TextView = itemView.findViewById(R.id.recycler_article_userid)
         private val userimg: ImageView = itemView.findViewById(R.id.recycler_article_userimg)
         private val articlethumbnail: ImageView = itemView.findViewById(R.id.recycler_article_image)
@@ -50,12 +52,11 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
                 ) {
                     val result = response.body()
                     Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/profile/" + result?.userimg).into(userimg)
-                    Log.d("확인 프로필 조회", result.toString())
                     userid.text = result?.userid
                 }
 
                 override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
-                    Log.d("사용자 정보 조회 실패", t.message.toString())
+                    Log.d("작성자 정보 조회 실패", t.message.toString())
                 }
             })
 
@@ -67,7 +68,11 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
 
             Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${item.article.userpid}/${item.article.articlecreatedate}/${item.article.articlethumbnail}.png").into(articlethumbnail)
 
-            itemView.setOnClickListener {
+            user.setOnClickListener {
+                itemClickListener.onClick(it, item.article.userpid)
+            }
+
+            articlethumbnail.setOnClickListener {
                 itemClickListener.onClick(it, item.article.articleidx, item.article.articlecreatedate, item.article.userpid, item.likey, hashstring)
             }
         }
@@ -75,6 +80,8 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
 
     interface ItemClickListener {
         fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String, hashstring: String)
+
+        fun onClick(view: View, userpid: String)
     }
 
     private lateinit var itemClickListener: ItemClickListener

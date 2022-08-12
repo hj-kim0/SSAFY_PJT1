@@ -111,6 +111,16 @@ interface NetWorkInterface {
         @Body follow: FollowRequest
     ): Call<FollowBoolean>
 
+    @POST("api/subscribe/following")
+    fun getfollowing(
+        @Body getProfile: GetProfile
+    ): Call<ProfileListResponse>
+
+    @POST("api/subscribe/followed")
+    fun getfollower(
+        @Body getProfile: GetProfile
+    ): Call<ProfileListResponse>
+
     @POST("api/article/delete")
     fun articledelete(
         @Body articledelete: ArticleDeleteRequest
