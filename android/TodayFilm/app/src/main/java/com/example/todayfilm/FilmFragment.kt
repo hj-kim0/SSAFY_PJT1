@@ -11,16 +11,16 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.MediaStore.Images.Media.getBitmap
 import android.util.Log
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.BounceInterpolator
+import android.view.animation.ScaleAnimation
 import android.widget.FrameLayout
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,14 +28,12 @@ import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import com.example.todayfilm.retrofit.NetWorkClient
-import com.google.android.gms.auth.api.signin.internal.Storage
 import kotlinx.android.synthetic.main.fragment_film.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
-import java.time.LocalDate
-import java.time.LocalDateTime
+
 
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
@@ -380,7 +378,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 var isLiked = response.body()?.success
                 if (isLiked!!){
                     if(tf){
-                        binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+                        binding.filmLikeBtn.isChecked = true
+//                        binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
                     }
                     else{//좋취
                         val likeDelete = LikeRequest()
@@ -394,7 +393,9 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                             ) {
                                 Log.d("좋아요취소",response.body()?.success.toString())
 
-                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                                binding.filmLikeBtn.isChecked = false
+
+//                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                                 countLikey()
 
 
@@ -413,7 +414,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 }
                 else{
                     if(tf){
-                        binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                        binding.filmLikeBtn.isChecked = false
+                    //    binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                     }
                     else{
                         // 좋아요
@@ -431,8 +433,18 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                                 Log.d("좋아요",userpid.toString())
                                 Log.d("좋아요",articleidx.toString())
 
+                                animation()
 
-                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+
+
+
+
+
+
+
+
+
+//                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
 
                                 countLikey()
 
@@ -471,6 +483,24 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
 
 
+
+    }
+    private fun animation(){
+        val scaleAnimation = ScaleAnimation(
+            0.7f,
+            1.0f,
+            0.7f,
+            1.0f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
+        val bounceInterpolator = BounceInterpolator()
+        scaleAnimation.setDuration(500)
+        scaleAnimation.interpolator = bounceInterpolator
+
+        binding.filmLikeBtn.startAnimation(scaleAnimation)
 
     }
 

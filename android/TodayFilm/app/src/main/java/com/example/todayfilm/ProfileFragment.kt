@@ -274,12 +274,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun getFollowNumber() {
         val getFollow = GetProfile()
         getFollow.userpid = search_userpid
+        Log.d("오류체크",userpid)
         val callFollowUser = NetWorkClient.GetNetwork.followed(getFollow)
 
         callFollowUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followNumber = response.body()?.list!!.size
-                binding.profileFollowerCnt.text = followNumber.toString()
+                binding.profileFollowingCnt.text = followNumber.toString()
             }
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
@@ -296,7 +297,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         callFollowingUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followedNumber = response.body()?.list!!.size
-                binding.profileFollowingCnt.text = followedNumber.toString()
+                binding.profileFollowerCnt.text = followedNumber.toString()
             }
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
