@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
     <item
         android:id="@+id/delete"
-        android:title="삭제하기"
-        />
+        android:title="@string/delete" />
     <item
         android:id="@+id/shareFile"
-        android:title="공유하기"
-        />
+        android:title="@string/share" />
     <item
         android:id="@+id/save"
-        android:title="저장하기" />
+        android:title="@string/save" />
     <item
         android:id="@+id/share"
-        android:title="공유대상설정" />
-
+        android:title="@string/shareTo" />
 </menu>

@@ -202,7 +202,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             2 -> {
-                moveFragment(ProfileListFragment())
+                if (data != null) {
+                    val fragment = ProfileListFragment()
+                    val bundle = Bundle()
+                    bundle.putString("title", data)
+                    bundle.putString("search_userpid", data1)
+                    fragment.arguments = bundle
+                    moveFragment(fragment)
+                }
             }
 
             3 -> {

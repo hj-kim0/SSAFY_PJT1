@@ -18,18 +18,29 @@
     <string name="rule">아이디와 비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
     <string name="rule_pw">비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
 
-    <string name="delete_data">데이터 초기화</string>
-    <string name="delete_data_check">데이터 초기화 확인</string>
-
     <string name="complete">완료</string>
     <string name="complete_frame">오늘의 필름 완성!</string>
     <string name="settings">설정</string>
+    <string name="delete">삭제하기</string>
     <string name="save">저장하기</string>
     <string name="share">공유하기</string>
     <string name="play">재생하기</string>
+    <string name="shareTo">공유대상설정</string>
+    <string name="all">전체 공개</string>
+    <string name="followers">팔로워만</string>
+    <string name="nobody">비공개</string>
+    <string name="retry">다시시도</string>
+    <string name="ok">확인</string>
+    <string name="loading">잠시만 기다려주세요...</string>
+
+    <string name="feed">피드</string>
+    <string name="home">홈</string>
+    <string name="mypage">마이페이지</string>
 
     <string name="user">사용자</string>
     <string name="article">게시글</string>
+    <string name="following">팔로잉</string>
+    <string name="follower">팔로워</string>
 
     <string name="example_date">2022/08/10 (수)</string>
 
@@ -48,6 +59,7 @@
     <string name="hint_description">한 줄 소개를 입력하세요</string>
     <string name="hint_save">사진첩에 저장할까요?</string>
     <string name="hint_share">공개 여부</string>
+    <string name="hint_shareto">공유하실 대상을 선택해주세요.</string>
 
     <string name="warn_delete_account">정말 탈퇴 하시겠습니까?\n마지막으로 비밀번호를 확인해주세요.</string>
 </resources>

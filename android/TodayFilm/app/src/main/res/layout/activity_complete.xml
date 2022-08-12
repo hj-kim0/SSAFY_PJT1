@@ -85,7 +85,7 @@
                     android:button="@null"
                     android:background="@drawable/radio_btn_selector"
                     android:textColor="@drawable/radio_text_selector"
-                    android:text="전체 공개"
+                    android:text="@string/all"
                     android:checked="true" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
@@ -96,7 +96,7 @@
                     android:button="@null"
                     android:background="@drawable/radio_btn_selector"
                     android:textColor="@drawable/radio_text_selector"
-                    android:text="팔로워만"/>
+                    android:text="@string/followers"/>
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/complete_share_nobody"
@@ -106,7 +106,7 @@
                     android:button="@null"
                     android:background="@drawable/radio_btn_selector"
                     android:textColor="@drawable/radio_text_selector"
-                    android:text="비공개"/>
+                    android:text="@string/nobody"/>
             </RadioGroup>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

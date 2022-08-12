@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchFragment : Fragment(),View.OnClickListener {
+class SearchFragment : Fragment() {
     lateinit var binding: FragmentSearchBinding
 
     override fun onCreateView(
@@ -28,27 +28,15 @@ class SearchFragment : Fragment(),View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnclickListener()
-    }
 
-    private fun setOnclickListener(){
-        binding.goProfileList.setOnClickListener(this)
+        // 키보드 엔터 눌렀을 때 검색 수행
         binding.searchKeyword.setOnEditorActionListener { view, i, event ->
             var handled = false
             if (i == EditorInfo.IME_ACTION_DONE) {
-                // 검색 수행
                 requestSearch()
                 handled = true
             }
             handled
-        }
-    }
-
-    override fun onClick(p0: View?) {
-        when (p0?.id){
-            R.id.go_profile_list -> {
-                (activity as MainActivity).changeFragment(2)
-            }
         }
     }
 
@@ -121,6 +109,10 @@ class SearchFragment : Fragment(),View.OnClickListener {
         articleAdapter.setItemClickListener(object: ArticleAdapter.ItemClickListener {
             override fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String, hashstring: String) {
                 (activity as MainActivity).changeFragment(3, articleidx, articlecreatedate, article_userpid, likey, hashstring)
+            }
+
+            override fun onClick(view: View, userpid: String) {
+                (activity as MainActivity).changeFragment(4, userpid)
             }
         })
 
