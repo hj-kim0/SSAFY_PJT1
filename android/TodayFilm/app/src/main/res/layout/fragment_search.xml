@@ -15,7 +15,7 @@
         android:layout_height="40dp"
         android:paddingHorizontal="10dp"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="5dp"
+        android:layout_marginVertical="10dp"
         android:hint="@string/hint_search"
         android:drawableStart="@drawable/searchback"
         android:drawablePadding="5dp"
@@ -29,7 +29,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginHorizontal="30dp"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:scrollbars="none">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

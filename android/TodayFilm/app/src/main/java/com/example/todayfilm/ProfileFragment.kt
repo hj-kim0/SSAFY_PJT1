@@ -1,6 +1,11 @@
 package com.example.todayfilm
 
+import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentProfileBinding
@@ -15,8 +21,9 @@ import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.random.Random
 
-class ProfileFragment : Fragment(), View.OnClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
     lateinit var binding: FragmentProfileBinding
     var userid = ""
     var isMyProfile = false
@@ -24,6 +31,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     var userpid = ""
     var followedNumber = 0
     var followNumber = 0
+    var isShake = true
+    val datas = arrayListOf<ArticleResponse>()
+
+    private var accel: Float = 0.0f //초기
+    private var accelCurrent: Float = 0.0f //이동하는 치수
+    private var accelLast: Float = 0.0f
+    private lateinit var sensorManager: SensorManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +47,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         binding = FragmentProfileBinding.inflate(inflater,container,false)
 
         userpid = MyPreference.read(requireActivity(), "userpid")
+        search_userpid = arguments?.getString("search_userpid").toString()
+
+        sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accel = 10f
+        accelCurrent = SensorManager.GRAVITY_EARTH //지구 중력값 주기
+        accelLast = SensorManager.GRAVITY_EARTH
 
         return binding.root
     }
@@ -44,9 +64,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-
-        search_userpid = arguments?.getString("search_userpid").toString()
-
         if (userpid == search_userpid) {
             isMyProfile = true
         }
@@ -66,6 +83,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         getFollowNumber()
         getFollowing()
         setOnClickListener()
+
+        sensorManager.registerListener(this, sensorManager
+            .getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            ,SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     private fun setOnClickListener() {
@@ -159,14 +180,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 call: Call<noRseponse>,
                 response: Response<noRseponse>
             ) {
-
                 val result: noRseponse? = response.body()
                 if (result?.success!!) {
                     binding.profileBtn.text = "언팔로우"
 
                     getFollowNumber()
                     getFollowing()
-
                 } else {
                     Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -191,13 +210,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 response: Response<List<ArticleResponse>>
             ) {
                 val result = response.body()
-                val datas = arrayListOf<ArticleResponse>()
 
                 if (result != null) {
                     for (r in result) {
                         datas.add(r)
                     }
                 }
+
+                datas.reverse()
 
                 initArticleRecycler(datas)
             }
@@ -214,7 +234,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         profile.userpid = search_userpid
 
         val callUser = NetWorkClient.GetNetwork.getprofile(profile)
-        callUser.enqueue(object : Callback<CompleteProfile>{
+        callUser.enqueue(object : Callback<CompleteProfile> {
             override fun onResponse(
                 call: Call<CompleteProfile>,
                 response: Response<CompleteProfile>
@@ -256,7 +276,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         binding.profileBtn.text = "팔로우"
                     }else{
                         follow()
-
                     }
                 }
             }
@@ -271,7 +290,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun getFollowNumber() {
         val getFollow = GetProfile()
         getFollow.userpid = search_userpid
-        Log.d("오류체크",userpid)
         val callFollowUser = NetWorkClient.GetNetwork.followed(getFollow)
 
         callFollowUser.enqueue(object : Callback<FollowList>{
@@ -302,5 +320,42 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 Log.d("팔로잉 정보 조회 실패", t.message.toString())
             }
         })
+    }
+
+    override fun onSensorChanged(p0: SensorEvent?) {
+        val x:Float = p0?.values?.get(0) as Float
+        val y:Float = p0.values?.get(1) as Float
+        val z:Float = p0.values?.get(2) as Float
+
+        accelLast = accelCurrent
+        accelCurrent = kotlin.math.sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+
+        val delta: Float = accelCurrent - accelLast
+
+        accel = accel * 0.9f + delta
+
+        isShake = PreferenceManager.getDefaultSharedPreferences(requireActivity()).getBoolean("shake", true)
+        // 액셀 치수가 30보다 크고, 흔들기 설정이 켜져있고, 본인 프로필이고, 필름이 있다면 랜덤 필름 감상
+        if (accel > 30 && isShake && userpid == search_userpid && datas.isNotEmpty()) {
+            val random = Random.nextInt(datas.size)
+            val randomdata = datas[random]
+            var hashstring = ""
+
+            for (hashtag in randomdata.hash) {
+                hashstring += "#$hashtag "
+            }
+
+            (activity as MainActivity).changeFragment(3, randomdata.article.articleidx, randomdata.article.articlecreatedate, randomdata.article.userpid, randomdata.likey, hashstring)
+        }
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        Log.d("확인", "정확도 변경")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+        datas.clear()
     }
 }

@@ -44,6 +44,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     var hashstring: String? = null
     var userpid: String? = null
     private lateinit var sharedViewModel: SharedViewModel
+    val duration = Toast.LENGTH_SHORT
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,46 +110,15 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         childFragmentManager.beginTransaction().add(R.id.fragment_content_film, frameFragment).commit()
         likecheckFun(true)
 
-
-//        val check = LikeCheck()
-//        check.userpid = userpid.toString()
-//        check.articleidx = articleidx.toString()
-//
-//        val callCheck = NetWorkClient.GetNetwork.likedcheck(check)
-//        callCheck.enqueue( object : Callback<LikeBoolean>{
-//            override fun onResponse(
-//                call: Call<LikeBoolean>,
-//                response: Response<LikeBoolean>
-//            ) {
-//                Log.d("석세스?",response.body()?.success.toString())
-//                var isLiked = response.body()?.success
-//                if (isLiked!!){
-//
-//                        binding.filmLikeBtn.text = "♥"
-//                    }else{
-//
-//
-//                        binding.filmLikeBtn.text = "♡"
-//                    }
-//                  }
-//
-//            override fun onFailure(call: Call<LikeBoolean>, t: Throwable) {
-//
-//            }
-//        })
-
-
-
-
-    setOnClickListener()
+        setOnClickListener()
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
     }
 
     private fun setOnClickListener() {
         binding.filmMenu.setOnClickListener(this)
         binding.filmPlayBtn.setOnClickListener(this)
         binding.filmLikeBtn.setOnClickListener(this)
+        binding.filmUser.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -160,18 +130,19 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
             R.id.film_play_btn -> {
                 binding.filmPlayBtn.isClickable = false
-
                 sharedViewModel.setIsPlay(true)
             }
+
             R.id.film_like_btn ->{
                 // 체크
                 likecheckFun(false)
-
             }
 
-
-
-    }}
+            R.id.film_user -> {
+                (activity as MainActivity).changeFragment(4, article_userpid)
+            }
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private fun showPopup(v: View) {
@@ -184,7 +155,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     override fun onMenuItemClick(p0: MenuItem?): Boolean {
         val dialog = CustomDialogFragment()
         val normaldialog = NormalDialogFragment()
-        val duration = Toast.LENGTH_SHORT
 
         when (p0?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
             R.id.delete -> {
@@ -200,33 +170,27 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                     NormalDialogFragment.OnButtonClickListener {
                     override fun onButton1Clicked() {
                         //확인버튼을 눌렀을 때 처리할 곳
-                        Log.d("게시글 번호", articleidx.toString())
-                        var articledelete = ArticleDeleteRequest()
+                        val articledelete = ArticleDeleteRequest()
                         articledelete.articleidx = articleidx!!.toInt()
-                        Log.d("게시글번호2", articledelete.articleidx.toString())
                         val call = NetWorkClient.GetNetwork.articledelete(articledelete)
                         call.enqueue(object : Callback<ArticleDeleteResponse> {
                             override fun onResponse(
                                 call: Call<ArticleDeleteResponse>,
                                 response: Response<ArticleDeleteResponse>
                             ) {
-                                val result: ArticleDeleteResponse? = response.body()
-
-                                Log.d("성공", result?.message.toString() + " " + result?.success.toString())
-                                Toast.makeText(context, "삭제가 완료되었습니다.", duration).show()
+                                Toast.makeText(context, "게시글이 삭제되었습니다.", duration).show()
                                 moveToMain()
                             }
 
                             override fun onFailure(call: Call<ArticleDeleteResponse>, t: Throwable) {
-                                Log.d("실패:", t.message.toString())
+                                Toast.makeText(context, "게시글 삭제에 실패했습니다.", duration).show()
+                                Log.d("게시글 삭제 실패", t.message.toString())
                             }
                         })
-                        Toast.makeText(context, "삭제가 완료되었습니다.", duration).show()
                     }
 
                     override fun onButton2Clicked() {
                         //취소버튼을 눌렀을 때 처리할 곳
-                        Toast.makeText(context, "삭제가 취소되었습니다.", duration).show()
                     }
                 })
             }
@@ -249,9 +213,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 }
                 startActivity(Intent.createChooser(shareIntent, "esources.getText(R.string.send_to"))
             }
-
-
-
 
             R.id.save -> {
                 val btn= arrayOf("네", "아니오")
@@ -300,7 +261,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
                     override fun onButton2Clicked() {
                         //확인버튼을 눌렀을 때 처리할 곳
-                        Toast.makeText(context, "저장이 취소되었습니다.", duration).show()
                     }
                 })
                 normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
@@ -310,34 +270,12 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     }
 
     fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
-
-//        val storage = File(requireActivity().cacheDir, "images")
-//        val fileName: String = "cache"+ LocalDate.now().toString() + ".jpg"
-//        val tempFile = File(storage, fileName)
-//        Log.d("경로",tempFile.absolutePath)
-//        val check = requireActivity().cacheDir.toUri()
-//
-//
-
         val destPath = requireActivity().externalCacheDir.toString() + "/cache_file.jpg"
         val tempFile = File(destPath)
         tempFile.createNewFile()
         val out =FileOutputStream(tempFile)
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
-
-
-
-//        val bitmapPath = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, inImage, "Title", null)
-//        val bitmapUri = Uri.parse(bitmapPath)
-
-
-
-
-
-
         val uri = FileProvider.getUriForFile(requireActivity(),"com.example.todayfilm.Fileprovider",tempFile)
-//        Log.d("유알아이",uri.toString())
-//        Log.d("경로",tempFile.absolutePath)
 
         return uri
     }
@@ -355,13 +293,13 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         return bitmap
     }
+
     private fun moveToMain() {
         // complete 액티비티로 이동
         val intent = Intent(activity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
-
 
     private fun likecheckFun(tf :Boolean){
         val check = LikeCheck()
@@ -370,98 +308,71 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         val callCheck = NetWorkClient.GetNetwork.likedcheck(check)
         callCheck.enqueue( object : Callback<LikeBoolean>{
-            override fun onResponse(
+            override fun onResponse (
                 call: Call<LikeBoolean>,
                 response: Response<LikeBoolean>
             ) {
-                Log.d("석세스?",response.body()?.success.toString())
-                var isLiked = response.body()?.success
-                if (isLiked!!){
-                    if(tf){
+                val isLiked = response.body()?.success
+                if (isLiked!!) {
+                    if (tf) {
                         binding.filmLikeBtn.isChecked = true
-//                        binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    }
-                    else{//좋취
+                    } else {
+                        // 좋아요 취소
                         val likeDelete = LikeRequest()
                         likeDelete.likeyfrom = userpid.toString()
                         likeDelete.likeyto = articleidx.toString()
-                        val CallDelet = NetWorkClient.GetNetwork.likeddelete(likeDelete)
-                        CallDelet.enqueue(object : Callback<noRseponse>{
-                            override fun onResponse(
+                        val callDelete = NetWorkClient.GetNetwork.likeddelete(likeDelete)
+                        callDelete.enqueue(object : Callback<noRseponse> {
+                            override fun onResponse (
                                 call: Call<noRseponse>,
                                 response: Response<noRseponse>
                             ) {
-                                Log.d("좋아요취소",response.body()?.success.toString())
-
                                 binding.filmLikeBtn.isChecked = false
-
-//                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                                 countLikey()
-
-
                             }
 
                             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-
+                                Toast.makeText(context, "좋아요 취소에 실패했습니다.", duration).show()
+                                Log.d("좋아요 취소 실패", t.message.toString())
                             }
                         })
-
-
-
-
                     }
-
-                }
-                else{
-                    if(tf){
+                } else {
+                    if (tf) {
                         binding.filmLikeBtn.isChecked = false
-                    //    binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                    }
-                    else{
+                    } else {
                         // 좋아요
                         val likeAdd = LikeRequest()
                         likeAdd.likeyfrom = userpid.toString()
                         likeAdd.likeyto = articleidx.toString()
-                        val CallAdd = NetWorkClient.GetNetwork.likedcreate(likeAdd)
-                        CallAdd.enqueue(object  :Callback<noRseponse>{
+                        val callAdd = NetWorkClient.GetNetwork.likedcreate(likeAdd)
+                        callAdd.enqueue(object  :Callback<noRseponse>{
 
                             override fun onResponse(
                                 call: Call<noRseponse>,
                                 response: Response<noRseponse>
                             ) {
-                                Log.d("좋아요",response.body()?.success.toString())
-                                Log.d("좋아요",userpid.toString())
-                                Log.d("좋아요",articleidx.toString())
-
                                 animation()
-
-
-
-
-
-
-
-
-
-
-//                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
-
                                 countLikey()
-
-
                             }
 
                             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
-
-                            } }) } } }
+                                Toast.makeText(context, "좋아요에 실패했습니다.", duration).show()
+                                Log.d("좋아요 실패", t.message.toString())
+                            }
+                        })
+                    }
+                }
+            }
 
             override fun onFailure(call: Call<LikeBoolean>, t: Throwable) {
-
+                Toast.makeText(context, "좋아요 확인에 실패했습니다.", duration).show()
+                Log.d("좋아요 확인 실패", t.message.toString())
             }
         })
     }
-    private fun countLikey(){
 
+    private fun countLikey(){
         val getArticleNumber = getArticleRequest()
         getArticleNumber.articleidx = articleidx.toString()
         val callLikeyNumber =  NetWorkClient.GetNetwork.getarticle(getArticleNumber)
@@ -470,21 +381,16 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 call: Call<getArticleResponse>,
                 response: Response<getArticleResponse>
             ) {
-
                 binding.filmLikey.text = response.body()?.likey.toString()
-
             }
 
             override fun onFailure(call: Call<getArticleResponse>, t: Throwable) {
-
+                Toast.makeText(context, "좋아요 조회에 실패했습니다.", duration).show()
+                Log.d("좋아요 조회 실패", t.message.toString())
             }
         })
-
-
-
-
-
     }
+
     private fun animation(){
         val scaleAnimation = ScaleAnimation(
             0.7f,
@@ -497,12 +403,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             0.5f
         )
         val bounceInterpolator = BounceInterpolator()
-        scaleAnimation.setDuration(500)
+        scaleAnimation.duration = 500
         scaleAnimation.interpolator = bounceInterpolator
-
         binding.filmLikeBtn.startAnimation(scaleAnimation)
-
     }
-
-
 }

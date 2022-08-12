@@ -19,8 +19,9 @@ class EmptyNotificationBroadcastReceiver: BroadcastReceiver() {
             // 작업 수행
             val isEmptyNotificationActivated = PreferenceManager.getDefaultSharedPreferences(p0).getBoolean("empty", true)
             val imgcount = MyPreference.readInt(p0, "imgcount")
+            val isComplete = MyPreference.readInt(p0, "isComplete")
 
-            if (isEmptyNotificationActivated && imgcount < 4) {
+            if (isEmptyNotificationActivated && imgcount < 4 && isComplete != 1 ) {
                 // 푸시 알림 생성
                 val notificationManager = p0.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 val notificationBuilder = NotificationCompat.Builder(p0, "10001")

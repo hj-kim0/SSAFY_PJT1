@@ -44,10 +44,12 @@ class MainActivity : AppCompatActivity() {
         // 처음에 보여줄 프래그먼트 지정
         if (isComplete == 1 && todayarticleidx != "-1") {
             isLoginAfterComplete()
+        } else if (isComplete == 1 && todayarticleidx == "-1") {
+
         } else {
             setFragment(TAG_HOME, HomeFragment())
-            binding.navBar.selectedItemId = R.id.homeFragment
         }
+        binding.navBar.selectedItemId = R.id.homeFragment
 
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
@@ -184,7 +186,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commitAllowingStateLoss()
     }
 
-    fun changeFragment(index: Int, data: String?=null, data1: String?=null, data2: String?=null, data3: String?=null, data4: String?=null){
+    fun changeFragment(index: Int, data: String?=null, data1: String?=null, data2: String?=null, data3: String?=null, data4: String?=null) {
         when(index){
             1 -> {
                 moveFragment(SearchFragment())

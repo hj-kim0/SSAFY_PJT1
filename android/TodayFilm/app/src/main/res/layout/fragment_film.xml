@@ -7,7 +7,8 @@
     tools:context=".FilmFragment"
     android:orientation="vertical"
     android:background="@color/blue_200"
-    android:overScrollMode="never">
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -19,27 +20,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="40dp"
-            android:paddingVertical="7dp">
+            android:paddingVertical="10dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/film_userimg"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/film_username"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/film_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="7dp"
-                android:textColor="@color/gray_500"
-                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/film_userimg"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/film_userimg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/film_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/gray_500"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/film_userimg"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/film_menu"

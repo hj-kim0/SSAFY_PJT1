@@ -8,7 +8,8 @@
     tools:context=".ProfileFragment"
     android:background="#E9F8FF"
     android:orientation="vertical"
-    android:overScrollMode="never">
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -176,6 +177,7 @@
             android:id="@+id/profile_article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             android:orientation="vertical" />
