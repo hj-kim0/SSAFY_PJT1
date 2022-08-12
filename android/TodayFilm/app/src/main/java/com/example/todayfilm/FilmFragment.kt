@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
@@ -42,6 +43,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     var likey: String? = null
     var hashstring: String? = null
     var userpid: String? = null
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,6 +108,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         childFragmentManager.beginTransaction().add(R.id.fragment_content_film, frameFragment).commit()
         setOnClickListener()
+
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
     }
 
     private fun setOnClickListener() {
@@ -121,7 +125,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             R.id.film_play_btn -> {
-                val sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+                binding.filmPlayBtn.isClickable = false
+
                 sharedViewModel.setIsPlay(true)
             }
         }

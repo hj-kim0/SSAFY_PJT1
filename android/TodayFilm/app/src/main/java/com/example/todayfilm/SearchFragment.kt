@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import com.example.todayfilm.data.SearchUserRequest
-import com.example.todayfilm.data.SearchUserResponse
-import com.example.todayfilm.data.SearchUser
+import android.widget.Toast
+import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentSearchBinding
 import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
@@ -56,7 +55,7 @@ class SearchFragment : Fragment(),View.OnClickListener {
     private fun requestSearch() {
         val keyword = binding.searchKeyword.text.toString()
 
-        val search = SearchUserRequest()
+        val search = SearchRequest()
         search.keyword = keyword
 
         // 사용자 검색
@@ -71,11 +70,35 @@ class SearchFragment : Fragment(),View.OnClickListener {
             }
 
             override fun onFailure(call: Call<SearchUserResponse>, t: Throwable) {
-                Log.d("", "실패"+t.message.toString())
+                Toast.makeText(requireActivity(), "사용자 검색에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("사용자 검색 실패", t.message.toString())
             }
         })
 
         // 게시글 검색
+        val callArticle = NetWorkClient.GetNetwork.searcharticle(search)
+        callArticle.enqueue(object : Callback<List<ArticleResponse>>{
+            override fun onResponse(
+                call: Call<List<ArticleResponse>>,
+                response: Response<List<ArticleResponse>>
+            ) {
+                val result = response.body()
+                val datas = arrayListOf<ArticleResponse>()
+
+                if (result != null) {
+                    for (r in result) {
+                        datas.add(r)
+                    }
+                }
+
+                initArticleRecycler(datas)
+            }
+
+            override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
+                Toast.makeText(requireActivity(), "게시글 검색에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("게시글 검색 실패", t.message.toString())
+            }
+        })
     }
 
     private fun initUserRecycler(userdatas: ArrayList<SearchUser>) {
@@ -89,6 +112,19 @@ class SearchFragment : Fragment(),View.OnClickListener {
         })
 
         userAdapter.datas = userdatas
+    }
+
+    private fun initArticleRecycler(articledatas: ArrayList<ArticleResponse>) {
+        val articleAdapter = ArticleAdapter(requireActivity())
+        binding.searchResultArticle.adapter = articleAdapter
+
+        articleAdapter.setItemClickListener(object: ArticleAdapter.ItemClickListener {
+            override fun onClick(view: View, articleidx: String, articlecreatedate: String, article_userpid: String, likey: String, hashstring: String) {
+                (activity as MainActivity).changeFragment(3, articleidx, articlecreatedate, article_userpid, likey, hashstring)
+            }
+        })
+
+        articleAdapter.datas = articledatas
     }
 }
 

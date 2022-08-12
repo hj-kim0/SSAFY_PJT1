@@ -83,8 +83,13 @@ interface NetWorkInterface {
 
     @POST("api/search/user")
     fun searchuser(
-        @Body search: SearchUserRequest
+        @Body search: SearchRequest
     ): Call<SearchUserResponse>
+
+    @POST("api/search/hash")
+    fun searcharticle(
+        @Body search: SearchRequest
+    ): Call<List<ArticleResponse>>
 
     @POST("api/subscribe/delete")
     fun deletefollow(
@@ -115,7 +120,5 @@ interface NetWorkInterface {
     fun followed(
         @Body getProfile: GetProfile
     ):Call<List<FollowProfile>>
-
-
 }
 

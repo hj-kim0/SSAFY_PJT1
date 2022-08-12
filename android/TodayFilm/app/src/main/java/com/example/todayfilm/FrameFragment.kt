@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -203,6 +204,8 @@ class FrameFragment : Fragment(), View.OnClickListener {
             setOnClickListener()
         }
 
+        val loadingDialog = LoadingDialog(requireActivity())
+
         // 동영상 재생 관련
         val image1 = binding.image1Photo
         val image2 = binding.image2Photo
@@ -218,19 +221,20 @@ class FrameFragment : Fragment(), View.OnClickListener {
         sharedViewModel.getIsPlay().observe(
             requireActivity(),
         ) {
-            image1.visibility = View.GONE
-            image2.visibility = View.GONE
-            image3.visibility = View.GONE
-            image4.visibility = View.GONE
+            if (it) {
+                loadingDialog.show()
 
-            prepareVideo(video1, image1, 1)
-            prepareVideo(video2, image2, 2)
-            prepareVideo(video3, image3, 3)
-            prepareVideo(video4, image4, 4)
+                prepareVideo(video1, image1, 1)
+                prepareVideo(video2, image2, 2)
+                prepareVideo(video3, image3, 3)
+                prepareVideo(video4, image4, 4)
+            }
         }
 
         sharedViewModel.getIsPrepared().observe(requireActivity()) {
             if (it == 10) {
+                loadingDialog.dismiss()
+
                 video1.start()
 
                 video1.setOnCompletionListener {
@@ -257,6 +261,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
                     video4.visibility = View.GONE
 
                     sharedViewModel.setIsPrepared(-10)
+                    sharedViewModel.setIsPlay(false)
                 }
             }
         }
@@ -270,6 +275,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
 
     fun prepareVideo(videoView: VideoView, imageView: ImageView, vidnum: Int) {
         videoView.visibility = View.VISIBLE
+        imageView.visibility = View.GONE
 
         // 동영상 주소 준비
         val videoUri = Uri.parse("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/${vidnum}.mp4")
