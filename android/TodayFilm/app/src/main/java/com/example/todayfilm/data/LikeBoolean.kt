@@ -1,6 +1,7 @@
 package com.example.todayfilm.data
 
-class noRseponse {
-    var success : Boolean = false
+class LikeBoolean {
     var message = ""
+    var success = false
+
 }

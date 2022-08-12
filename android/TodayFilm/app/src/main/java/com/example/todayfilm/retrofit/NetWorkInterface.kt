@@ -119,6 +119,37 @@ interface NetWorkInterface {
     @POST("api/subscribe/followed")
     fun followed(
         @Body getProfile: GetProfile
-    ):Call<List<FollowProfile>>
+    ):Call<FollowList>
+
+    @POST("api/subscribe/following")
+    fun following(
+        @Body getProfile: GetProfile
+    ):Call<FollowList>
+
+    //좋아요
+    @POST("api/likey/create")
+    fun likedcreate(
+        @Body likecreate : LikeRequest
+
+    ): Call<noRseponse>
+
+
+    //좋아요 취소
+    @POST("api/likey/delete")
+    fun likeddelete(
+        @Body likecreate : LikeRequest
+
+    ): Call<noRseponse>
+
+    // 좋아요 여부
+    @POST("api/article/likey")
+    fun likedcheck(
+        @Body likecheck : LikeCheck
+    ): Call<LikeBoolean>
+
+    @POST("api/article/getarticle")
+    fun getarticle(
+        @Body likeynumber : getArticleRequest
+     ): Call<getArticleResponse>
 }
 

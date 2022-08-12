@@ -18,22 +18,24 @@ import android.widget.FrameLayout
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.todayfilm.data.ArticleDeleteRequest
-import com.example.todayfilm.data.ArticleDeleteResponse
-import com.example.todayfilm.data.CompleteProfile
-import com.example.todayfilm.data.GetProfile
+import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentFilmBinding
 import com.example.todayfilm.retrofit.NetWorkClient
+import com.google.android.gms.auth.api.signin.internal.Storage
 import kotlinx.android.synthetic.main.fragment_film.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
@@ -75,8 +77,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         bundle.putString("articlecreatedate", articlecreatedate)
         bundle.putString("article_userpid", article_userpid)
         frameFragment.arguments = bundle
-
         binding.filmHashtags.text = hashstring
+
 
         // 작성자 정보 조회
         val profile = GetProfile()
@@ -107,14 +109,48 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         }
 
         childFragmentManager.beginTransaction().add(R.id.fragment_content_film, frameFragment).commit()
-        setOnClickListener()
+        likecheckFun(true)
 
+
+//        val check = LikeCheck()
+//        check.userpid = userpid.toString()
+//        check.articleidx = articleidx.toString()
+//
+//        val callCheck = NetWorkClient.GetNetwork.likedcheck(check)
+//        callCheck.enqueue( object : Callback<LikeBoolean>{
+//            override fun onResponse(
+//                call: Call<LikeBoolean>,
+//                response: Response<LikeBoolean>
+//            ) {
+//                Log.d("석세스?",response.body()?.success.toString())
+//                var isLiked = response.body()?.success
+//                if (isLiked!!){
+//
+//                        binding.filmLikeBtn.text = "♥"
+//                    }else{
+//
+//
+//                        binding.filmLikeBtn.text = "♡"
+//                    }
+//                  }
+//
+//            override fun onFailure(call: Call<LikeBoolean>, t: Throwable) {
+//
+//            }
+//        })
+
+
+
+
+    setOnClickListener()
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
     }
 
     private fun setOnClickListener() {
         binding.filmMenu.setOnClickListener(this)
         binding.filmPlayBtn.setOnClickListener(this)
+        binding.filmLikeBtn.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -129,8 +165,15 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
                 sharedViewModel.setIsPlay(true)
             }
-        }
-    }
+            R.id.film_like_btn ->{
+                // 체크
+                likecheckFun(false)
+
+            }
+
+
+
+    }}
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private fun showPopup(v: View) {
@@ -209,6 +252,9 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                 startActivity(Intent.createChooser(shareIntent, "esources.getText(R.string.send_to"))
             }
 
+
+
+
             R.id.save -> {
                 val btn= arrayOf("네", "아니오")
                 normaldialog.arguments = bundleOf(
@@ -266,29 +312,32 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     }
 
     fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
-        val storage = File(requireContext().cacheDir, "images")
-        val fileName: String = "cache"+ ".jpg"
+
+        val storage = File(requireActivity().cacheDir, "images")
+        val fileName: String = "cache"+ LocalDate.now().toString() + ".jpg"
         val tempFile = File(storage, fileName)
+//        Log.d("경로",tempFile.absolutePath)
+//        val check = requireActivity().cacheDir.toUri()
+//
+//
+//        tempFile.createNewFile()
+//        val out =FileOutputStream(tempFile)
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
 
-        try {
-            // 자동으로 빈 파일을 생성합니다.
-            tempFile.createNewFile()
 
-            // 파일을 쓸 수 있는 스트림을 준비합니다.
-            val out = FileOutputStream(tempFile)
 
-            // compress 함수를 사용해 스트림에 비트맵을 저장합니다.
-            inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
 
-            // 스트림 사용후 닫아줍니다.
-            out.close()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+//        val bitmapPath = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, inImage, "Title", null)
+//        val bitmapUri = Uri.parse(bitmapPath)
+
+
+
+
+
 
         val uri = FileProvider.getUriForFile(requireActivity(),"com.example.todayfilm.Fileprovider",tempFile)
+//        Log.d("유알아이",uri.toString())
+//        Log.d("경로",tempFile.absolutePath)
 
         return uri
     }
@@ -312,4 +361,116 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
+
+
+    private fun likecheckFun(tf :Boolean){
+        val check = LikeCheck()
+        check.userpid = userpid.toString()
+        check.articleidx = articleidx.toString()
+
+        val callCheck = NetWorkClient.GetNetwork.likedcheck(check)
+        callCheck.enqueue( object : Callback<LikeBoolean>{
+            override fun onResponse(
+                call: Call<LikeBoolean>,
+                response: Response<LikeBoolean>
+            ) {
+                Log.d("석세스?",response.body()?.success.toString())
+                var isLiked = response.body()?.success
+                if (isLiked!!){
+                    if(tf){
+                        binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    }
+                    else{//좋취
+                        val likeDelete = LikeRequest()
+                        likeDelete.likeyfrom = userpid.toString()
+                        likeDelete.likeyto = articleidx.toString()
+                        val CallDelet = NetWorkClient.GetNetwork.likeddelete(likeDelete)
+                        CallDelet.enqueue(object : Callback<noRseponse>{
+                            override fun onResponse(
+                                call: Call<noRseponse>,
+                                response: Response<noRseponse>
+                            ) {
+                                Log.d("좋아요취소",response.body()?.success.toString())
+
+                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                                countLikey()
+
+
+                            }
+
+                            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+
+                            }
+                        })
+
+
+
+
+                    }
+
+                }
+                else{
+                    if(tf){
+                        binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    }
+                    else{
+                        // 좋아요
+                        val likeAdd = LikeRequest()
+                        likeAdd.likeyfrom = userpid.toString()
+                        likeAdd.likeyto = articleidx.toString()
+                        val CallAdd = NetWorkClient.GetNetwork.likedcreate(likeAdd)
+                        CallAdd.enqueue(object  :Callback<noRseponse>{
+
+                            override fun onResponse(
+                                call: Call<noRseponse>,
+                                response: Response<noRseponse>
+                            ) {
+                                Log.d("좋아요",response.body()?.success.toString())
+                                Log.d("좋아요",userpid.toString())
+                                Log.d("좋아요",articleidx.toString())
+
+
+                                binding.filmLikeBtn.setImageResource(R.drawable.ic_baseline_favorite_24)
+
+                                countLikey()
+
+
+                            }
+
+                            override fun onFailure(call: Call<noRseponse>, t: Throwable) {
+
+                            } }) } } }
+
+            override fun onFailure(call: Call<LikeBoolean>, t: Throwable) {
+
+            }
+        })
+    }
+    private fun countLikey(){
+
+        val getArticleNumber = getArticleRequest()
+        getArticleNumber.articleidx = articleidx.toString()
+        val callLikeyNumber =  NetWorkClient.GetNetwork.getarticle(getArticleNumber)
+        callLikeyNumber.enqueue(object : Callback<getArticleResponse>{
+            override fun onResponse(
+                call: Call<getArticleResponse>,
+                response: Response<getArticleResponse>
+            ) {
+
+                binding.filmLikey.text = response.body()?.likey.toString()
+
+            }
+
+            override fun onFailure(call: Call<getArticleResponse>, t: Throwable) {
+
+            }
+        })
+
+
+
+
+
+    }
+
+
 }
