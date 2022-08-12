@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,16 +29,35 @@
         android:layout_weight="6"
         android:paddingTop="50dp"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        >
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/login_to_findPassword"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/find_pw"
-            android:textColor="@color/gray_500"
-            android:textAlignment="textEnd"/>
+            android:layout_marginBottom="10dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/login_to_findPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_ripple_border"
+                android:clickable="true"
+                android:focusable="true"
+
+
+                android:gravity=""
+                android:text="@string/find_pw"
+                android:textColor="@color/gray_500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+ />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/login_id"
@@ -111,7 +131,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signup"
-                android:textColor="@color/blue_500"/>
+                android:textColor="@color/blue_500"
+                android:background="@drawable/custom_ripple_border"
+                android:clickable="true"
+                android:focusable="true"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

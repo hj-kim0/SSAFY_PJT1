@@ -21,7 +21,12 @@
             android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/custom_ripple_border"
+            android:clickable="true"
+            android:focusable="true"
+
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/profileList_title"

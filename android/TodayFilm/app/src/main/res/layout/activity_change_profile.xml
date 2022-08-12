@@ -86,7 +86,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/change_pw"
-            android:textColor="@color/blue_500"/>
+            android:textColor="@color/blue_500"
+            android:background="@drawable/custom_ripple_border"
+            android:clickable="true"
+            android:focusable="true"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

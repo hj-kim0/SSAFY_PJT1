@@ -34,7 +34,12 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/custom_ripple_slash"
+
+            />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="1dp"
@@ -51,7 +56,12 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/custom_ripple_slash"
+
+            />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
