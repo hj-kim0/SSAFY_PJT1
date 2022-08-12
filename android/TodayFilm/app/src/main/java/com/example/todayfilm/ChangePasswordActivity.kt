@@ -20,7 +20,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         val userpassword = MyPreference.read(this, "userpassword")
-        val userpid = MyPreference.read(this, "userid")
+        val userid = MyPreference.read(this, "userid")
 
         binding.changePasswordNewPw.setOnFocusChangeListener { view, b ->
             if (!b) {
@@ -46,9 +46,9 @@ class ChangePasswordActivity : AppCompatActivity() {
             }else{
                 // 서버로 요청 보내기
                 var changepw = ChangePwRequest()
-                changepw.userpid = userpid
+                changepw.userid = userid
                 changepw.userpw = oldPw
-                changepw.usernewpw = newPw
+                changepw.usernewpw = newPwCheck
                 val call = NetWorkClient.GetNetwork.changepw(changepw)
                 call.enqueue(object : Callback<ChangePwResponse> {
                     override fun onResponse(
@@ -57,6 +57,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     ) {
                         val result: ChangePwResponse? = response.body()
                         Log.d("test", result?.message.toString())
+                        Log.d("test1", changepw.usernewpw )
                         MyPreference.write(this@ChangePasswordActivity, "userpassword", newPw)
                         Toast.makeText(this@ChangePasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
                         onBackPressed()
