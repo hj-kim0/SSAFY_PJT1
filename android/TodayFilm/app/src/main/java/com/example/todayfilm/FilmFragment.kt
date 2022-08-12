@@ -313,17 +313,19 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
     fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
 
-        val storage = File(requireActivity().cacheDir, "images")
-        val fileName: String = "cache"+ LocalDate.now().toString() + ".jpg"
-        val tempFile = File(storage, fileName)
+//        val storage = File(requireActivity().cacheDir, "images")
+//        val fileName: String = "cache"+ LocalDate.now().toString() + ".jpg"
+//        val tempFile = File(storage, fileName)
 //        Log.d("경로",tempFile.absolutePath)
 //        val check = requireActivity().cacheDir.toUri()
 //
 //
-//        tempFile.createNewFile()
-//        val out =FileOutputStream(tempFile)
-//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
 
+        val destPath = requireActivity().externalCacheDir.toString() + "/cache_file.jpg"
+        val tempFile = File(destPath)
+        tempFile.createNewFile()
+        val out =FileOutputStream(tempFile)
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
 
 
 
