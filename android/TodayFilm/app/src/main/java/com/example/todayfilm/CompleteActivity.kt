@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.preference.PreferenceManager
 import com.example.todayfilm.data.FindPwResponse
 import com.example.todayfilm.databinding.ActivityCompleteBinding
 import com.example.todayfilm.retrofit.NetWorkClient
@@ -75,7 +76,9 @@ class CompleteActivity : AppCompatActivity() {
                 }
             }
 
-            hashstring = hashstring.substring(1)
+            if (hashtags.isNotEmpty()) {
+                hashstring = hashstring.substring(1)
+            }
 
             // 오늘 날짜 확인
             val today = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
@@ -126,6 +129,43 @@ class CompleteActivity : AppCompatActivity() {
                     videos.add(MultipartBody.Part.createFormData("videodata", video.name, body))
                 }
 
+                val isRepeat = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("repeat", true)
+
+                // 게시글 반복 저장
+                if (imgcount in 1..3) {
+                    if (isRepeat) {
+                        for (index in 1..4-imgcount) {
+                            if (imgcount == 2 && index == 2) {
+                                val image = File(this.getExternalFilesDir(null), "2.png")
+                                val body = RequestBody.create(MediaType.parse("image/*"), image)
+                                images.add(MultipartBody.Part.createFormData("imgdata", "4.png", body))
+
+                                val video = File(this.getExternalFilesDir(null), "2.mp4")
+                                val body1 = RequestBody.create(MediaType.parse("video/*"), video)
+                                videos.add(MultipartBody.Part.createFormData("videodata", "4.mp4", body1))
+                            } else {
+                                val image = File(this.getExternalFilesDir(null), "1.png")
+                                val body = RequestBody.create(MediaType.parse("image/*"), image)
+                                images.add(MultipartBody.Part.createFormData("imgdata", "${imgcount + index}.png", body))
+
+                                val video = File(this.getExternalFilesDir(null), "1.mp4")
+                                val body1 = RequestBody.create(MediaType.parse("video/*"), video)
+                                videos.add(MultipartBody.Part.createFormData("videodata", "${imgcount + index}.mp4", body1))
+                            }
+                        }
+                    } else {
+                        for (index in 1..4-imgcount) {
+                            val image = File("android.resource://$packageName/raw/blankimage.png")
+                            val body = RequestBody.create(MediaType.parse("image/*"), image)
+                            images.add(MultipartBody.Part.createFormData("imgdata", "${imgcount + index}.png", body))
+
+                            val video = File("android.resource://$packageName/raw/blankvideo.mp4")
+                            val body1 = RequestBody.create(MediaType.parse("video/*"), video)
+                            videos.add(MultipartBody.Part.createFormData("videodata", "${imgcount + index}.mp4", body1))
+                        }
+                    }
+                }
+
                 // 게시글 작성자
                 val pid = MyPreference.read(this, "userpid")
                 val userpid = RequestBody.create(MediaType.parse("text/plain"), pid)
@@ -163,7 +203,7 @@ class CompleteActivity : AppCompatActivity() {
                         }
 
                         // 기기에 저장
-                        if(complete_save.isChecked){
+                        if (complete_save.isChecked) {
                             val bitmap = Bitmap.createBitmap(fragment_content_complete.getWidth(), fragment_content_complete.getHeight(), (Bitmap.Config.ARGB_8888))
                             val canvas = Canvas(bitmap)
                             val bgDrawable = fragment_content_complete.getBackground()
@@ -176,7 +216,7 @@ class CompleteActivity : AppCompatActivity() {
 
                             var fos: OutputStream? = null
                             // 3
-                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                 // 4
                                 baseContext?.contentResolver?.also { resolver ->
                                     // 5
@@ -226,7 +266,8 @@ class CompleteActivity : AppCompatActivity() {
                         // 로딩 화면 끝
                         loadingDialog.dismiss()
 
-                        Toast.makeText(applicationContext, "전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "게시글 작성에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("게시글 작성 실패", t.message.toString())
                     }
                 })
             }

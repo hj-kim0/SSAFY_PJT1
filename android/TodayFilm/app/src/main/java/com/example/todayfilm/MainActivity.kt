@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             val normaldialog = NormalDialogFragment()
             val btn= arrayOf("네","아니오")
             normaldialog.arguments = bundleOf(
-                "bodyContext" to "네 선택 시, 설정의 '사진 반복 여부'에 따라\n필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다",
+                "bodyContext" to "네 선택 시, 설정의 '사진 반복 여부'에 따라 필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다",
                 "bodyTitle" to "어제의 필름이 완성되지 않았습니다.\n이대로 완성하시겠습니까?",
                 "btnData" to btn
             )

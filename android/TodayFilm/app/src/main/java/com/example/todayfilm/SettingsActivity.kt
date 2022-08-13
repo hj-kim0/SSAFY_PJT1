@@ -27,7 +27,6 @@ class SettingsActivity : AppCompatActivity() {
         val binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
@@ -35,9 +34,6 @@ class SettingsActivity : AppCompatActivity() {
                     .commit()
         }
     }
-
-
-
 
     class SettingsPreference : PreferenceFragmentCompat() {
         // 저장되는 데이터에 접근하기 위한 SharedPreferences
@@ -87,16 +83,15 @@ class SettingsActivity : AppCompatActivity() {
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
             val key = preference.key
 
-
             when (key) {
                 "logout" -> {
                     // 다이얼로그 띄우기
                     val normaldialog = NormalDialogFragment()
                     val duration = Toast.LENGTH_SHORT
-                    val btn= arrayOf("네","아니오")
+                    val btn= arrayOf("네", "아니오")
                     normaldialog.arguments = bundleOf(
-                        "bodyContext" to "정말 로그아웃 하시겠습니까?",
-                        "bodyTitle" to "로그아웃",
+                        "bodyContext" to "완성되지 않은 필름은 삭제됩니다.",
+                        "bodyTitle" to "로그아웃 하시겠습니까?",
                         "btnData" to btn
                     )
 
@@ -105,10 +100,9 @@ class SettingsActivity : AppCompatActivity() {
                     normaldialog.setButtonClickListener(object :
                         NormalDialogFragment.OnButtonClickListener {
                         override fun onButton1Clicked() {
-                            //취소버튼을 눌렀을 때 처리할 곳
-
+                            // 네 버튼을 눌렀을 때 처리할 곳
                             val logoutuser = LogoutRequest()
-                            var userpid = MyPreference.read(requireActivity(), "userpid").toInt()
+                            val userpid = MyPreference.read(requireActivity(), "userpid").toInt()
                             logoutuser.userpid = userpid
                             val call = NetWorkClient.GetNetwork.signout(logoutuser)
                             call.enqueue(object : Callback<LogoutResponse> {
@@ -116,69 +110,24 @@ class SettingsActivity : AppCompatActivity() {
                                     call: Call<LogoutResponse>,
                                     response: Response<LogoutResponse>
                                 ) {
-
                                     val intent = Intent(activity, IntroActivity::class.java)
                                     intent.putExtra("logout", "1")
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     startActivity(intent)
 
-                                    Toast.makeText(context, "로그아웃이 완료되었습니다.", duration).show()
-
+                                    Toast.makeText(context, "성공적으로 로그아웃되었습니다.", duration).show()
                                 }
 
                                 override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
-                                    Log.d("실패:", t.message.toString())
+                                    Toast.makeText(context, "로그아웃에 실패했습니다.", duration).show()
+                                    Log.d("로그아웃 실패", t.message.toString())
                                 }
                             })
-
                         }
 
-                        override fun onButton2Clicked() {
-                            //확인버튼을 눌렀을 때 처리할 곳
-                            Toast.makeText(context, "로그아웃이 취소되었습니다.", duration).show()
-                        }
+                        override fun onButton2Clicked() {}
                     })
                 }
-
-
-
-
-
-
-
-
-
-
-                    
-
-//                    val builder = AlertDialog.Builder(activity)
-//                    builder.setTitle("로그아웃 하시겠습니까?")
-//                        .setMessage("완성되지 않은 필름은 삭제됩니다.")
-//                        .setPositiveButton("예", DialogInterface.OnClickListener { dialog, id ->
-//                            // 서버로 로그아웃 요청
-//
-//                            // 응답 받은 후 토스트 띄우고 intro 액티비티로 이동
-//                            showToast()
-//                            val intent = Intent(activity, IntroActivity::class.java)
-//                            intent.putExtra("logout", "1")
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                            startActivity(intent)
-//                        })
-//                        .setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, id -> })
-//                    builder.show()
-//                }
-
-
-
-
-
-
-
-
-
-
-
-
 
                 "deleteAccount" -> {
                     // delete account 액티비티로 이동
@@ -189,10 +138,6 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             return super.onPreferenceTreeClick(preference)
-        }
-
-        private fun showToast() {
-            Toast.makeText(activity, "성공적으로 로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 }

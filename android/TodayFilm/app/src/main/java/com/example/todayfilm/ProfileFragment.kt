@@ -81,12 +81,10 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
         getProfile()
         getArticle()
         getFollowNumber()
-        getFollowing()
+        getFollowingNumber()
         setOnClickListener()
 
-        sensorManager.registerListener(this, sensorManager
-            .getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-            ,SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     private fun setOnClickListener() {
@@ -113,7 +111,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
                 } else {
                     searchProfile(false)
                     getFollowNumber()
-                    getFollowing()
+                    getFollowingNumber()
                 }
             }
 
@@ -142,8 +140,8 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
     private fun unfollow(){
         val deleteFollowR = FollowRequest()
-        deleteFollowR.subfrom = search_userpid
-        deleteFollowR.subto = userpid
+        deleteFollowR.subfrom = userpid
+        deleteFollowR.subto = search_userpid
 
         val calldeletefollow = NetWorkClient.GetNetwork.deletefollow(deleteFollowR)
         calldeletefollow.enqueue( object : Callback<noRseponse> {
@@ -156,12 +154,12 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
                     binding.profileBtn.text = "팔로우"
 
                     getFollowNumber()
-                    getFollowing()
-
+                    getFollowingNumber()
                 } else {
                     Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
                 Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 Log.d("팔로우 요청 실패", t.message.toString())
@@ -171,11 +169,11 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
     private fun follow(){
         val addFollowR = FollowRequest()
-        addFollowR.subfrom = search_userpid
-        addFollowR.subto = userpid
+        addFollowR.subfrom = userpid
+        addFollowR.subto = search_userpid
 
-        val calldeletefollow = NetWorkClient.GetNetwork.createfollow(addFollowR)
-        calldeletefollow.enqueue( object : Callback<noRseponse> {
+        val callcreatefollow = NetWorkClient.GetNetwork.createfollow(addFollowR)
+        callcreatefollow.enqueue( object : Callback<noRseponse> {
             override fun onResponse(
                 call: Call<noRseponse>,
                 response: Response<noRseponse>
@@ -185,7 +183,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
                     binding.profileBtn.text = "언팔로우"
 
                     getFollowNumber()
-                    getFollowing()
+                    getFollowingNumber()
                 } else {
                     Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -256,8 +254,8 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
     private fun searchProfile(switch:Boolean){
         val searchFollowr = FollowRequest()
-        searchFollowr.subfrom = search_userpid
-        searchFollowr.subto = userpid
+        searchFollowr.subfrom = userpid
+        searchFollowr.subto = search_userpid
 
         val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
         searchFollow.enqueue(object : Callback<FollowBoolean>{
@@ -265,16 +263,16 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
                 val isFollow = response.body()?.followBoolean
 
                 if (isFollow!!) {
-                    if (switch){
+                    if (switch) {
                         binding.profileBtn.text = "언팔로우"
-                    }else{
+                    } else {
                         unfollow()
                     }
 
                 } else {
-                    if (switch){
+                    if (switch) {
                         binding.profileBtn.text = "팔로우"
-                    }else{
+                    } else {
                         follow()
                     }
                 }
@@ -291,7 +289,6 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
         val getFollow = GetProfile()
         getFollow.userpid = search_userpid
         val callFollowUser = NetWorkClient.GetNetwork.followed(getFollow)
-
         callFollowUser.enqueue(object : Callback<FollowList>{
             override fun onResponse(call: Call<FollowList>, response: Response<FollowList>) {
                 followNumber = response.body()?.list!!.size
@@ -305,7 +302,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
         })
     }
 
-    private fun getFollowing(){
+    private fun getFollowingNumber(){
         val getFollow = GetProfile()
         getFollow.userpid = search_userpid
         val callFollowingUser = NetWorkClient.GetNetwork.following(getFollow)
