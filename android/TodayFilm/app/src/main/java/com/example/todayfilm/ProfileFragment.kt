@@ -256,6 +256,8 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
         val searchFollowr = FollowRequest()
         searchFollowr.subfrom = userpid
         searchFollowr.subto = search_userpid
+        Log.d("from오류",userpid)
+        Log.d("to오류",search_userpid)
 
         val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
         searchFollow.enqueue(object : Callback<FollowBoolean>{
