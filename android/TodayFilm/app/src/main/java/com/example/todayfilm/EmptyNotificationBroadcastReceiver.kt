@@ -6,6 +6,8 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.preference.PreferenceManager
 
@@ -14,6 +16,7 @@ class EmptyNotificationBroadcastReceiver: BroadcastReceiver() {
         const val EMPTY_NOTIFICATION_CODE = 1
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onReceive(p0: Context?, p1: Intent?) {
         if (p0 != null) {
             // 작업 수행
@@ -44,9 +47,7 @@ class EmptyNotificationBroadcastReceiver: BroadcastReceiver() {
                     .setContentText("사진을 찍어 필름을 완성해보세요!")
                     .setContentIntent(pendingIntent)
 
-                if (notificationManager != null) {
-                    notificationManager.notify(EMPTY_NOTIFICATION_CODE, notificationBuilder.build())
-                }
+                notificationManager.notify(EMPTY_NOTIFICATION_CODE, notificationBuilder.build())
             }
 
             // AlarmManager 재등록

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.core.os.HandlerCompat.postDelayed
 import com.example.todayfilm.databinding.ActivityCoverBinding
 
 class CoverActivity : AppCompatActivity() {

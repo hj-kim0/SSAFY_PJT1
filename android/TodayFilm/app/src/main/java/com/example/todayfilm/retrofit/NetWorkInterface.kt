@@ -139,7 +139,6 @@ interface NetWorkInterface {
     @POST("api/likey/create")
     fun likedcreate(
         @Body likecreate : LikeRequest
-
     ): Call<noRseponse>
 
     //좋아요 취소

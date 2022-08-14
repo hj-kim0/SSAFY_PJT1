@@ -60,7 +60,7 @@ class CheckActivity : AppCompatActivity() {
         // 영상 길이 자르기
         Mp4Composer(srcPath, destPath)
             .rotation(Rotation.ROTATION_270)
-            .size(1920, 1080)
+            .size(640, 360)
             .fillMode(FillMode.PRESERVE_ASPECT_FIT)
             .trim(startTime, endTime)
             .listener(object : Mp4Composer.Listener {
@@ -140,13 +140,15 @@ class CheckActivity : AppCompatActivity() {
             resultFile.delete()
 
             // 영상의 마지막 프레임 추출해서 같은 위치에 같은 이름으로 저장
-            var bitmap = mediaMetadataRetriever.getFrameAtTime(endTime * 1000 - 1)
+            var bitmap = mediaMetadataRetriever.getFrameAtTime(endTime * 1000)
             val rotateMatrix = Matrix()
             rotateMatrix.postRotate(270F)
             bitmap = Bitmap.createBitmap(bitmap!!, 0,0, bitmap.width, bitmap.height, rotateMatrix, false)
-            val imageFile = File(this.getExternalFilesDir(null), "${imgcount}.png")
+            bitmap = Bitmap.createScaledBitmap(bitmap, 640, 360, true)
+            val imageFile = File(this.getExternalFilesDir(null), "${imgcount}.jpg")
             val fileOutputStream = FileOutputStream(imageFile)
-            bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+            bitmap.recycle()
             fileOutputStream.flush()
 
             // 저장할 Imgvid 객체 생성

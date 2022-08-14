@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.FragmentProfileListBinding
 import com.example.todayfilm.retrofit.NetWorkClient
@@ -18,12 +17,12 @@ import retrofit2.Response
 class ProfileListFragment : Fragment(),View.OnClickListener {
     lateinit var binding: FragmentProfileListBinding
     var title: String? = ""
-    var search_userpid: String? = ""
+    private var search_userpid: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileListBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -57,8 +56,8 @@ class ProfileListFragment : Fragment(),View.OnClickListener {
             }
 
             override fun onFailure(call: Call<ProfileListResponse>, t: Throwable) {
-                Toast.makeText(requireActivity(), "${title} 목록 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("사용자 정보 조회 실패", t.message.toString())
+                Toast.makeText(requireActivity(), "$title 목록 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.e("사용자 정보 조회 실패", t.message.toString())
             }
         })
 

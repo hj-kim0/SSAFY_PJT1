@@ -3,14 +3,12 @@ package com.example.todayfilm
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-
 
 open class FCMService : FirebaseMessagingService() {
     override fun onNewToken(@NonNull token: String) {
@@ -21,7 +19,7 @@ open class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(@NonNull remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        var check: Boolean = true
+        var check = true
 
         val title: String? = remoteMessage.getNotification()?.getTitle()
         val message: String? = remoteMessage.getNotification()?.getBody()
@@ -67,10 +65,10 @@ open class FCMService : FirebaseMessagingService() {
                     "c207",
                     "c207",
                     NotificationManager.IMPORTANCE_DEFAULT
-                );
-                notificationChannel.setDescription("c207");
+                )
+                notificationChannel.setDescription("c207")
                 notificationChannel.setShowBadge(true)
-                notificationManager.createNotificationChannel(notificationChannel);
+                notificationManager.createNotificationChannel(notificationChannel)
             }
 
             val notificationBuilder = NotificationCompat.Builder(this, "c207")

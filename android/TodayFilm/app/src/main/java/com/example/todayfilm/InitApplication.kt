@@ -5,13 +5,11 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.widget.Toast
-import androidx.preference.PreferenceManager
-import java.text.SimpleDateFormat
 import java.util.*
 
 class InitApplication: Application() {
     private lateinit var mContext: Context
-    var isNotificationChannelCreated = false
+    private var isNotificationChannelCreated = false
 
     override fun onCreate() {
         super.onCreate()

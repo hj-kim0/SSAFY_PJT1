@@ -28,34 +28,4 @@ class NotificationPreferenceFragment: PreferenceFragmentCompat() {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity())
     }
-
-    // 설정 변경 이벤트 처리
-    val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
-        when (key) {
-            "empty" -> {
-                val value = prefs.getBoolean("empty", false)
-            }
-            "follow" -> {
-                val value = prefs.getBoolean("follow", false)
-            }
-            "like" -> {
-                val value = prefs.getBoolean("like", false)
-            }
-            "new" -> {
-                val value = prefs.getBoolean("new", false)
-            }
-        }
-    }
-
-    // 리스너 등록
-    override fun onResume() {
-        super.onResume()
-        prefs.registerOnSharedPreferenceChangeListener(prefListener)
-    }
-
-    // 리스너 해제
-    override fun onPause() {
-        super.onPause()
-        prefs.unregisterOnSharedPreferenceChangeListener(prefListener)
-    }
 }

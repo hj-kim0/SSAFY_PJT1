@@ -9,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.todayfilm.data.ChangeArticleShareRequest
 import com.example.todayfilm.data.ChangeUserDetailResponse
-import com.example.todayfilm.data.LoginData
 import com.example.todayfilm.databinding.FragmentCustomDialogBinding
 import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
@@ -25,13 +24,13 @@ class CustomDialogFragment: DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCustomDialogBinding.inflate(inflater, container, false)
         val view = binding.root
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
-        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
         sharedViewModel.getArticleIdx().observe(
             requireActivity(),
         ) {
@@ -42,7 +41,7 @@ class CustomDialogFragment: DialogFragment() {
         return view
     }
 
-    fun initDialog() {
+    private fun initDialog() {
         val duration = Toast.LENGTH_SHORT
         var share: String
 

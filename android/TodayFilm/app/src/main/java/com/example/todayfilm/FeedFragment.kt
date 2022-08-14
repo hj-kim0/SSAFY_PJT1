@@ -21,7 +21,7 @@ class FeedFragment : Fragment(),View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFeedBinding.inflate(inflater,container,false)
 
         userpid = MyPreference.read(requireActivity(), "userpid")
@@ -60,7 +60,7 @@ class FeedFragment : Fragment(),View.OnClickListener {
 
             override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
                 Toast.makeText(requireActivity(), "피드 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("피드 조회 실패", t.message.toString())
+                Log.e("피드 조회 실패", t.message.toString())
             }
         })
     }

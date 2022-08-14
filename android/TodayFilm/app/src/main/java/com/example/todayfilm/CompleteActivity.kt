@@ -30,7 +30,6 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CompleteActivity : AppCompatActivity() {
@@ -45,6 +44,7 @@ class CompleteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val date = MyPreference.read(this, "date")
+        val filename = date.substring(0, 8)
 
         val fragmentManager: FragmentManager = supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
@@ -80,10 +80,6 @@ class CompleteActivity : AppCompatActivity() {
                 hashstring = hashstring.substring(1)
             }
 
-            // 오늘 날짜 확인
-            val today = SimpleDateFormat("yyyy/MM/dd (E)", Locale.KOREA)
-                .format(System.currentTimeMillis())
-
             // 공개 여부 확인
             val shareBtn = binding.completeShareGroup.checkedRadioButtonId
             var share = 0
@@ -116,7 +112,7 @@ class CompleteActivity : AppCompatActivity() {
                 // 이미지 데이터
                 val images = ArrayList<MultipartBody.Part>()
                 for (index in 1..imgcount) {
-                    val image = File(this.getExternalFilesDir(null), "${index}.png")
+                    val image = File(this.getExternalFilesDir(null), "${index}.jpg")
                     val body = RequestBody.create(MediaType.parse("image/*"), image)
                     images.add(MultipartBody.Part.createFormData("imgdata", image.name, body))
                 }
@@ -136,17 +132,17 @@ class CompleteActivity : AppCompatActivity() {
                     if (isRepeat) {
                         for (index in 1..4-imgcount) {
                             if (imgcount == 2 && index == 2) {
-                                val image = File(this.getExternalFilesDir(null), "2.png")
+                                val image = File(this.getExternalFilesDir(null), "2.jpg")
                                 val body = RequestBody.create(MediaType.parse("image/*"), image)
-                                images.add(MultipartBody.Part.createFormData("imgdata", "4.png", body))
+                                images.add(MultipartBody.Part.createFormData("imgdata", "4.jpg", body))
 
                                 val video = File(this.getExternalFilesDir(null), "2.mp4")
                                 val body1 = RequestBody.create(MediaType.parse("video/*"), video)
                                 videos.add(MultipartBody.Part.createFormData("videodata", "4.mp4", body1))
                             } else {
-                                val image = File(this.getExternalFilesDir(null), "1.png")
+                                val image = File(this.getExternalFilesDir(null), "1.jpg")
                                 val body = RequestBody.create(MediaType.parse("image/*"), image)
-                                images.add(MultipartBody.Part.createFormData("imgdata", "${imgcount + index}.png", body))
+                                images.add(MultipartBody.Part.createFormData("imgdata", "${imgcount + index}.jpg", body))
 
                                 val video = File(this.getExternalFilesDir(null), "1.mp4")
                                 val body1 = RequestBody.create(MediaType.parse("video/*"), video)
@@ -154,13 +150,24 @@ class CompleteActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        for (index in 1..4-imgcount) {
-                            val image = File("android.resource://$packageName/raw/blankimage.png")
-                            val body = RequestBody.create(MediaType.parse("image/*"), image)
-                            images.add(MultipartBody.Part.createFormData("imgdata", "${imgcount + index}.png", body))
+                        val imageinputstream = resources.openRawResource(R.raw.blankimage)
+                        val imagetemp = File.createTempFile("imagetemp", ".jpg")
+                        imagetemp.deleteOnExit()
+                        imagetemp.outputStream().use { fileOutputStream ->
+                            imageinputstream.copyTo(fileOutputStream)
+                        }
+                        val body = RequestBody.create(MediaType.parse("image/*"), imagetemp)
 
-                            val video = File("android.resource://$packageName/raw/blankvideo.mp4")
-                            val body1 = RequestBody.create(MediaType.parse("video/*"), video)
+                        val videoinputstream = resources.openRawResource(R.raw.blankvideo)
+                        val videotemp = File.createTempFile("videotemp", ".mp4")
+                        videotemp.deleteOnExit()
+                        videotemp.outputStream().use { fileOutputStream ->
+                            videoinputstream.copyTo(fileOutputStream)
+                        }
+                        val body1 = RequestBody.create(MediaType.parse("video/*"), videotemp)
+
+                        for (index in 1..4-imgcount) {
+                            images.add(MultipartBody.Part.createFormData("imgdata", "${imgcount + index}.jpg", body))
                             videos.add(MultipartBody.Part.createFormData("videodata", "${imgcount + index}.mp4", body1))
                         }
                     }
@@ -204,9 +211,9 @@ class CompleteActivity : AppCompatActivity() {
 
                         // 기기에 저장
                         if (complete_save.isChecked) {
-                            val bitmap = Bitmap.createBitmap(fragment_content_complete.getWidth(), fragment_content_complete.getHeight(), (Bitmap.Config.ARGB_8888))
+                            val bitmap = Bitmap.createBitmap(fragment_content_complete.width, fragment_content_complete.height, (Bitmap.Config.ARGB_8888))
                             val canvas = Canvas(bitmap)
-                            val bgDrawable = fragment_content_complete.getBackground()
+                            val bgDrawable = fragment_content_complete.background
                             if (bgDrawable != null) {
                                 bgDrawable.draw(canvas)
                             } else {
@@ -221,7 +228,7 @@ class CompleteActivity : AppCompatActivity() {
                                 baseContext?.contentResolver?.also { resolver ->
                                     // 5
                                     val contentValues = ContentValues().apply {
-                                        put(MediaStore.MediaColumns.DISPLAY_NAME, "$date.png")
+                                        put(MediaStore.MediaColumns.DISPLAY_NAME, "$filename.jpg")
                                         put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
                                         put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                                     }
@@ -234,7 +241,7 @@ class CompleteActivity : AppCompatActivity() {
                                 }
                             } else {
                                 val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                                val image = File(imagesDir, "$date.png")
+                                val image = File(imagesDir, "$filename.jpg")
                                 fos = FileOutputStream(image)
                             }
 
@@ -244,20 +251,16 @@ class CompleteActivity : AppCompatActivity() {
                             }
                         }
 
-                        // 오늘 필름을 저장했다면 내부 저장소에 필름 완성했다는 정보 남기기
-                        if (today == date) {
-                            MyPreference.writeInt(applicationContext, "isComplete", 1)
-                        } else {
-                            // 어제 필름을 저장했다면 내부 저장소에 date 갱신
-                            MyPreference.write(applicationContext, "date", today)
-                        }
+                        // 내부 저장소에 필름 완성했다는 정보 남기기
+                        MyPreference.writeInt(applicationContext, "isComplete", 1)
 
                         // 로딩 화면 끝
                         loadingDialog.dismiss()
 
-                        // 응답 받은 후 토스트 띄우고 main 액티비티로 이동
+                        // 응답 받은 후 토스트 띄우고 profile로 이동
                         Toast.makeText(applicationContext, "성공적으로 기록되었습니다.", Toast.LENGTH_SHORT).show()
                         val intent = Intent(applicationContext, MainActivity::class.java)
+                        intent.putExtra("parent", "complete")
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
                     }

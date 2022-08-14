@@ -10,7 +10,6 @@ import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import com.example.todayfilm.data.ArticleDeleteResponse
 import com.example.todayfilm.data.LogoutRequest
 import com.example.todayfilm.data.LogoutResponse
 import com.example.todayfilm.databinding.ActivitySettingsBinding
@@ -37,11 +36,11 @@ class SettingsActivity : AppCompatActivity() {
 
     class SettingsPreference : PreferenceFragmentCompat() {
         // 저장되는 데이터에 접근하기 위한 SharedPreferences
-        lateinit var prefs: SharedPreferences
+        private lateinit var prefs: SharedPreferences
 
         // Preference 객체
-        var repeatPreference: Preference? = null
-        var shakePreference: Preference? = null
+        private var repeatPreference: Preference? = null
+        private var shakePreference: Preference? = null
 
         // onCreatee() 중에 호출되어 Fragment에 preference를 제공
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -57,33 +56,8 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
-            when (key) {
-                "repeat" -> {
-                    val value = prefs.getBoolean("repeat", false)
-                }
-                "shake" -> {
-                    val value = prefs.getBoolean("shake", false)
-                }
-            }
-        }
-
-        // 리스너 등록
-        override fun onResume() {
-            super.onResume()
-            prefs.registerOnSharedPreferenceChangeListener(prefListener)
-        }
-
-        // 리스너 해제
-        override fun onPause() {
-            super.onPause()
-            prefs.unregisterOnSharedPreferenceChangeListener(prefListener)
-        }
-
         override fun onPreferenceTreeClick(preference: Preference): Boolean {
-            val key = preference.key
-
-            when (key) {
+            when (preference.key) {
                 "logout" -> {
                     // 다이얼로그 띄우기
                     val normaldialog = NormalDialogFragment()
@@ -120,7 +94,7 @@ class SettingsActivity : AppCompatActivity() {
 
                                 override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
                                     Toast.makeText(context, "로그아웃에 실패했습니다.", duration).show()
-                                    Log.d("로그아웃 실패", t.message.toString())
+                                    Log.e("로그아웃 실패", t.message.toString())
                                 }
                             })
                         }

@@ -6,6 +6,8 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,6 +17,7 @@ class ResetNotificationBroadcastReceiver: BroadcastReceiver() {
         const val RESET_NOTIFICATION_CODE = 3
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onReceive(p0: Context?, p1: Intent?) {
         if (p0 != null) {
             // 작업 수행
@@ -53,9 +56,7 @@ class ResetNotificationBroadcastReceiver: BroadcastReceiver() {
                         .setContentText("알림을 눌러 확인해주세요!")
                         .setContentIntent(pendingIntent)
 
-                    if (notificationManager != null) {
-                        notificationManager.notify(RESET_NOTIFICATION_CODE, notificationBuilder.build())
-                    }
+                    notificationManager.notify(RESET_NOTIFICATION_CODE, notificationBuilder.build())
                 } else {
                     // 완성 X && 데이터 X -> date 갱신
                     MyPreference.write(p0, "date", date)

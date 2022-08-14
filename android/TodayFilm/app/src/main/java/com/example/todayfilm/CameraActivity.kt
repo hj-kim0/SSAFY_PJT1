@@ -25,7 +25,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
-
 class CameraActivity : AppCompatActivity() {
     // 뷰 바인딩
     private lateinit var binding: ActivityCameraBinding
@@ -130,9 +129,7 @@ class CameraActivity : AppCompatActivity() {
             if (allPermissionsGranted()) {
                 openCamera()
             } else {
-                Toast.makeText(this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "사용자가 권한을 허가하지 않았습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)

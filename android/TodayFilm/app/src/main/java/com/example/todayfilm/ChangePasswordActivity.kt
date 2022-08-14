@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.Toast
 import com.example.todayfilm.data.ChangePwRequest
 import com.example.todayfilm.data.ChangePwResponse
-import com.example.todayfilm.data.SignupData
 import com.example.todayfilm.databinding.ActivityChangePasswordBinding
 import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
@@ -19,10 +18,11 @@ class ChangePasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         val userpassword = MyPreference.read(this, "userpassword")
         val userid = MyPreference.read(this, "userid")
 
-        binding.changePasswordNewPw.setOnFocusChangeListener { view, b ->
+        binding.changePasswordNewPw.setOnFocusChangeListener { _, b ->
             if (!b) {
                 if (binding.changePasswordNewPw.length() < 6) {
                     Toast.makeText(this, "비밀번호는 6자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
@@ -31,9 +31,9 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         binding.changePasswordBtn.setOnClickListener {
-            val oldPw = binding.changePasswordOldPw.text.toString()
-            val newPw = binding.changePasswordNewPw.text.toString()
-            val newPwCheck = binding.changePasswordNewPwCheck.text.toString()
+            val oldPw = binding.changePasswordOldPw.text.toString().trim()
+            val newPw = binding.changePasswordNewPw.text.toString().trim()
+            val newPwCheck = binding.changePasswordNewPwCheck.text.toString().trim()
 
             if ((oldPw.isEmpty()) || (newPw.isEmpty()) || (newPwCheck.isEmpty())) {
                 binding.changePasswordErr.text = "기입하지 않은 란이 있습니다."
@@ -45,7 +45,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 binding.changePasswordErr.text = "새로운 비밀번호가 일치하지 않습니다."
             }else{
                 // 서버로 요청 보내기
-                var changepw = ChangePwRequest()
+                val changepw = ChangePwRequest()
                 changepw.userid = userid
                 changepw.userpw = oldPw
                 changepw.usernewpw = newPwCheck
@@ -56,15 +56,20 @@ class ChangePasswordActivity : AppCompatActivity() {
                         response: Response<ChangePwResponse>
                     ) {
                         val result: ChangePwResponse? = response.body()
-                        Log.d("test", result?.message.toString())
-                        Log.d("test1", changepw.usernewpw )
-                        MyPreference.write(this@ChangePasswordActivity, "userpassword", newPw)
-                        Toast.makeText(this@ChangePasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                        onBackPressed()
+
+                        if (result?.success == "true") {
+                            MyPreference.write(this@ChangePasswordActivity, "userpassword", newPw)
+                            Toast.makeText(this@ChangePasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                            onBackPressed()
+                        } else if (result?.success == "false") {
+                            Toast.makeText(this@ChangePasswordActivity, "비밀번호 변경에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                            Log.e("비밀번호 변경 실패", result.message)
+                        }
                     }
 
                     override fun onFailure(call: Call<ChangePwResponse>, t: Throwable) {
-                        Log.d("", "실패" + t.message.toString())
+                        Toast.makeText(this@ChangePasswordActivity, "비밀번호 변경에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("비밀번호 변경 실패", t.message.toString())
                     }
                 })
             }

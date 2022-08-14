@@ -1,7 +1,6 @@
 package com.example.todayfilm
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -34,17 +33,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
 
-
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
-    var article_userpid: String? = null
-    var articlecreatedate: String? = null
-    var articleidx: String? = null
-    var likey: String? = null
-    var hashstring: String? = null
-    var userpid: String? = null
+    private var article_userpid: String? = null
+    private var articlecreatedate: String? = null
+    private var articleidx: String? = null
+    private var likey: String? = null
+    private var hashstring: String? = null
+    private var userpid: String? = null
     private lateinit var sharedViewModel: SharedViewModel
-    val duration = Toast.LENGTH_SHORT
+    private val duration = Toast.LENGTH_SHORT
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +76,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         frameFragment.arguments = bundle
         binding.filmHashtags.text = hashstring
 
-
         // 작성자 정보 조회
         val profile = GetProfile()
         profile.userpid = article_userpid.toString()
@@ -96,7 +93,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
-                Log.d("사용자 정보 조회 실패", t.message.toString())
+                Toast.makeText(requireActivity(), "사용자 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.e("사용자 정보 조회 실패", t.message.toString())
             }
         })
 
@@ -112,6 +110,9 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         setOnClickListener()
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel.getIsPlay().observe(requireActivity()) {
+            binding.filmPlayBtn.isClickable = !it
+        }
     }
 
     private fun setOnClickListener() {
@@ -129,7 +130,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             }
 
             R.id.film_play_btn -> {
-                binding.filmPlayBtn.isClickable = false
                 sharedViewModel.setIsPlay(true)
             }
 
@@ -184,19 +184,17 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
                             override fun onFailure(call: Call<ArticleDeleteResponse>, t: Throwable) {
                                 Toast.makeText(context, "게시글 삭제에 실패했습니다.", duration).show()
-                                Log.d("게시글 삭제 실패", t.message.toString())
+                                Log.e("게시글 삭제 실패", t.message.toString())
                             }
                         })
                     }
 
-                    override fun onButton2Clicked() {
-                        //취소버튼을 눌렀을 때 처리할 곳
-                    }
+                    override fun onButton2Clicked() {}
                 })
             }
 
             R.id.share -> {
-                val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+                val sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
                 sharedViewModel.setArticleIdx(articleidx ?: "")
                 dialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
             }
@@ -204,7 +202,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
             R.id.shareFile -> {
                 val bitmap = getBitmap(fragment_content_film)
 
-                val path :Uri = getImageUri(context,bitmap)
+                val path :Uri = getImageUri(bitmap)
 
                 val shareIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -228,7 +226,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                         val bitmap = getBitmap(fragment_content_film)
 
                         var fos: OutputStream? = null
-                        val title = articlecreatedate
                         // 3
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             // 4
@@ -236,7 +233,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
                                 // 5
                                 val contentValues = ContentValues().apply {
-                                    put(MediaStore.MediaColumns.DISPLAY_NAME, "$title.png")
+                                    put(MediaStore.MediaColumns.DISPLAY_NAME, "$articlecreatedate.jpg")
                                     put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
                                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                                 }
@@ -249,7 +246,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
                             }
                         } else {
                             val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                            val image = File(imagesDir, "$title.png")
+                            val image = File(imagesDir, "$articlecreatedate.jpg")
                             fos = FileOutputStream(image)
                         }
 
@@ -269,7 +266,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         return p0 != null
     }
 
-    fun getImageUri(inContext: Context?, inImage: Bitmap): Uri {
+    private fun getImageUri(inImage: Bitmap): Uri {
         val destPath = requireActivity().externalCacheDir.toString() + "/cache_file.jpg"
         val tempFile = File(destPath)
         tempFile.createNewFile()
@@ -281,9 +278,9 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
     }
 
     fun getBitmap(fragment: FrameLayout): Bitmap{
-        val bitmap = Bitmap.createBitmap(fragment.getWidth(), fragment.getHeight(), Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(fragment.width, fragment.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        val bgDrawable = fragment.getBackground()
+        val bgDrawable = fragment.background
         if (bgDrawable != null) {
             bgDrawable.draw(canvas)
         } else {
@@ -333,7 +330,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
                             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
                                 Toast.makeText(context, "좋아요 취소에 실패했습니다.", duration).show()
-                                Log.d("좋아요 취소 실패", t.message.toString())
+                                Log.e("좋아요 취소 실패", t.message.toString())
                             }
                         })
                     }
@@ -358,7 +355,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
                             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
                                 Toast.makeText(context, "좋아요에 실패했습니다.", duration).show()
-                                Log.d("좋아요 실패", t.message.toString())
+                                Log.e("좋아요 실패", t.message.toString())
                             }
                         })
                     }
@@ -367,7 +364,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
             override fun onFailure(call: Call<LikeBoolean>, t: Throwable) {
                 Toast.makeText(context, "좋아요 확인에 실패했습니다.", duration).show()
-                Log.d("좋아요 확인 실패", t.message.toString())
+                Log.e("좋아요 확인 실패", t.message.toString())
             }
         })
     }
@@ -386,7 +383,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
             override fun onFailure(call: Call<getArticleResponse>, t: Throwable) {
                 Toast.makeText(context, "좋아요 조회에 실패했습니다.", duration).show()
-                Log.d("좋아요 조회 실패", t.message.toString())
+                Log.e("좋아요 조회 실패", t.message.toString())
             }
         })
     }

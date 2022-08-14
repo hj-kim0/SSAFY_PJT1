@@ -1,6 +1,6 @@
 package com.example.todayfilm
 
-import android.content.Intent
+import android.icu.number.Scale.none
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,29 +10,29 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.todayfilm.data.ArticleResponse
 import com.example.todayfilm.data.getArticleRequest
-import com.example.todayfilm.data.getArticleResponse
 import com.example.todayfilm.databinding.ActivityMainBinding
 import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.System.exit
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val TAG_FEED = "feed_fragment"
-    val TAG_HOME = "home_fragment"
-    val TAG_PROFILE = "profile_fragment"
-    val TAG_SEARCH = "search_fragment"
-    val TAG_PROFILE_LIST = "profile_list_fragment"
-    val TAG_FILM = "film_fragment"
+    private val TAG_FEED = "feed_fragment"
+    private val TAG_HOME = "home_fragment"
+    private val TAG_PROFILE = "profile_fragment"
+    private val TAG_SEARCH = "search_fragment"
+    private val TAG_PROFILE_LIST = "profile_list_fragment"
+    private val TAG_FILM = "film_fragment"
 
-    var fromResetNotification = false
-    var isComplete = 0
-    var todayarticleidx = "-1"
+    private var fromResetNotification = false
+    private var isComplete = 0
+    private var todayarticleidx = "-1"
 
-    private final var FINISH_INTERVAL_TIME: Long = 2000
+    private var FINISH_INTERVAL_TIME: Long = 2000
     private var backPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         // 처음에 보여줄 프래그먼트 지정
         if (isComplete == 1 && todayarticleidx != "-1") {
             isLoginAfterComplete()
-        } else if (isComplete == 1 && todayarticleidx == "-1") {
-
         } else {
             setFragment(TAG_HOME, HomeFragment())
         }
@@ -64,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.homeFragment -> {
                     clearBackStack()
+                    todayarticleidx = MyPreference.read(this, "todayarticleidx")
                     if (isComplete == 1 && todayarticleidx != "-1") {
                         isLoginAfterComplete()
                     } else {
@@ -90,7 +89,10 @@ class MainActivity : AppCompatActivity() {
         // changeprofile에서 왔다면 본인 Profile Fragment 띄우기
         val parent = intent.getStringExtra("parent")
         if (parent == "changeprofile") {
+            binding.navBar.selectedItemId = R.id.profileFragment
             changeFragment(4, MyPreference.read(this, "userpid"))
+        } else if (parent == "complete") {
+            changeFragment(4, MyPreference.read(this, "userpid"), "complete")
         }
 
         // reset 알림을 받고 왔거나, 내부 저장소의 date가 오늘 날짜와 다르면 다이얼로그 띄우기
@@ -100,15 +102,14 @@ class MainActivity : AppCompatActivity() {
         val date = MyPreference.read(this, "date")
 
         if (fromResetNotification || today != date) {
-            // 완성이 아니고 이미지가 1개 이상인 상태
-
             val normaldialog = NormalDialogFragment()
             val btn= arrayOf("네","아니오")
             normaldialog.arguments = bundleOf(
-                "bodyContext" to "네 선택 시, 설정의 '사진 반복 여부'에 따라 필름의 남은 칸을 채웁니다.\n아니오 선택 시, 필름을 초기화합니다",
-                "bodyTitle" to "어제의 필름이 완성되지 않았습니다.\n이대로 완성하시겠습니까?",
+                "bodyContext" to "네 선택 시, 오늘 날짜로 이어서 기록됩니다.\n아니오 선택 시, 필름을 초기화합니다",
+                "bodyTitle" to "이전 필름이 완성되지 않았습니다.\n이어서 기록하시겠습니까?",
                 "btnData" to btn
             )
+            normaldialog.isCancelable = false
 
             normaldialog.show(this.supportFragmentManager, "CustomDialog")
 
@@ -117,10 +118,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onButton1Clicked() {
                     // 네
                     fromResetNotification = false
-                    // complete 액티비티로 이동
-                    val intent = Intent(this@MainActivity, CompleteActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
+                    // date 갱신
+                    MyPreference.write(this@MainActivity, "date", today)
                 }
 
                 override fun onButton2Clicked() {
@@ -134,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setFragment(tag: String, fragment: Fragment) {
+    private fun setFragment(tag: String, fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
 
@@ -216,7 +215,11 @@ class MainActivity : AppCompatActivity() {
                     bundle.putString("likey", data3)
                     bundle.putString("hashstring", data4)
                     fragment.arguments = bundle
-                    moveFragment(fragment)
+
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_content_main, fragment)
+                        .addToBackStack(null).commit()
                 }
             }
 
@@ -225,6 +228,7 @@ class MainActivity : AppCompatActivity() {
                     val fragment = ProfileFragment()
                     val bundle = Bundle()
                     bundle.putString("search_userpid", data)
+                    bundle.putString("parent", data1)
                     fragment.arguments = bundle
                     moveFragment(fragment)
                 }
@@ -232,20 +236,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun clearBackStack() {
+    private fun clearBackStack() {
         val fragmentManager: FragmentManager = supportFragmentManager
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
-    fun moveFragment(fragment: Fragment) {
+    private fun moveFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(R.xml.enter, R.xml.none, R.xml.none, R.xml.exit)
+            .setCustomAnimations(R.animator.enter, R.animator.none, R.animator.none, R.animator.exit)
             .replace(R.id.fragment_content_main, fragment)
             .addToBackStack(null).commit()
     }
 
-    fun isLoginAfterComplete() {
+    private fun isLoginAfterComplete() {
     // 완성했으면서 todayarticleidx 값이 -1이 아니라면 통신해서 게시글 정보 가져오고 Film Fragment 띄우기
         val getArticleReqeust = getArticleRequest()
         getArticleReqeust.articleidx = todayarticleidx
@@ -274,18 +278,19 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount == 0) {
-            var tempTime = System.currentTimeMillis();
-            var intervalTime = tempTime - backPressedTime;
-            if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
-                super.onBackPressed();
+            val tempTime = System.currentTimeMillis()
+            val intervalTime = tempTime - backPressedTime
+            if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+                super.onBackPressed()
             } else {
-                backPressedTime = tempTime;
-                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                backPressedTime = tempTime
+                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
                 return
             }
         }
-        super.onBackPressed();
+        super.onBackPressed()
     }
 }

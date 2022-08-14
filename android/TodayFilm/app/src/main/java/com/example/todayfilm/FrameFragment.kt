@@ -27,13 +27,13 @@ import kotlin.collections.ArrayList
 
 class FrameFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentFrameBinding
-    var parent: String? = null
-    var articleidx: String? = null
-    var articlecreatedate: String? = null
-    var article_userpid: String? = null
-    var imgcount = 0
-    lateinit var sharedPreferences: SharedPreferences
-    lateinit var sharedViewModel: SharedViewModel
+    private var parent: String? = null
+    private var articleidx: String? = null
+    private var articlecreatedate: String? = null
+    private var article_userpid: String? = null
+    private var imgcount = 0
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedViewModel: SharedViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -110,13 +110,13 @@ class FrameFragment : Fragment(), View.OnClickListener {
         } else {
             // 부모가 film이라면 넘겨받은 정보로 데이터 보여주기
             val imgview1 = binding.image1Photo
-            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/1.png").into(imgview1)
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/1.jpg").into(imgview1)
             val imgview2 = binding.image2Photo
-            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/2.png").into(imgview2)
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/2.jpg").into(imgview2)
             val imgview3 = binding.image3Photo
-            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/3.png").into(imgview3)
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/3.jpg").into(imgview3)
             val imgview4 = binding.image4Photo
-            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/4.png").into(imgview4)
+            Glide.with(requireActivity()).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${article_userpid}/${articlecreatedate}/4.jpg").into(imgview4)
 
             val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
             val temp = LocalDate.parse(articlecreatedate, formatter)
@@ -177,7 +177,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
     }
 
     // 설정 변경 이벤트 처리
-    val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
         when (key) {
             "date" -> {
                 binding.imgvid1 = null
@@ -268,7 +268,7 @@ class FrameFragment : Fragment(), View.OnClickListener {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(prefListener)
     }
 
-    fun prepareVideo(videoView: VideoView, imageView: ImageView, vidnum: Int) {
+    private fun prepareVideo(videoView: VideoView, imageView: ImageView, vidnum: Int) {
         videoView.visibility = View.VISIBLE
         imageView.visibility = View.GONE
 

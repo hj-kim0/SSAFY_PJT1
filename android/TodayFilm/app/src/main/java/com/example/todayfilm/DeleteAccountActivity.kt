@@ -3,11 +3,8 @@ package com.example.todayfilm
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import com.example.todayfilm.data.ChangePwResponse
+import android.widget.Toast
 import com.example.todayfilm.data.DeleteAccountRequest
 import com.example.todayfilm.data.DeleteAccountResponse
 
@@ -23,16 +20,18 @@ class DeleteAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var userpid = MyPreference.read(this, "userpid")
-        var userpw = MyPreference.read(this, "userpassword")
+        val userpid = MyPreference.read(this, "userpid")
+        val userpw = MyPreference.read(this, "userpassword")
 
         binding.deleteAccountBtn.setOnClickListener{
-            var checkpw = binding.deleteAccountPw.text.toString()
-            if (checkpw != userpw){
+            val checkpw = binding.deleteAccountPw.text.toString().trim()
 
-                binding.deleteAccountErr.setText("비밀번호가 일치하지 않습니다.")
-            }else{
-                var deleteUser = DeleteAccountRequest()
+            if (checkpw.isEmpty()) {
+                binding.deleteAccountErr.text = "기입하지 않은 란이 있습니다."
+            } else if (checkpw != userpw){
+                binding.deleteAccountErr.text = "비밀번호가 일치하지 않습니다."
+            } else {
+                val deleteUser = DeleteAccountRequest()
                 deleteUser.userpid = userpid.toInt()
                 deleteUser.userpassword = userpw
 
@@ -43,27 +42,27 @@ class DeleteAccountActivity : AppCompatActivity() {
                         response: Response<DeleteAccountResponse>
                     ) {
                         val result: DeleteAccountResponse? = response.body()
-                        Log.d("test", result?.message.toString())
-                        var dialog = AlertDialog.Builder(this@DeleteAccountActivity)
-                        dialog.setTitle("회원탈퇴")
-                        dialog.setMessage("회원탈퇴가 정상적으로 완료되었습니다.")
-                        dialog.show()
 
-                        Handler(Looper.getMainLooper()).postDelayed({
+                        if (result?.success == "true") {
+                            Toast.makeText(this@DeleteAccountActivity, "성공적으로 탈퇴되었습니다.", Toast.LENGTH_SHORT).show()
+
                             val intent = Intent(this@DeleteAccountActivity, IntroActivity::class.java)
                             intent.putExtra("logout", "1")
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                             finish()
-                        }, 2500)
+                        } else if (result?.success == "false") {
+                            Toast.makeText(this@DeleteAccountActivity, "회원탈퇴에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                            Log.e("회원탈퇴 실패", result.message)
+                        }
                     }
 
                     override fun onFailure(call: Call<DeleteAccountResponse>, t: Throwable) {
-                        Log.d("", "실패" + t.message.toString())
+                        Toast.makeText(this@DeleteAccountActivity, "회원탈퇴에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("회원탈퇴 실패", t.message.toString())
                     }
                 })
             }
         }
-
     }
 }

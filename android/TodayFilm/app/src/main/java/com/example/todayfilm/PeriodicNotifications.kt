@@ -6,10 +6,10 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
+import androidx.annotation.RequiresApi
 import java.util.*
 
-fun EverySixHour(): Long {
+fun everySixHour(): Long {
     val currentDate = Calendar.getInstance( )
 
     // 초기값 06시
@@ -37,7 +37,7 @@ fun EverySixHour(): Long {
     return dueDate.timeInMillis
 }
 
-fun EveryMidnight(): Long {
+fun everyMidnight(): Long {
     val currentDate = Calendar.getInstance()
     val dueDate = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
@@ -55,6 +55,7 @@ fun EveryMidnight(): Long {
 
 const val EMPTY_BROADCAST_CODE = 0
 
+@RequiresApi(Build.VERSION_CODES.M)
 fun setEmptyNotification(context: Context) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val alarmIntent = Intent(context, EmptyNotificationBroadcastReceiver::class.java).let {
@@ -64,13 +65,13 @@ fun setEmptyNotification(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            EverySixHour(),
+            everySixHour(),
             alarmIntent
         )
     } else {
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            EverySixHour(),
+            everySixHour(),
             alarmIntent
         )
     }
@@ -78,6 +79,7 @@ fun setEmptyNotification(context: Context) {
 
 const val RESET_BROADCAST_CODE = 2
 
+@RequiresApi(Build.VERSION_CODES.M)
 fun setResetNotification(context: Context) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val alarmIntent = Intent(context, ResetNotificationBroadcastReceiver::class.java).let {
@@ -87,13 +89,13 @@ fun setResetNotification(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            EveryMidnight(),
+            everyMidnight(),
             alarmIntent
         )
     } else {
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            EveryMidnight(),
+            everyMidnight(),
             alarmIntent
         )
     }

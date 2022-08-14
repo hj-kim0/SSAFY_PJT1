@@ -2,19 +2,17 @@ package com.example.todayfilm
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.example.todayfilm.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentHomeBinding
-    var imgcount = 0
-    var isComplete = 0
+    private var imgcount = 0
+    private var isComplete = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,

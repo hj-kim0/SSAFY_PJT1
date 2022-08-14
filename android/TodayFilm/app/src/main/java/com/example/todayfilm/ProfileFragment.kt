@@ -26,12 +26,13 @@ import kotlin.random.Random
 class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
     lateinit var binding: FragmentProfileBinding
     var userid = ""
-    var isMyProfile = false
-    var search_userpid = ""
+    private var isMyProfile = false
+    private var search_userpid = ""
+    var parent = ""
     var userpid = ""
     var followedNumber = 0
     var followNumber = 0
-    var isShake = true
+    private var isShake = true
     val datas = arrayListOf<ArticleResponse>()
 
     private var accel: Float = 0.0f //초기
@@ -43,11 +44,12 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater,container,false)
 
         userpid = MyPreference.read(requireActivity(), "userpid")
         search_userpid = arguments?.getString("search_userpid").toString()
+        parent = arguments?.getString("parent").toString()
 
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accel = 10f
@@ -162,7 +164,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
                 Toast.makeText(requireActivity(), "언팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("팔로우 요청 실패", t.message.toString())
+                Log.e("팔로우 요청 실패", t.message.toString())
             }
         })
     }
@@ -191,7 +193,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
             override fun onFailure(call: Call<noRseponse>, t: Throwable) {
                 Toast.makeText(requireActivity(), "팔로우 요청이 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("팔로우 요청 실패", t.message.toString())
+                Log.e("팔로우 요청 실패", t.message.toString())
             }
         })
     }
@@ -217,12 +219,24 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
                 datas.reverse()
 
+                if (parent == "complete") {
+                    val todayarticle = datas[0]
+                    var hashstring = ""
+
+                    for (hashtag in todayarticle.hash) {
+                        hashstring += "#$hashtag "
+                    }
+
+                    MyPreference.write(requireActivity(), "todayarticleidx", todayarticle.article.articleidx)
+                    (activity as MainActivity).changeFragment(3, todayarticle.article.articleidx, todayarticle.article.articlecreatedate, todayarticle.article.userpid, todayarticle.likey, hashstring)
+                }
+
                 initArticleRecycler(datas)
             }
 
             override fun onFailure(call: Call<List<ArticleResponse>>, t: Throwable) {
                 Toast.makeText(requireActivity(), "사용자 게시글 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("사용자 게시글 조회 실패", t.message.toString())
+                Log.e("사용자 게시글 조회 실패", t.message.toString())
             }
         })
     }
@@ -247,7 +261,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
             override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
                 Toast.makeText(requireActivity(), "사용자 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("사용자 정보 조회 실패", t.message.toString())
+                Log.e("사용자 정보 조회 실패", t.message.toString())
             }
         })
     }
@@ -256,8 +270,6 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
         val searchFollowr = FollowRequest()
         searchFollowr.subfrom = userpid
         searchFollowr.subto = search_userpid
-        Log.d("from오류",userpid)
-        Log.d("to오류",search_userpid)
 
         val searchFollow = NetWorkClient.GetNetwork.followsearch(searchFollowr)
         searchFollow.enqueue(object : Callback<FollowBoolean>{
@@ -282,7 +294,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
             override fun onFailure(call: Call<FollowBoolean>, t: Throwable) {
                 Toast.makeText(requireActivity(), "팔로우에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("팔로우 실패", t.message.toString())
+                Log.e("팔로우 실패", t.message.toString())
             }
         })
     }
@@ -299,7 +311,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
                 Toast.makeText(requireActivity(), "팔로우 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("팔로우 정보 조회 실패", t.message.toString())
+                Log.e("팔로우 정보 조회 실패", t.message.toString())
             }
         })
     }
@@ -316,7 +328,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, SensorEventListener {
 
             override fun onFailure(call: Call<FollowList>, t: Throwable) {
                 Toast.makeText(requireActivity(), "팔로잉 정보 조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("팔로잉 정보 조회 실패", t.message.toString())
+                Log.e("팔로잉 정보 조회 실패", t.message.toString())
             }
         })
     }

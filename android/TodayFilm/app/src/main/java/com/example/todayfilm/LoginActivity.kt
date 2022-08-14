@@ -32,14 +32,14 @@ class LoginActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "종료하시려면 뒤로가기를 한번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
             doubleBackToExit = true
-            runDelayed(1500L) {
+            runDelayed {
                 doubleBackToExit = false
             }
         }
     }
 
-    fun runDelayed(millis: Long, function: () -> Unit) {
-        Handler(Looper.getMainLooper()).postDelayed(function, millis)
+    private fun runDelayed(function: () -> Unit) {
+        Handler(Looper.getMainLooper()).postDelayed(function, 1500L)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,8 +65,8 @@ class LoginActivity : AppCompatActivity() {
             val loadingDialog = LoadingDialog(this)
             loadingDialog.show()
 
-            val loginId = binding.loginId.text.toString()
-            val loginPw = binding.loginPw.text.toString()
+            val loginId = binding.loginId.text.toString().trim()
+            val loginPw = binding.loginPw.text.toString().trim()
 
             val user = User()
             user.userid = loginId
@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
 
                             override fun onFailure(call: Call<LoginData>, t: Throwable) {
                                 Toast.makeText(this@LoginActivity, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                Log.d("로그인 실패", t.message.toString())
+                                Log.e("로그인 실패", t.message.toString())
                             }
                         })
                     }
