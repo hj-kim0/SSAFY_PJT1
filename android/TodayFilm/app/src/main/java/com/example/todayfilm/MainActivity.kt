@@ -1,6 +1,5 @@
 package com.example.todayfilm
 
-import android.icu.number.Scale.none
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,7 +14,6 @@ import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.System.exit
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,16 +69,20 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.profileFragment -> {
-                    clearBackStack()
-                    val fragment = ProfileFragment()
-                    val bundle = Bundle()
-                    bundle.putString("search_userpid", MyPreference.read(this, "userpid"))
-                    fragment.arguments = bundle
-                    setFragment(TAG_PROFILE, fragment)
+                    myProfile()
                 }
             }
             true
         }
+    }
+
+    fun myProfile() {
+        clearBackStack()
+        val fragment = ProfileFragment()
+        val bundle = Bundle()
+        bundle.putString("search_userpid", MyPreference.read(this, "userpid"))
+        fragment.arguments = bundle
+        setFragment(TAG_PROFILE, fragment)
     }
 
     override fun onResume() {
@@ -189,7 +191,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeFragment(index: Int, data: String?=null, data1: String?=null, data2: String?=null, data3: String?=null, data4: String?=null) {
-        when(index){
+        when (index) {
             1 -> {
                 moveFragment(SearchFragment())
             }
@@ -280,14 +282,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(supportFragmentManager.backStackEntryCount == 0) {
+        if (supportFragmentManager.backStackEntryCount == 0) {
             val tempTime = System.currentTimeMillis()
             val intervalTime = tempTime - backPressedTime
             if (intervalTime in 0..FINISH_INTERVAL_TIME) {
                 super.onBackPressed()
             } else {
                 backPressedTime = tempTime
-                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "종료하시려면 뒤로가기를 한번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
                 return
             }
         }

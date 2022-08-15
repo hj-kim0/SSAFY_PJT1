@@ -23,6 +23,12 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchBinding.inflate(inflater,container,false)
+
+        val keyword = MyPreference.read(requireActivity(), "keyword")
+        if (keyword != "") {
+            requestSearch(keyword)
+        }
+
         return binding.root
     }
 
@@ -30,18 +36,18 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 키보드 엔터 눌렀을 때 검색 수행
-        binding.searchKeyword.setOnEditorActionListener { _, i, _ ->
+        binding.searchKeyword.setOnEditorActionListener { textView, i, _ ->
             var handled = false
             if (i == EditorInfo.IME_ACTION_DONE) {
-                requestSearch()
+                requestSearch(textView.text.toString().trim())
                 handled = true
             }
             handled
         }
     }
 
-    private fun requestSearch() {
-        val keyword = binding.searchKeyword.text.toString().trim()
+    private fun requestSearch(keyword: String) {
+        MyPreference.write(requireActivity(), "keyword", keyword)
 
         val search = SearchRequest()
         search.keyword = keyword
@@ -122,6 +128,11 @@ class SearchFragment : Fragment() {
         })
 
         articleAdapter.datas = articledatas
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyPreference.write(requireActivity(), "keyword", "")
     }
 }
 

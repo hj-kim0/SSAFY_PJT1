@@ -263,6 +263,7 @@ class CompleteActivity : AppCompatActivity() {
                         intent.putExtra("parent", "complete")
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
+                        finish()
                     }
 
                     override fun onFailure(call: Call<FindPwResponse>, t: Throwable) {

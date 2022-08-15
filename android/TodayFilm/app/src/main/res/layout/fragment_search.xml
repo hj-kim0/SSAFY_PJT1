@@ -21,6 +21,7 @@
         android:drawablePadding="5dp"
         android:background="@drawable/input_border"
         android:inputType="text"
+        android:imeOptions="actionDone"
         android:textColor="@color/gray_500"
         android:textColorHint="@color/gray_200" />
 

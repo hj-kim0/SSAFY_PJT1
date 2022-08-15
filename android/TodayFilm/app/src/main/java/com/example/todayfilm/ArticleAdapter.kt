@@ -56,7 +56,7 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
                 }
 
                 override fun onFailure(call: Call<CompleteProfile>, t: Throwable) {
-                    Log.d("작성자 정보 조회 실패", t.message.toString())
+                    Log.e("작성자 정보 조회 실패", t.message.toString())
                 }
             })
 

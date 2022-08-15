@@ -32,6 +32,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClickListener{
     lateinit var binding: FragmentFilmBinding
@@ -158,39 +160,45 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
         when (p0?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
             R.id.delete -> {
-                val btn= arrayOf("네","아니오")
-                normaldialog.arguments = bundleOf(
-                    "bodyContext" to "삭제하면 복구되지 않습니다",
-                    "bodyTitle" to "정말 삭제하시겠습니까?",
-                    "btnData" to btn
-                )
-                normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
+                val today = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(System.currentTimeMillis())
 
-                normaldialog.setButtonClickListener(object :
-                    NormalDialogFragment.OnButtonClickListener {
-                    override fun onButton1Clicked() {
-                        //확인버튼을 눌렀을 때 처리할 곳
-                        val articledelete = ArticleDeleteRequest()
-                        articledelete.articleidx = articleidx!!.toInt()
-                        val call = NetWorkClient.GetNetwork.articledelete(articledelete)
-                        call.enqueue(object : Callback<ArticleDeleteResponse> {
-                            override fun onResponse(
-                                call: Call<ArticleDeleteResponse>,
-                                response: Response<ArticleDeleteResponse>
-                            ) {
-                                Toast.makeText(context, "게시글이 삭제되었습니다.", duration).show()
-                                moveToMain()
-                            }
+                if (articlecreatedate == today) {
+                    Toast.makeText(requireActivity(), "오늘의 필름은 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    val btn = arrayOf("네", "아니오")
+                    normaldialog.arguments = bundleOf(
+                        "bodyContext" to "삭제하면 복구되지 않습니다",
+                        "bodyTitle" to "정말 삭제하시겠습니까?",
+                        "btnData" to btn
+                    )
+                    normaldialog.show((activity as MainActivity).supportFragmentManager, "CustomDialog")
 
-                            override fun onFailure(call: Call<ArticleDeleteResponse>, t: Throwable) {
-                                Toast.makeText(context, "게시글 삭제에 실패했습니다.", duration).show()
-                                Log.e("게시글 삭제 실패", t.message.toString())
-                            }
-                        })
-                    }
+                    normaldialog.setButtonClickListener(object :
+                        NormalDialogFragment.OnButtonClickListener {
+                        override fun onButton1Clicked() {
+                            //확인버튼을 눌렀을 때 처리할 곳
+                            val articledelete = ArticleDeleteRequest()
+                            articledelete.articleidx = articleidx!!.toInt()
+                            val call = NetWorkClient.GetNetwork.articledelete(articledelete)
+                            call.enqueue(object : Callback<ArticleDeleteResponse> {
+                                override fun onResponse(
+                                    call: Call<ArticleDeleteResponse>,
+                                    response: Response<ArticleDeleteResponse>
+                                ) {
+                                    Toast.makeText(context, "게시글이 삭제되었습니다.", duration).show()
+                                    (activity as MainActivity).myProfile()
+                                }
 
-                    override fun onButton2Clicked() {}
-                })
+                                override fun onFailure(call: Call<ArticleDeleteResponse>, t: Throwable) {
+                                    Toast.makeText(context, "게시글 삭제에 실패했습니다.", duration).show()
+                                    Log.e("게시글 삭제 실패", t.message.toString())
+                                }
+                            })
+                        }
+
+                        override fun onButton2Clicked() {}
+                    })
+                }
             }
 
             R.id.share -> {
@@ -272,9 +280,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         tempFile.createNewFile()
         val out =FileOutputStream(tempFile)
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, out)
-        val uri = FileProvider.getUriForFile(requireActivity(),"com.example.todayfilm.Fileprovider",tempFile)
 
-        return uri
+        return FileProvider.getUriForFile(requireActivity(),"com.example.todayfilm.Fileprovider",tempFile)
     }
 
     fun getBitmap(fragment: FrameLayout): Bitmap{
@@ -289,13 +296,6 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         fragment.draw(canvas)
 
         return bitmap
-    }
-
-    private fun moveToMain() {
-        // complete 액티비티로 이동
-        val intent = Intent(activity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
     }
 
     private fun likecheckFun(tf :Boolean){
