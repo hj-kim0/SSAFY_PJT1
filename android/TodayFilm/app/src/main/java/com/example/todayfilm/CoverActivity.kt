@@ -11,6 +11,8 @@ class CoverActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        startService(Intent(this, ForecdTerminationService::class.java))
+
         val binding = ActivityCoverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

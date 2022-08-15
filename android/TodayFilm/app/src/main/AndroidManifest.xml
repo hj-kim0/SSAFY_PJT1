@@ -107,6 +107,8 @@
         <receiver android:name=".EmptyNotificationBroadcastReceiver"/>
         <receiver android:name=".ResetNotificationBroadcastReceiver"/>
 
-    </application>
+        <service android:name=".ForecdTerminationService"
+            android:stopWithTask="false"/>
 
+    </application>
 </manifest>
