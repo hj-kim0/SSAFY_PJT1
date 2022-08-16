@@ -61,6 +61,7 @@ class CompleteActivity : AppCompatActivity() {
         binding.completeBtn.setOnClickListener {
             val hashtags = binding.completeHashtag.insertTag
             var isHashtagsOK = true
+            var isComma = false
             var hashstring = ""
 
             // 해시태그 유효성 검사
@@ -71,28 +72,11 @@ class CompleteActivity : AppCompatActivity() {
                 if (hashtag.length < 0 || hashtag.length > 32) {
                     isHashtagsOK = false
                     break
+                } else if (hashtag.contains(',')) {
+                    isComma = true
+                    break
                 } else {
                     hashstring += ",$hashtag"
-                }
-            }
-
-            if (hashtags.isNotEmpty()) {
-                hashstring = hashstring.substring(1)
-            }
-
-            // 공개 여부 확인
-            val shareBtn = binding.completeShareGroup.checkedRadioButtonId
-            var share = 0
-
-            when (shareBtn) {
-                R.id.complete_share_all -> {
-                    share = 0
-                }
-                R.id.complete_share_followers -> {
-                    share = 1
-                }
-                R.id.complete_share_nobody -> {
-                    share = 2
                 }
             }
 
@@ -102,9 +86,32 @@ class CompleteActivity : AppCompatActivity() {
                 Toast.makeText(this, "대표 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
             } else if (!isHashtagsOK) {
                 Toast.makeText(this, "해시태그가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
+            } else if (isComma) {
+                Toast.makeText(this, "해시태그에 쉼표는 입력할 수 없습니다.", Toast.LENGTH_SHORT).show()
             } else {
                 loadingDialog = LoadingDialog(this)
                 loadingDialog.show()
+
+                // 해시태그 스트링의 첫 번째 쉼표 제거
+                if (hashtags.isNotEmpty()) {
+                    hashstring = hashstring.substring(1)
+                }
+
+                // 공개 여부 확인
+                val shareBtn = binding.completeShareGroup.checkedRadioButtonId
+                var share = 0
+
+                when (shareBtn) {
+                    R.id.complete_share_all -> {
+                        share = 0
+                    }
+                    R.id.complete_share_followers -> {
+                        share = 1
+                    }
+                    R.id.complete_share_nobody -> {
+                        share = 2
+                    }
+                }
 
                 // 서버로 데이터 전송
                 val imgcount = MyPreference.readInt(this, "imgcount")

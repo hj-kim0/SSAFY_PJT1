@@ -89,6 +89,8 @@ class SearchFragment : Fragment() {
                         }
                     }
 
+                    datas.reverse()
+
                     initArticleRecycler(datas)
                 }
 

@@ -55,6 +55,8 @@ class FeedFragment : Fragment(),View.OnClickListener {
                     }
                 }
 
+                datas.reverse()
+
                 initFeedRecycler(datas)
             }
 

@@ -29,8 +29,7 @@
         android:layout_weight="6"
         android:paddingTop="50dp"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        >
+        android:gravity="center_horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
@@ -45,19 +44,12 @@
                 android:background="@drawable/custom_ripple_border"
                 android:clickable="true"
                 android:focusable="true"
-
-
-                android:gravity=""
                 android:text="@string/find_pw"
                 android:textColor="@color/gray_500"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
- />
-
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/login_id"
