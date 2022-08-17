@@ -57,7 +57,7 @@
         <activity
             android:name=".CameraActivity"
             android:exported="false"
-            android:screenOrientation="sensorLandscape"
+            android:screenOrientation="portrait"
 
 
 

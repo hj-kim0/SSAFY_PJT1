@@ -5,4 +5,4 @@
     android:paddingVertical="7dp"
     android:paddingHorizontal="10dp"
     android:textSize="13sp"
-    android:textColor="@color/gray_500"/>
+    android:textColor="@color/gray_900"/>

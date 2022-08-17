@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@drawable/night_nostar">
+    android:background="@color/blue_200">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:fontFamily="@font/ridi"
