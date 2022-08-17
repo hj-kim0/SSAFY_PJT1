@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="popup_style_right_over" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:paddingHorizontal">5dp</item>
-    </style>
-</resources>
