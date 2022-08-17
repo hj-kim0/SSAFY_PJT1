@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".IntroActivity"
     android:orientation="vertical"
-    android:background="@color/blue_200">
+    android:background="@drawable/night_cut3"
+    style=""
+
+    >
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -17,12 +20,13 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo_transparent"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/rIDIBatang"
             android:text="@string/app_name_ko"
             android:textSize="25sp"
             android:textColor="@color/white"
@@ -31,6 +35,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/rIDIBatang"
             android:text="@string/app_phrase"
             android:textColor="@color/white"
             android:textSize="18sp"/>
@@ -40,27 +45,36 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="3"
         android:paddingTop="70dp"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/intro_signup"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/signup"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black" />
+        android:gravity="bottom|center_horizontal"
+        android:paddingBottom="10dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/intro_login"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/login"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"/>
+            android:fontFamily="@font/rIDIBatang"
+            android:background="@drawable/button_c"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/intro_signup"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:text="@string/signup"
+            android:textSize="20sp"
+            android:fontFamily="@font/rIDIBatang"
+            android:background="@drawable/button_c"
+            android:textColor="@color/white"
+
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -70,6 +84,7 @@
         android:layout_weight="0.5"
         android:gravity="bottom|center"
         android:layout_marginBottom="20dp"
+        android:fontFamily="@font/rIDIBatang"
         android:text="@string/app_footer"
         android:textSize="10sp"
         android:textColor="@color/white"

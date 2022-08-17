@@ -16,7 +16,7 @@
         android:paddingHorizontal="10dp"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"
-        android:hint="@string/hint_search"
+        android:hint="사용자명, 해시태그로 검색하기"
         android:drawableStart="@drawable/searchback"
         android:drawablePadding="5dp"
         android:background="@drawable/input_border"

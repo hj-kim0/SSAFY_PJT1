@@ -59,6 +59,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         likey = arguments?.getString("likey")
         hashstring = arguments?.getString("hashstring")
         userpid = MyPreference.read(requireActivity(), "userpid")
+        Log.d("해시해시",hashstring.toString())
 
         binding.filmLikey.text = likey
 
@@ -77,6 +78,8 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         bundle.putString("article_userpid", article_userpid)
         frameFragment.arguments = bundle
         binding.filmHashtags.text = hashstring
+
+
 
         // 작성자 정보 조회
         val profile = GetProfile()

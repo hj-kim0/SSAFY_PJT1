@@ -20,6 +20,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
 import com.example.todayfilm.databinding.ActivityChangeProfileBinding
@@ -39,7 +40,8 @@ class ChangeProfileActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private var pid = ""
     private var changeProfilePath = ""
-
+    private val backKeyPressedTime = 0
+    var mBackWait:Long = 0
     // 권한 관련
     private val REQUEST_CODE_PERMISSIONS = 10
     private val REQUIRED_PERMISSIONS =
@@ -266,4 +268,38 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        val normaldialog = NormalDialogFragment()
+//        val btn = arrayOf("네", "아니오")
+//        normaldialog.arguments = bundleOf(
+//            "bodyContext" to "뒤로가기 하면 복구되지 않습니다",
+//            "bodyTitle" to "정말 뒤로 가시겠습니까?",
+//            "btnData" to btn
+//        )
+//        normaldialog.show(this.supportFragmentManager, "CustomDialog")
+//        normaldialog.setButtonClickListener(object :
+//            NormalDialogFragment.OnButtonClickListener {
+//            override fun onButton1Clicked() {
+//                //확인버튼을 눌렀을 때 처리할 곳
+//            }
+//
+//            override fun onButton2Clicked() {}
+//        })
+
+        if (System.currentTimeMillis() - mBackWait >= 2000) {
+            mBackWait = System.currentTimeMillis()
+            Toast.makeText(this,"뒤로가기를 누르면 저장되지 않습니다",Toast.LENGTH_SHORT).show()
+
+        }
+
+        else{
+//            super.onBackPressed()
+            finish()
+
+        }
+
+    }
+
 }
