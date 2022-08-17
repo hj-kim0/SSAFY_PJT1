@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".SignupActivity"
     android:orientation="vertical"
-    android:background="@color/blue_200">
+    android:background="@drawable/night_nostar">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo_neon"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -30,6 +30,7 @@
         android:gravity="center_horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:fontFamily="@font/ridi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -38,6 +39,7 @@
             android:textColor="@color/gray_500"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:fontFamily="@font/ridi"
             android:id="@+id/signup_id"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -47,8 +49,8 @@
             android:hint="@string/hint_id"
             android:inputType="text"
             android:textSize="12sp"
-            android:textColor="@color/gray_500"
-            android:textColorHint="@color/gray_200"
+            android:textColor="@color/gray_900"
+            android:textColorHint="@color/gray_900"
             android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             android:maxLength="20"
             android:privateImeOptions="defaultInputmode=english"
@@ -56,6 +58,7 @@
             android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:fontFamily="@font/ridi"
             android:id="@+id/signup_pw"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -65,14 +68,15 @@
             android:hint="@string/hint_pw"
             android:inputType="textPassword"
             android:textSize="12sp"
-            android:textColor="@color/gray_500"
-            android:textColorHint="@color/gray_200"
+            android:textColor="@color/gray_900"
+            android:textColorHint="@color/gray_900"
             android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             android:maxLength="20"
             android:drawableStart="@drawable/ic_key"
             android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:fontFamily="@font/ridi"
             android:id="@+id/signup_pw_check"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -82,14 +86,15 @@
             android:hint="@string/hint_pw_check"
             android:inputType="textPassword"
             android:textSize="12sp"
-            android:textColor="@color/gray_500"
-            android:textColorHint="@color/gray_200"
+            android:textColor="@color/gray_900"
+            android:textColorHint="@color/gray_900"
             android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             android:maxLength="20"
             android:drawableStart="@drawable/ic_key"
             android:drawablePadding="10dp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:fontFamily="@font/ridi"
             android:id="@+id/signup_username"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -99,8 +104,8 @@
             android:hint="@string/hint_username"
             android:inputType="text"
             android:textSize="12sp"
-            android:textColor="@color/gray_500"
-            android:textColorHint="@color/gray_200"
+            android:textColor="@color/gray_900"
+            android:textColorHint="@color/gray_900"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="10dp"/>
 
@@ -112,6 +117,7 @@
             android:background="@drawable/input_border"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:fontFamily="@font/ridi"
             android:id="@+id/signup_answer"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -121,8 +127,8 @@
             android:hint="@string/hint_answer"
             android:inputType="text"
             android:textSize="12sp"
-            android:textColor="@color/gray_500"
-            android:textColorHint="@color/gray_200"
+            android:textColor="@color/gray_900"
+            android:textColorHint="@color/gray_900"
             android:drawableStart="@drawable/ic_check_circle"
             android:drawablePadding="10dp"/>
 
@@ -138,14 +144,15 @@
             tools:ignore="RtlSymmetry" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:fontFamily="@font/ridi"
             android:id="@+id/signup_btn"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="13dp"
-            android:backgroundTint="@color/white"
+            android:background="@drawable/button_b"
             android:text="@string/signup"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -153,12 +160,15 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="@string/from_signup_to_login" />
+                android:textColor="@color/white"
+                android:text="희원이신가요?" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/signup_to_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,6 +183,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"

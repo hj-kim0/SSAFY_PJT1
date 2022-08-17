@@ -6,15 +6,16 @@
     tools:context=".DeleteAccountActivity"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/blue_200">
+    android:background="@drawable/night_nostar">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="70dp"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/logo_neon"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
@@ -24,16 +25,18 @@
         android:textStyle="bold"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:gravity="center"
         android:text="@string/warn_delete_account"
-        android:textColor="@color/red"
+        android:textColor="#ff4848"
         android:textSize="15sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/deleteAccount_pw"
+        android:fontFamily="@font/ridi"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -41,8 +44,8 @@
         android:hint="@string/hint_pw"
         android:inputType="textPassword"
         android:textSize="12sp"
-        android:textColor="@color/gray_500"
-        android:textColorHint="@color/gray_200"
+        android:textColor="@color/gray_900"
+        android:textColorHint="@color/gray_900"
         android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
         android:maxLength="20"
         android:drawableStart="@drawable/ic_key"
@@ -60,16 +63,18 @@
         tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:fontFamily="@font/ridi"
         android:id="@+id/deleteAccount_btn"
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="13dp"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/button_b"
         android:text="@string/delete_account"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"

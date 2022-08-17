@@ -19,12 +19,14 @@
         android:id="@+id/recycler_profile_article_like_btn"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/ic_baseline_favorite_24"
+        android:src="@drawable/favorite_1"
         app:layout_constraintTop_toBottomOf="@id/recycler_profile_article_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginStart="2dp"
+        android:fontFamily="@font/ridi"
         android:id="@+id/recycler_profile_article_likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,6 +37,7 @@
         app:layout_constraintStart_toEndOf="@id/recycler_profile_article_like_btn"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
         android:id="@+id/recycler_profile_article_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

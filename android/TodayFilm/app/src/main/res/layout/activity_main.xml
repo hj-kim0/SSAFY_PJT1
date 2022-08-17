@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@color/blue_200">
+    android:background="@drawable/night_nostar">
 
     <FrameLayout
         android:id="@+id/fragment_content_main"
@@ -21,6 +21,7 @@
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:fontFamily="@font/ridi"
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

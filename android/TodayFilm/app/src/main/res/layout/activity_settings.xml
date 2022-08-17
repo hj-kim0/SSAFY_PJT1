@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/blue_200">
+    android:background="@drawable/night_nostar">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/settings"

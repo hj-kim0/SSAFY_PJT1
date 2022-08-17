@@ -2,21 +2,19 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle" android:padding = "10dp">
     <!-- 버튼 색깔 -->
-
+    <!--    <gradient-->
+    <!--        android:angle="0"-->
+    <!--        android:startColor="#02203b"-->
+    <!--        android:endColor="#1a568b"-->
+    <!--        android:type="linear" />-->
+    <solid android:color="#80afcaee"/>
     <!-- 네 귀퉁이? 모양 -->
-    <gradient
-        android:angle="0"
-        android:endColor="#593d5b"
-        android:startColor="#c88bcb"
-        android:type="linear" />
     <corners
         android:bottomLeftRadius="5dp"
         android:bottomRightRadius="5dp"
         android:topLeftRadius="5dp"
         android:topRightRadius="5dp"/>
     <!-- 테두리 색깔 -->
-    <!-- 테두리 색깔 -->
-    <stroke android:width="3dp"
-        android:color="#66FFFFFF"/>
-
+    <stroke android:width="2dp"
+        android:color="#cce8f2ff"/>
 </shape>

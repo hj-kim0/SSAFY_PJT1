@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FilmFragment"
     android:orientation="vertical"
-    android:background="@color/blue_200"
     android:overScrollMode="never"
     android:scrollbars="none">
 
@@ -44,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/gray_500"
+                    android:textColor="@color/gray_200"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -58,6 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_more_vert_24"
+                android:background="@drawable/custom_ripple_border"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -83,18 +85,20 @@
                 android:text=""
                 android:textOff=""
                 android:textOn=""
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:background="@drawable/favorite_ani"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/film_likey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="6dp"
+                android:textSize="18sp"
                 android:textColor="@color/gray_500"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -112,11 +116,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="3dp"
             android:id="@+id/film_hashtags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="15dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -8,6 +8,7 @@
     tools:context=".ProfileFragment"
     android:orientation="vertical"
     android:overScrollMode="never"
+    android:background="@drawable/night_nostar"
     android:scrollbars="none">
 <!--    android:background="#E9F8FF"-->
 
@@ -48,11 +49,12 @@
                 app:layout_constraintBottom_toTopOf="@id/profile_id" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/profile_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,11 +63,12 @@
                 app:layout_constraintBottom_toTopOf="@id/profile_username"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/profile_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +95,7 @@
                     android:paddingHorizontal="10dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/ridi"
                         android:id="@+id/profile_following_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -100,6 +104,7 @@
                         android:textSize="14sp"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/ridi"
                         android:id="@+id/profile_following_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,6 +130,7 @@
                     android:paddingHorizontal="10dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/ridi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/follower"
@@ -132,6 +138,7 @@
                         android:textSize="14sp"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:fontFamily="@font/ridi"
                         android:id="@+id/profile_follower_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -144,23 +151,25 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/profile_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:textColor="@color/gray_500"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_follow_group"
                 app:layout_constraintBottom_toTopOf="@id/profile_btn"/>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:fontFamily="@font/ridi"
                 android:id="@+id/profile_btn"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:backgroundTint="@color/white"
+                android:background="@drawable/button_b"
                 android:textSize="12sp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_description" />

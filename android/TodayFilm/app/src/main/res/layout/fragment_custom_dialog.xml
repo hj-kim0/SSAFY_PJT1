@@ -18,6 +18,7 @@
             android:paddingHorizontal="33dp" >
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/custom_dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
                 android:text="@string/shareTo" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:fontFamily="@font/ridi"
                 android:id="@+id/custom_dialog_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,6 +47,7 @@
             android:layout_marginTop="35dp"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatButton
+                android:fontFamily="@font/ridi"
                 android:id="@+id/complete_dialog_show_all"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
@@ -55,6 +58,7 @@
                 android:textColor="@color/gray_500" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:fontFamily="@font/ridi"
                 android:id="@+id/complete_dialog_show_followers"
                 android:layout_width="wrap_content"
                 android:layout_height="57dp"
@@ -65,6 +69,7 @@
                 android:textColor="@color/gray_500" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:fontFamily="@font/ridi"
                 android:id="@+id/complete_dialog_show_nobody"
                 android:layout_width="wrap_content"
                 android:layout_height="57dp"
