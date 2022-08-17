@@ -196,10 +196,12 @@ class FrameFragment : Fragment(), View.OnClickListener {
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences?, key: String? ->
         when (key) {
             "date" -> {
-                binding.imgvid1 = null
-                binding.imgvid2 = null
-                binding.imgvid3 = null
-                binding.imgvid4 = null
+                if (MyPreference.readInt(requireActivity(), "imgcount") == 0) {
+                    binding.imgvid1 = null
+                    binding.imgvid2 = null
+                    binding.imgvid3 = null
+                    binding.imgvid4 = null
+                }
                 binding.date = sharedPreferences!!.getString("date", "")
             }
         }
