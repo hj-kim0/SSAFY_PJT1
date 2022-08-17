@@ -1,0 +1,39 @@
+server:
+  port: 8000
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+project:
+  properties:
+    firebase-create-scoped: "https://www.googleapis.com/auth/firebase.messaging"
+    firebase-multicast-message-size: 500
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://i7c207.p.ssafy.io:3306/c207DB?serverTimezone=Asia/Seoul
+    username: c207
+    password: '!Q2w#E4r'
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 120MB
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+
