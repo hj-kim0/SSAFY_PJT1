@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.webkit.WebView
 import com.example.todayfilm.databinding.ActivityCoverBinding
 
+
 class CoverActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,6 @@ class CoverActivity : AppCompatActivity() {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             startActivity(intent)
             finish()
-        }, 4500)
+        }, 3000)
     }
 }

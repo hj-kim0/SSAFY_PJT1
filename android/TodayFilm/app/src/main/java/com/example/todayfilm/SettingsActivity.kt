@@ -109,6 +109,11 @@ class SettingsActivity : AppCompatActivity() {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 }
+                "license" -> {
+                    val intent = Intent(activity, LicenseActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                }
             }
 
             return super.onPreferenceTreeClick(preference)

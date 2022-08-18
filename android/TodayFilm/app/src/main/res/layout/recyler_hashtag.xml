@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.AppCompatTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/custom_ripple_slash"
+    android:layout_marginBottom="3dp"
     android:id="@+id/recycler_hashtag"
     android:fontFamily="@font/ridi"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="5dp"
     android:textColor="@color/white"
+    android:shadowColor="@color/blue_500"
+    android:shadowDx="0"
+    android:shadowDy="0"
+    android:shadowRadius="8"
     android:textSize="15sp" />

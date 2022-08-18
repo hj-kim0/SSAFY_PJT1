@@ -11,12 +11,11 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="h,1:1.78"
+        app:layout_constraintDimensionRatio="W, 1:1.78"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/camera_btn">
         <TextureView
             android:id="@+id/textureView"
             android:layout_width="match_parent"
@@ -27,11 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_switch_black"
             android:layout_margin="5dp"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_switch_black"
             app:borderWidth="0dp"
-            app:tint="@null" />
+            app:tint="@null"/>
     </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -41,8 +40,7 @@
         android:background="@drawable/btn_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
- />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@
     <PreferenceCategory
         app:title="애플리케이션"
         app:iconSpaceReserved="false">
+
         <SwitchPreference
             app:title="사진 반복해서 채우기"
             app:summary="필름이 채워지지 않은 채로 완성하면,\n남은 칸을 찍은 사진들로 반복해서 채웁니다"
@@ -37,5 +38,9 @@
             app:title="회원탈퇴"
             app:iconSpaceReserved="false"
             android:key="deleteAccount"/>
+        <Preference
+            app:title="라이센스"
+            app:iconSpaceReserved="false"
+            android:key="license"/>
     </PreferenceCategory>
 </PreferenceScreen>

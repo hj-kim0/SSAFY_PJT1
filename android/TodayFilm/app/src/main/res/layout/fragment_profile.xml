@@ -49,13 +49,17 @@
                 app:layout_constraintBottom_toTopOf="@id/profile_id" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="11"
                 android:fontFamily="@font/ridi"
                 android:id="@+id/profile_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textColor="@color/blue_200"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,13 +67,18 @@
                 app:layout_constraintBottom_toTopOf="@id/profile_username"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="11"
+                android:textColor="@color/yellow_200"
                 android:fontFamily="@font/ridi"
                 android:id="@+id/profile_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:textColor="@color/white"
-                android:textSize="13sp"
+
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_id"
@@ -117,7 +126,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="7dp"
+                    android:layout_marginHorizontal="3dp"
                     android:background="@color/gray_500"/>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -155,7 +164,9 @@
                 android:id="@+id/profile_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
+                android:paddingBottom="9dp"
+                android:paddingTop="2dp"
+                android:textStyle="italic"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

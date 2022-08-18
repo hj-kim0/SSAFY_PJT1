@@ -6,15 +6,24 @@
         <item name="colorPrimaryVariant">#02203b</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/blue_200</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/yellow_200</item>
         <item name="colorSecondaryVariant">@color/yellow_500</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <!-- Customize your theme here. -->
         <item name="android:colorControlHighlight">@color/black</item>
+
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
     </style>
 </resources>

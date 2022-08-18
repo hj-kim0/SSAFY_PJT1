@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
+    android:background="@drawable/night_nostar"
     tools:context=".FeedFragment">
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,14 +14,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/logo_neon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+
         
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/go_search"
@@ -42,6 +36,16 @@
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
+        />
+    <TextView
+        android:id="@+id/no_friend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="돋보기를 클릭해 새로운 친구를 사귀어 보세요"
+        android:paddingBottom="40dp"
+        android:textColor="@color/white"
+        android:visibility="invisible"
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:gravity="center"
+        android:lineSpacingExtra="4dp"
         android:text="@string/warn_delete_account"
         android:textColor="#ff4848"
         android:textSize="15sp" />

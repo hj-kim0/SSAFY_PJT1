@@ -7,6 +7,7 @@
     tools:context=".FilmFragment"
     android:orientation="vertical"
     android:overScrollMode="never"
+    android:background="@drawable/night_nostar"
     android:scrollbars="none">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -106,9 +107,9 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/film_play_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_play_circle_filled_24"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/play_neon"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

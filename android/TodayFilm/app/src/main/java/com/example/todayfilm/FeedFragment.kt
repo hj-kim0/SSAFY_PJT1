@@ -48,6 +48,11 @@ class FeedFragment : Fragment(),View.OnClickListener {
             ) {
                 val result = response.body()
                 val datas = arrayListOf<ArticleResponse>()
+                Log.d("체크",datas.size.toString())
+                if(datas.size == 0){
+                    binding.noFriend.visibility = View.VISIBLE
+                }
+
 
                 if (result != null) {
                     for (r in result) {
