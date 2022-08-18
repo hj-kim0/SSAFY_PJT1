@@ -1,13 +1,16 @@
 package com.example.todayfilm
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.todayfilm.data.*
@@ -15,6 +18,8 @@ import com.example.todayfilm.retrofit.NetWorkClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     var datas = mutableListOf<ArticleResponse>()
@@ -29,16 +34,19 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
     override fun getItemCount(): Int = datas.size
 
     // ViewHolder 재활용 시 사용
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(datas[position])
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val user: LinearLayoutCompat = itemView.findViewById(R.id.recycler_article_user)
+        private val user: ConstraintLayout = itemView.findViewById(R.id.recycler_article_user)
         private val userid: TextView = itemView.findViewById(R.id.recycler_article_userid)
         private val userimg: ImageView = itemView.findViewById(R.id.recycler_article_userimg)
         private val articlethumbnail: ImageView = itemView.findViewById(R.id.recycler_article_image)
+        private val articlecreatedate: TextView = itemView.findViewById(R.id.recycler_article_date)
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(item: ArticleResponse) {
             // 작성자 정보 조회
             val profile = GetProfile()
@@ -61,6 +69,11 @@ class ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Articl
             })
 
             Glide.with(itemView).load("http://i7c207.p.ssafy.io:8080/harufilm/upload/article/${item.article.userpid}/${item.article.articlecreatedate}/${item.article.articlethumbnail}.jpg").into(articlethumbnail)
+
+            val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+            val temp = LocalDate.parse(item.article.articlecreatedate, formatter)
+            val changed = temp.format(DateTimeFormatter.ofPattern("yyyy/MM/dd (E)"))
+            articlecreatedate.text = changed
 
             user.setOnClickListener {
                 itemClickListener.onClick(it, item.article.userpid)
