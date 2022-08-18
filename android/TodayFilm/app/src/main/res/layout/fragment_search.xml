@@ -21,6 +21,7 @@
         android:drawableStart="@drawable/searchback"
         android:drawablePadding="5dp"
         android:background="@drawable/input_border"
+        android:textSize="15sp"
         android:inputType="text"
         android:imeOptions="actionDone"
         android:textColor="@color/gray_900"
