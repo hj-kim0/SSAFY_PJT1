@@ -41,14 +41,24 @@ class MainActivity : AppCompatActivity() {
 
         isComplete = MyPreference.readInt(this, "isComplete")
         todayarticleidx = MyPreference.read(this, "todayarticleidx")
+        val parent = intent.getStringExtra("parent")
 
         // 처음에 보여줄 프래그먼트 지정
-        if (isComplete == 1 && todayarticleidx != "-1") {
+        if (parent == "changeprofile") {
+            changeFragment(4, MyPreference.read(this, "userpid"))
+        } else if (parent == "complete") {
+            changeFragment(4, MyPreference.read(this, "userpid"), "complete")
+        } else if (isComplete == 1 && todayarticleidx != "-1") {
             isLoginAfterComplete()
         } else {
             setFragment(TAG_HOME, HomeFragment())
         }
-        binding.navBar.selectedItemId = R.id.homeFragment
+
+        if (parent == "changeprofile") {
+            binding.navBar.selectedItemId = R.id.profileFragment
+        } else {
+            binding.navBar.selectedItemId = R.id.homeFragment
+        }
 
         // 네비 항목 클릭 시 프래그먼트 변경
         binding.navBar.setOnItemSelectedListener { item ->
@@ -87,15 +97,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        // changeprofile에서 왔다면 본인 Profile Fragment 띄우기
-        val parent = intent.getStringExtra("parent")
-        if (parent == "changeprofile") {
-            binding.navBar.selectedItemId = R.id.profileFragment
-            changeFragment(4, MyPreference.read(this, "userpid"))
-        } else if (parent == "complete") {
-            changeFragment(4, MyPreference.read(this, "userpid"), "complete")
-        }
 
         // reset 알림을 받고 왔거나, 내부 저장소의 date가 오늘 날짜와 다르면 다이얼로그 띄우기
         fromResetNotification = intent.getBooleanExtra("fromResetNotification", false)

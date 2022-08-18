@@ -60,7 +60,7 @@ class CheckActivity : AppCompatActivity() {
         // 영상 길이 자르기
         Mp4Composer(srcPath, destPath)
             .rotation(Rotation.ROTATION_270)
-            .size(640, 360)
+            .size(852, 480)
             .fillMode(FillMode.PRESERVE_ASPECT_FIT)
             .trim(startTime, endTime)
             .listener(object : Mp4Composer.Listener {
@@ -144,7 +144,7 @@ class CheckActivity : AppCompatActivity() {
             val rotateMatrix = Matrix()
             rotateMatrix.postRotate(270F)
             bitmap = Bitmap.createBitmap(bitmap!!, 0,0, bitmap.width, bitmap.height, rotateMatrix, false)
-            bitmap = Bitmap.createScaledBitmap(bitmap, 640, 360, true)
+            bitmap = Bitmap.createScaledBitmap(bitmap, 852, 480, true)
             val imageFile = File(this.getExternalFilesDir(null), "${imgcount}.jpg")
             val fileOutputStream = FileOutputStream(imageFile)
             bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
