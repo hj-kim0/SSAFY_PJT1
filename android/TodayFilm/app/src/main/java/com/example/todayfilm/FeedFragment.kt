@@ -41,18 +41,6 @@ class FeedFragment : Fragment(),View.OnClickListener {
         setOnClickListener()
                 super.onCreate(savedInstanceState);
 
-
-        val anim =  AlphaAnimation(0.0f,1.0f);
-        anim.setDuration(100);
-        anim.setStartOffset(20);
-        anim.setRepeatMode(Animation.REVERSE);
-        anim.setRepeatCount(Animation.INFINITE);
-        binding.noFriend.startAnimation(anim)
-
-
-
-
-
     }
 
     override fun onResume() {
