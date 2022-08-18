@@ -103,7 +103,7 @@ interface NetWorkInterface {
     @POST("api/article/showsubarticle")
     fun showsubarticle(
         @Body getProfile: GetProfile
-    ): Call<List<ArticleResponse>>
+    ): Call<ArticleResponseLike>
 
     @POST("api/subscribe/follow")
     fun followsearch(

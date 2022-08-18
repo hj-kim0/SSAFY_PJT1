@@ -30,6 +30,22 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/no_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="추천 게시글로 새로운 친구를 사귀어 보세요! 좋아요가 많은 순으로 게시물이 추천됩니다. "
+        android:paddingBottom="25dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+
+
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feed_article"
         android:layout_width="match_parent"
@@ -37,15 +53,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         />
-    <TextView
-        android:id="@+id/no_friend"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="돋보기를 클릭해 새로운 친구를 사귀어 보세요"
-        android:paddingBottom="40dp"
-        android:textColor="@color/white"
-        android:visibility="invisible"
-        />
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

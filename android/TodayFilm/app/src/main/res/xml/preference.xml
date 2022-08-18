@@ -8,7 +8,7 @@
 
         <SwitchPreference
             app:title="사진 반복해서 채우기"
-            app:summary="필름이 채워지지 않은 채로 완성하면,\n남은 칸을 찍은 사진들로 반복해서 채웁니다"
+            app:summary="필름이 채워지지 않은 채로 완성하면,\n남은 칸을 찍은 사진으로 반복합니다."
             app:iconSpaceReserved="false"
             android:defaultValue="true"
             android:key="repeat"/>

@@ -154,6 +154,7 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
         when (p0?.id) {
             R.id.film_menu -> {
                 showPopup(binding.filmMenu)
+
             }
 
             R.id.film_play_btn -> {
@@ -173,15 +174,21 @@ class FilmFragment : Fragment(), View.OnClickListener, PopupMenu.OnMenuItemClick
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private fun showPopup(v: View) {
-        val popup = PopupMenu(context,v,  Gravity.TOP, 0, R.style.popup) // PopupMenu 객체 선언
+        val themeWrapper = ContextThemeWrapper(context , R.style.popup)
+        val popup = PopupMenu(themeWrapper ,v,  Gravity.TOP, 0, R.style.popup) // PopupMenu 객체 선언
         popup.menuInflater.inflate(R.menu.popup, popup.menu) // 메뉴 레이아웃 inflate
         popup.setOnMenuItemClickListener(this)
         popup.show() // 팝업 보여주기
+
+
     }
 
     override fun onMenuItemClick(p0: MenuItem?): Boolean {
         val dialog = CustomDialogFragment()
         val normaldialog = NormalDialogFragment()
+
+
+
 
         when (p0?.itemId) { // 메뉴 아이템에 따라 동작 다르게 하기
             R.id.delete -> {
