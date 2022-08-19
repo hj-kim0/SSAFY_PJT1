@@ -10,8 +10,8 @@
         <item name="android:textColorSecondary">@color/blue_200</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/yellow_200</item>
-        <item name="colorSecondaryVariant">@color/yellow_500</item>
+        <item name="colorSecondary">#409dd7</item>
+        <item name="colorSecondaryVariant">@color/yellow_200</item>
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar color. -->

@@ -30,6 +30,6 @@ class CoverActivity : AppCompatActivity() {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             startActivity(intent)
             finish()
-        }, 2500)
+        }, 3000)
     }
 }
