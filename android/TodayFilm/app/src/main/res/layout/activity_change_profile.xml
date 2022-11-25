@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChangeProfileActivity"
+    android:orientation="vertical"
+    android:background="@drawable/night_nostar">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/changeProfile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:paddingTop="50dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/changeProfile_username"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:hint="@string/hint_username"
+            android:fontFamily="@font/ridi"
+            android:inputType="text"
+            android:textSize="12sp"
+            android:textColor="@color/gray_500"
+            android:textColorHint="@color/gray_200"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:fontFamily="@font/ridi"
+            android:id="@+id/changeProfile_description"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:backgroundTint="@color/white"
+            android:hint="@string/hint_description"
+            android:inputType="text"
+            android:textSize="12sp"
+            android:textColor="@color/gray_500"
+            android:textColorHint="@color/gray_200"
+            android:drawableStart="@drawable/ic_chat_bubble_outline"
+            android:drawablePadding="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/changeProfile_err"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="7dp"
+            android:paddingVertical="4dp"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="12sp"
+            tools:ignore="RtlSymmetry" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:fontFamily="@font/ridi"
+            android:background="@drawable/button_b"
+            android:id="@+id/changeProfile_btn"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="13dp"
+            android:text="@string/change_profile"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:fontFamily="@font/ridi"
+            android:id="@+id/changeProfile_to_changePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_pw"
+            android:textColor="@color/blue_200"
+            android:background="@drawable/custom_ripple_border"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="bottom|center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/app_footer"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        tools:ignore="SmallSp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

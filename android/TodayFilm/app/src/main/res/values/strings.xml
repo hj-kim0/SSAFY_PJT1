@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Today Film</string>
+    <string name="app_name_ko">하루 담은 필름</string>
+    <string name="app_phrase">사진 4장으로 기록하는 하루</string>
+    <string name="app_footer">developed by 필름 깎는 개발자들</string>
+
+    <string name="signup">회원가입</string>
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
+
+    <string name="from_login_to_signup">회원이 아니면</string>
+    <string name="from_signup_to_login">이미 회원이면</string>
+
+    <string name="delete_account">회원탈퇴</string>
+    <string name="change_pw">비밀번호 변경</string>
+    <string name="change_profile">회원정보 수정</string>
+    <string name="find_pw">비밀번호 찾기</string>
+    <string name="rule">아이디와 비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
+    <string name="rule_pw">비밀번호는 6~20자의 영문 및 숫자만 가능합니다</string>
+
+    <string name="complete">완료</string>
+    <string name="complete_frame">오늘의 필름 완성!</string>
+    <string name="settings">설정</string>
+    <string name="delete">삭제하기</string>
+    <string name="save">저장하기</string>
+    <string name="share">공유하기</string>
+    <string name="play">재생하기</string>
+    <string name="shareTo">공유대상설정</string>
+    <string name="all">전체 공개</string>
+    <string name="followers">팔로워만</string>
+    <string name="nobody">비공개</string>
+    <string name="retry">다시시도</string>
+    <string name="ok">확인</string>
+    <string name="loading">잠시만 기다려주세요...</string>
+
+    <string name="feed">피드</string>
+    <string name="home">홈</string>
+    <string name="mypage">마이페이지</string>
+
+    <string name="user">사용자</string>
+    <string name="article">게시글</string>
+    <string name="following">팔로잉</string>
+    <string name="follower">팔로워</string>
+
+    <string name="example_date">2022/08/10 (수)</string>
+
+    <string name="hint_id">아이디를 입력하세요</string>
+    <string name="hint_pw">비밀번호를 입력하세요</string>
+    <string name="hint_pw_check">비밀번호를 다시 입력하세요</string>
+    <string name="hint_pw_old">기존 비밀번호를 입력하세요</string>
+    <string name="hint_pw_new">새로운 비밀번호를 입력하세요</string>
+    <string name="hint_pw_new_check">새로운 비밀번호를 다시 입력하세요</string>
+    <string name="hint_username">닉네임을 입력하세요</string>
+    <string name="hint_answer">답변을 입력하세요</string>
+    <string name="hint_search">검색어를 입력하세요</string>
+    <string name="hint_hashtag">해시태그를 입력하세요</string>
+    <string name="hint_content">#내용을_입력하세요</string>
+    <string name="hint_place">장소를 입력하세요</string>
+    <string name="hint_description">한 줄 소개를 입력하세요</string>
+    <string name="hint_save">사진첩에 저장할까요?</string>
+    <string name="hint_share">공개 여부</string>
+    <string name="hint_shareto">공유하실 대상을 선택해주세요.</string>
+
+    <string name="warn_delete_account">정말 탈퇴 하시겠습니까?\n마지막으로 비밀번호를 확인해주세요.</string>
+</resources>

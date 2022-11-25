@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <PreferenceCategory
+        app:title="애플리케이션"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            app:title="사진 반복해서 채우기"
+            app:summary="필름이 채워지지 않은 채로 완성하면,\n남은 칸을 찍은 사진으로 반복합니다."
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"
+            android:key="repeat"/>
+
+        <SwitchPreference
+            app:title="흔들어서 예전 필름 보기"
+            app:summary="필름을 보면서 지난 하루를 추억하세요"
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"
+            android:key="shake"/>
+
+        <Preference
+            android:title="푸시 알림"
+            app:summary="푸시 알림을 항목별로 설정하세요"
+            app:iconSpaceReserved="false"
+            android:fragment="com.example.todayfilm.NotificationPreferenceFragment"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="계정"
+        app:iconSpaceReserved="false">
+        <Preference
+            app:title="@string/logout"
+            app:iconSpaceReserved="false"
+            android:key="logout"/>
+        <Preference
+            app:title="회원탈퇴"
+            app:iconSpaceReserved="false"
+            android:key="deleteAccount"/>
+        <Preference
+            app:title="라이센스"
+            app:iconSpaceReserved="false"
+            android:key="license"/>
+    </PreferenceCategory>
+</PreferenceScreen>

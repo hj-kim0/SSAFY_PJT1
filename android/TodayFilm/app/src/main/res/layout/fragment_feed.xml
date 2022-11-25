@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:background="@drawable/night_nostar"
+    tools:context=".FeedFragment">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp">
+
+
+        
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/go_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/searchback"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/custom_ripple_border"
+            android:clickable="true"
+            android:focusable="true"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/no_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="추천 게시글로 새로운 친구를 사귀어 보세요! 좋아요가 많은 순으로 게시물이 추천됩니다. "
+        android:paddingBottom="25dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/feed_article"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/recycler_profile_article_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="H, 1.78:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/recycler_profile_article_like_btn"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/favorite_1"
+        app:layout_constraintTop_toBottomOf="@id/recycler_profile_article_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginStart="2dp"
+        android:fontFamily="@font/ridi"
+        android:id="@+id/recycler_profile_article_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_900"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/recycler_profile_article_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/recycler_profile_article_like_btn"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:fontFamily="@font/ridi"
+        android:id="@+id/recycler_profile_article_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_900"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/recycler_profile_article_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
